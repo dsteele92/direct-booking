@@ -1,0 +1,16 @@
+@mixin flex-center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin inner {
+	height: 100%;
+	width: 100%;
+	max-width: 2500px;
+}
+
+@mixin sectionSize {
+	height: 80vh;
+	width: 100%;
+}
