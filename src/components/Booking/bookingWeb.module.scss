@@ -1,11 +1,14 @@
 @import 'sass';
 
 .Book {
-	height: 100%;
+	height: 20vh;
 	width: 100%;
 	background: rgba($color: white, $alpha: 0.5);
 	transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	@include flex-center;
+	// transition: height 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 
 	.StickyBackground {
 	}
@@ -35,5 +38,13 @@
 	&Scroll {
 		@extend .Book;
 		background: $color-secondary;
+	}
+
+	&Top {
+		@extend .Book;
+		// background: rgba($color: $color-secondary, $alpha: 0.5);
+		background: $color-secondary;
+		height: 10vh;
+		border-bottom: groove;
 	}
 }
