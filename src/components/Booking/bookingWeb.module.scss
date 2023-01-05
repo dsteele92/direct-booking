@@ -1,0 +1,39 @@
+@import 'sass';
+
+.Book {
+	height: 100%;
+	width: 100%;
+	background: rgba($color: white, $alpha: 0.5);
+	transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	@include flex-center;
+
+	.StickyBackground {
+	}
+
+	.Inner {
+		@include inner;
+		@include flex-center;
+
+		.Booker {
+			width: 60%;
+			height: 50px;
+			display: grid;
+			grid-template-columns: 2fr 2fr 1fr 2fr;
+			column-gap: 20px;
+
+			div {
+				// height: 100%;
+				border: 1px solid black;
+				display: flex;
+				align-items: center;
+				padding: 10px;
+				background: whitesmoke;
+			}
+		}
+	}
+
+	&Scroll {
+		@extend .Book;
+		background: $color-secondary;
+	}
+}

@@ -1,26 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Style from './app.module.scss';
+import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile } from 'components';
 import { taborInfo } from './content/taborInfo.js';
 
 function App() {
-	const [scroll, setScroll] = useState(false);
-
-	useEffect(() => {
-		const onScroll = (event) => {
-			if (window.pageYOffset >= 50) {
-				setScroll(true);
-			} else {
-				setScroll(false);
-			}
-		};
-
-		window.addEventListener('scroll', onScroll);
-
-		return () => {
-			window.removeEventListener('scroll', onScroll);
-		};
-	}, []);
-
 	return (
 		<div className={Style.App}>
 			<div className={Style.TopBackground}>
@@ -34,8 +17,8 @@ function App() {
 					</div>
 				</div>
 			</section>
-			<section className={scroll ? Style.BookScroll : Style.Book}>
-				<div className={Style.Inner}>BOOKING</div>
+			<section className={Style.Booking}>
+				<BookingWeb />
 			</section>
 			<section className={Style.Description}>
 				<div className={Style.Inner}>
@@ -56,7 +39,7 @@ function App() {
 				</div>
 			</section>
 			<section className={Style.Photos}>
-				<div className={Style.Inner}></div>
+				<GalleryWeb />
 			</section>
 			<section className={Style.Amenities}>
 				<div className={Style.Inner}></div>

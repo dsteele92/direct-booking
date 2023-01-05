@@ -13,7 +13,7 @@
 		.Tint {
 			height: 100%;
 			width: 100%;
-			background: rgba($color: #000000, $alpha: 0.2);
+			background: rgba($color: black, $alpha: 0.2);
 		}
 	}
 	.HomeBanner {
@@ -50,23 +50,13 @@
 		}
 	}
 
-	.Book {
+	.Booking {
 		position: sticky;
 		z-index: 100;
 		top: 0;
 		height: 20vh;
 		width: 100%;
-		background: rgba($color: white, $alpha: 0.3);
-		transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-		.Inner {
-			@include inner;
-			@include flex-center;
-		}
-
-		&Scroll {
-			@extend .Book;
-			background: $color-booking;
-		}
+		@include flex-center;
 	}
 
 	.Description {
@@ -155,7 +145,7 @@
 	.Photos {
 		position: relative;
 		@include sectionSize;
-		background: rgba($color: #59829c, $alpha: 1);
+		background: $color-secondary;
 		.Inner {
 			@include inner;
 		}

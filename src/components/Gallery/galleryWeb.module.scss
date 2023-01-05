@@ -1,0 +1,55 @@
+@import 'sass';
+
+.Gallery {
+	height: 100%;
+	width: 100%;
+	@include flex-center;
+
+	.Inner {
+		@include inner;
+		@include flex-center;
+
+		.CarouselFrame {
+			position: relative;
+			height: 90%;
+			width: 90%;
+			overflow-x: scroll;
+			overflow-y: hidden;
+			display: flex;
+			flex-direction: row;
+
+			.CarouselInnerRooms {
+				flex-shrink: 0;
+				position: relative;
+				// top: 0;
+				// left: 0;
+				height: 100%;
+				// width: 100%;
+				overflow: hidden;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+
+				// .CarouselInnerPhotos {
+				// 	position: absolute;
+				// 	top: 0;
+				// 	left: 0;
+				// 	height: 100%;
+				// 	width: 100%;
+
+				.Photo {
+					height: 26vw;
+					width: 40vw;
+					// border: 2px solid blue;
+					border-radius: 10px;
+					background-size: cover;
+					background-repeat: no-repeat;
+					background-position: center;
+
+					box-shadow: 0 5px 20px 5px rgba(128, 128, 128, 0.75);
+				}
+				// }
+			}
+		}
+	}
+}
