@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Style from './bookingWeb.module.scss';
+import { IoIosArrowDropright } from 'react-icons/io';
 
 export default function BookingWeb() {
 	const [scroll, setScroll] = useState(false);
@@ -27,15 +28,18 @@ export default function BookingWeb() {
 	}, []);
 
 	return (
-		<div className={!scroll ? Style.Book : !top ? Style.BookScroll : Style.BookTop}>
-			{/* <div className={Style.StickyBackground}></div> */}
-			<div className={Style.Inner}>
-				<div className={Style.Booker}>
-					<div>Check In</div>
-					<div>Check Out</div>
-					<div>Guests</div>
-					<div>Check Availability</div>
-				</div>
+		<div className={scroll ? Style.Book : Style.BookScroll}>
+			<div className={Style.Booker}>
+				<div>Check In</div>
+				<div>Check Out</div>
+				<div>Guests</div>
+			</div>
+			<div className={Style.Button}>
+				<h4>
+					Check <br />
+					Availability
+				</h4>
+				<IoIosArrowDropright />
 			</div>
 		</div>
 	);

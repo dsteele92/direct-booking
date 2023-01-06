@@ -24,19 +24,14 @@ export default function GalleryWeb() {
 
 	return (
 		<div className={Style.Gallery}>
-			<div className={Style.Inner}>
-				<div className={Style.CarouselFrame}>
-					{Object.values(photos).map((room, index) => (
-						<div className={Style.CarouselInnerRooms} style={{ width: `${room.length * 50}%` }} key={index}>
-							{room.map((photo, index) => (
-								<div
-									className={Style.Photo}
-									style={{ backgroundImage: `url(${photo})` }}
-									key={index}></div>
-							))}
-						</div>
-					))}
-				</div>
+			<div className={Style.CarouselFrame}>
+				{Object.values(photos).map((room, index) => (
+					<div className={Style.CarouselInnerRooms} style={{ width: `${room.length * 50}%` }} key={index}>
+						{room.map((photo, index) => (
+							<div className={Style.Photo} style={{ backgroundImage: `url(${photo})` }} key={index}></div>
+						))}
+					</div>
+				))}
 			</div>
 		</div>
 	);

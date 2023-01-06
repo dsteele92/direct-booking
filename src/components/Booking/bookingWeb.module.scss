@@ -1,50 +1,49 @@
 @import 'sass';
 
 .Book {
-	height: 20vh;
+	height: 100%;
 	width: 100%;
-	background: rgba($color: white, $alpha: 0.5);
+	background: rgba($color: white, $alpha: 1);
 	transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 	// transition: height 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
 
-	.StickyBackground {
+	display: grid;
+	grid-template-columns: 3fr 1fr;
+
+	.Booker {
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+
+		div {
+			height: 40px;
+			width: 130px;
+			border: 1px solid rgba(0, 0, 0, 0.5);
+			border-radius: 2px;
+			@include flex-center;
+			padding: 10px;
+			// background: rgba($color: whitesmoke, $alpha: 0.5);
+		}
 	}
 
-	.Inner {
-		@include inner;
+	.Button {
+		height: 100%;
+		width: 100%;
+		background-color: $color-aqua;
 		@include flex-center;
 
-		.Booker {
-			width: 60%;
-			height: 50px;
-			display: grid;
-			grid-template-columns: 2fr 2fr 1fr 2fr;
-			column-gap: 20px;
-
-			div {
-				// height: 100%;
-				border: 1px solid black;
-				display: flex;
-				align-items: center;
-				padding: 10px;
-				background: whitesmoke;
-			}
+		font-size: 25px;
+		h4 {
+			font-size: 18px;
+			font-family: 'Marcellus', serif;
+			letter-spacing: 1pt;
+			margin-right: 30px;
+			// text-transform: uppercase;
 		}
 	}
 
 	&Scroll {
 		@extend .Book;
-		background: $color-secondary;
-	}
-
-	&Top {
-		@extend .Book;
-		// background: rgba($color: $color-secondary, $alpha: 0.5);
-		background: $color-secondary;
-		height: 10vh;
-		border-bottom: groove;
+		// background: $color-secondary;
 	}
 }
