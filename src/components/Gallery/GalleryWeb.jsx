@@ -1,18 +1,46 @@
 import React, { useState } from 'react';
 import Style from './galleryWeb.module.scss';
 import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
-import { LR1, LR2, LR3, K1, K2 } from 'images';
+import {
+	LR1,
+	LR2,
+	LR3,
+	LR4,
+	LR5,
+	LR6,
+	LR7,
+	K1,
+	K2,
+	BDR1,
+	BDR2,
+	BDR3,
+	BDR4,
+	BDR5,
+	BDR6,
+	BDR7,
+	BDR8,
+	BDR9,
+	BTH1,
+	BTH2,
+	BTH3,
+	BTH4,
+	BTH5,
+	BTH6,
+	BTH7,
+	LND,
+	EXT,
+} from 'images';
 
 export default function GalleryWeb() {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [galleryIndex, setGalleryIndex] = useState(0);
 
 	const photos = {
-		'Living & Dining': [LR1, LR2, LR3],
+		'Living & Dining': [LR1, LR2, LR3, LR4, LR5, LR6, LR7],
 		Kitchen: [K1, K2],
-		Bedrooms: [],
-		Bathrooms: [],
-		Exterior: [],
+		Bedrooms: [BDR1, BDR2, BDR3, BDR4, BDR5, BDR6, BDR7, BDR8, BDR9],
+		Bathrooms: [BTH1, BTH2, BTH3, BTH4, BTH5, BTH6, BTH7, LND],
+		Exterior: [EXT],
 	};
 
 	const gallery = Object.values(photos);

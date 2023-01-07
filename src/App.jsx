@@ -1,17 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Style from './app.module.scss';
-import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile } from 'components';
+import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile, AmenitiesWeb, AmenitiesMobile } from 'components';
 import { taborInfo } from './content/taborInfo.js';
-import { HiArrowRight } from 'react-icons/hi';
-import { BsArrowDown, BsDoorClosed, BsDoorOpen, BsDoorClosedFill, BsDoorOpenFill } from 'react-icons/bs';
+import { BsDoorClosed, BsDoorOpen } from 'react-icons/bs';
 
 function App() {
 	const [enter, setEnter] = useState(false);
+	const [offset, setOffset] = useState(0);
+	const [scroll, setScroll] = useState(false);
+
+	const main = useRef();
+
+	useEffect(() => {
+		const handleScroll = (event) => {
+			const bottom = (event.target.scrollTop / (1.4 * event.target.clientHeight)) * 100;
+			setOffset(bottom);
+
+			if (event.target.scrollTop > 0.5 * event.target.clientHeight) {
+				setScroll(true);
+			} else {
+				setScroll(false);
+			}
+		};
+
+		const window = main.current;
+
+		window.addEventListener('scroll', handleScroll);
+
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+		};
+	}, []);
 
 	return (
 		<div className={Style.App}>
 			<div className={Style.Full}>
-				<main className={enter ? Style.MainEnter : Style.Main}>
+				<main className={scroll ? Style.MainScroll : Style.Main} ref={main}>
 					<section className={enter ? Style.HomeBannerEnter : Style.HomeBanner}>
 						<div className={Style.Tint}></div>
 						<div className={Style.MainHeader}>
@@ -20,11 +44,8 @@ function App() {
 						</div>
 						<div className={Style.Enter} onClick={() => setEnter(true)}>
 							<h3>Enter</h3>
-							<div className={Style.Arrow}>
-								{/* <div className={Style.Rotate}>
-									<HiArrowRight />
-								</div> */}
-								<div className={Style.Door}>
+							<div className={Style.Door}>
+								<div className={Style.Closed}>
 									<BsDoorClosed />
 								</div>
 								<div className={Style.Open}>
@@ -39,8 +60,6 @@ function App() {
 					<section className={Style.Description}>
 						<div className={Style.Left}>
 							<div className={Style.InfoBox}>
-								{/* <div className={Style.Square1}></div>
-								<div className={Style.Square2}></div> */}
 								<p>{taborInfo.aboutTheSpace}</p>
 								<div className={Style.ShowMore}>
 									{/* Add onClick modal open function */}
@@ -52,11 +71,13 @@ function App() {
 							<h2>Welcome</h2>
 						</div>
 					</section>
-					<section className={Style.Amenities}>Amenities</section>
+					<section className={Style.Amenities}>
+						<AmenitiesWeb offset={offset} scroll={scroll} />
+					</section>
 					<section className={Style.Reviews}>Reviews</section>
 					<section className={Style.Host}>Host</section>
 				</main>
-				<section className={enter ? Style.BookingEnter : Style.Booking}>
+				<section className={Style.Booking}>
 					<BookingWeb />
 				</section>
 			</div>

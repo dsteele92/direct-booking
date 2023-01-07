@@ -3,8 +3,7 @@
 .Gallery {
 	height: 100%;
 	width: 100%;
-	padding: 10px;
-	background: $color-secondary;
+	padding-top: 20px;
 	@include flex-center;
 	flex-direction: column;
 
