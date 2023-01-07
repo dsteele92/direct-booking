@@ -3,7 +3,7 @@ import Style from './app.module.scss';
 import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile } from 'components';
 import { taborInfo } from './content/taborInfo.js';
 import { HiArrowRight } from 'react-icons/hi';
-import { BsArrowDown } from 'react-icons/bs';
+import { BsArrowDown, BsDoorClosed, BsDoorOpen, BsDoorClosedFill, BsDoorOpenFill } from 'react-icons/bs';
 
 function App() {
 	const [enter, setEnter] = useState(false);
@@ -21,8 +21,14 @@ function App() {
 						<div className={Style.Enter} onClick={() => setEnter(true)}>
 							<h3>Enter</h3>
 							<div className={Style.Arrow}>
-								<div className={Style.Rotate}>
+								{/* <div className={Style.Rotate}>
 									<HiArrowRight />
+								</div> */}
+								<div className={Style.Door}>
+									<BsDoorClosed />
+								</div>
+								<div className={Style.Open}>
+									<BsDoorOpen />
 								</div>
 							</div>
 						</div>
