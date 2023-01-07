@@ -3,50 +3,107 @@
 .Gallery {
 	height: 100%;
 	width: 100%;
+	padding: 10px;
+	background: $color-secondary;
 	@include flex-center;
+	flex-direction: column;
 
-	.CarouselFrame {
-		position: relative;
-		height: 90%;
-		width: 90%;
-		// overflow-x: scroll;
-		// overflow-y: hidden;
-		overflow: hidden;
-		display: flex;
-		flex-direction: row;
-
-		.CarouselInnerRooms {
-			flex-shrink: 0;
-			position: relative;
-			// top: 0;
-			// left: 0;
+	nav {
+		height: 10%;
+		width: 100%;
+		ul {
 			height: 100%;
 			width: 100%;
-			overflow: hidden;
 			display: flex;
-			justify-content: space-around;
+			justify-content: space-evenly;
 			align-items: center;
 
-			// .CarouselInnerPhotos {
-			// 	position: absolute;
-			// 	top: 0;
-			// 	left: 0;
-			// 	height: 100%;
-			// 	width: 100%;
+			.Li {
+				list-style: none;
+				font-family: 'Marcellus', serif;
+				transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+				color: gray;
+				cursor: pointer;
+				// text-transform: uppercase;
 
-			.Photo {
-				height: 90%;
-				width: 35vw;
-				max-width: 50vh;
-				// border: 2px solid blue;
-				border-radius: 10px;
-				background-size: cover;
-				background-repeat: no-repeat;
-				background-position: center;
-
-				box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
+				&Current {
+					@extend .Li;
+					// text-decoration: underline;
+					// color: white;
+					// text-shadow: rgb(255, 255, 255) 1px 0 3px;
+					// color: pink;
+					color: black;
+					border-bottom: 1px solid $color-aqua;
+				}
 			}
-			// }
+		}
+	}
+
+	.Arrow {
+		position: absolute;
+		height: fit-content;
+		width: 5%;
+		cursor: pointer;
+		@include flex-center;
+
+		font-size: 25px;
+		color: $color-main;
+
+		&Left {
+			@extend .Arrow;
+			left: 5%;
+
+			&Disable {
+				@extend .ArrowLeft;
+				color: rgba($color: $color-main, $alpha: 0.7);
+				cursor: default;
+			}
+		}
+		&Right {
+			@extend .Arrow;
+			right: 5%;
+
+			&Disable {
+				@extend .ArrowRight;
+				color: rgba($color: $color-main, $alpha: 0.7);
+				cursor: default;
+			}
+		}
+	}
+
+	.CarouselFrameOuter {
+		position: relative;
+		height: 90%;
+		width: 80%;
+		overflow: hidden;
+		// overflow-x: scroll;
+		.CarouselFrameInner {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			overflow: visible;
+			transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+			.CarouselRooms {
+				flex-shrink: 0;
+				height: 100%;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+
+				.Photo {
+					height: 90%;
+					width: 35vw;
+					max-width: 60vh;
+					border-radius: 10px;
+					background-size: cover;
+					background-repeat: no-repeat;
+					background-position: center;
+
+					box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
+				}
+			}
 		}
 	}
 }

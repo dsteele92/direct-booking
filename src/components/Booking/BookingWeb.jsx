@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Style from './bookingWeb.module.scss';
-import { IoIosArrowDropright } from 'react-icons/io';
+import { TfiArrowCircleRight } from 'react-icons/tfi';
 
 export default function BookingWeb() {
 	const [scroll, setScroll] = useState(false);
@@ -39,7 +39,7 @@ export default function BookingWeb() {
 					Check <br />
 					Availability
 				</h4>
-				<IoIosArrowDropright />
+				<TfiArrowCircleRight />
 			</div>
 		</div>
 	);

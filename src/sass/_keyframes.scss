@@ -1,0 +1,41 @@
+.Arrow {
+	@keyframes bounce {
+		from {
+			transform: translateY(0);
+		}
+		60% {
+			transform: translateY(10px);
+		}
+		to {
+			transform: translateY(0);
+		}
+	}
+}
+
+// @keyframes bookingBarEnter {
+// 	0% {
+// 		opacity: 1;
+// 	}
+// 	40% {
+// 		opacity: 0;
+// 		height: 100px;
+// 		width: 70%;
+// 		transform: translateY(50%);
+// 		border-radius: 10px;
+// 		z-index: -101;
+// 	}
+// 	60% {
+// 		opacity: 0;
+// 		height: 50px;
+// 		width: 100%;
+// 		border-radius: 0 0 10px 10px;
+// 		transform: translateY(100%);
+// 	}
+// 	100% {
+// 		opacity: 1;
+// 		height: 50px;
+// 		width: 100%;
+// 		border-radius: 0 0 10px 10px;
+// 		transform: translateY(100%);
+// 	}
+// }

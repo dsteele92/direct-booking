@@ -20,6 +20,7 @@
 			width: 130px;
 			border: 1px solid rgba(0, 0, 0, 0.5);
 			border-radius: 2px;
+			box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
 			@include flex-center;
 			padding: 10px;
 			// background: rgba($color: whitesmoke, $alpha: 0.5);
@@ -32,13 +33,13 @@
 		background-color: $color-aqua;
 		@include flex-center;
 
-		font-size: 25px;
+		font-size: 24px;
 		h4 {
 			font-size: 18px;
 			font-family: 'Marcellus', serif;
 			letter-spacing: 1pt;
 			margin-right: 30px;
-			// text-transform: uppercase;
+			text-transform: uppercase;
 		}
 	}
 

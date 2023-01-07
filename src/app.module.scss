@@ -23,6 +23,8 @@
 			border-radius: 10px;
 			overflow: hidden;
 			box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
+			// padding-bottom: 50px;
+			background-color: $color-secondary;
 
 			.HomeBanner {
 				z-index: 100;
@@ -35,7 +37,8 @@
 				background-position: center 70%;
 				border-radius: 10px;
 				overflow: hidden;
-				transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+				// transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+				transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
 				display: flex;
 				flex-direction: column;
@@ -133,13 +136,21 @@
 				}
 			}
 
+			.Photos {
+				position: relative;
+				height: 60%;
+				width: 100%;
+				// background: $color-secondary;
+			}
+
 			.Description {
 				position: relative;
-				height: 50%;
+				height: 40%;
 				width: 100%;
-				background: white;
+				// background: $color-secondary;
 				display: grid;
 				grid-template-columns: 1fr 1fr;
+				padding-bottom: 50px;
 				.Left {
 					position: relative;
 					.InfoBox {
@@ -149,7 +160,7 @@
 						left: 50%;
 						transform: translate(-35%, -50%);
 						height: 90%;
-						width: 80%;
+						width: 90%;
 						// border: 1px solid black;
 						.Square1 {
 							z-index: -1;
@@ -174,17 +185,19 @@
 						p {
 							position: absolute;
 							text-align: justify;
-							top: 40%;
-							height: 30%;
-							// border: 1px solid black;
+							top: 50%;
 							left: 50%;
-							transform: translateX(-50%);
+							transform: translate(-50%, -50%);
+							// height: 30%;
+							// top: 40%;
+							// left: 50%;
+							// transform: translateX(-50%);
 							width: 80%;
 							color: black;
 							// make overflow go to ellipsis
 							font-family: 'Marcellus', serif;
 							@include flex-center;
-							font-size: 15px;
+							font-size: 16px;
 							line-height: 1.4;
 							@media screen and (max-height: 1000px) {
 								font-size: 13px;
@@ -204,22 +217,22 @@
 					}
 				}
 				.Right {
-					@include flex-center;
+					position: relative;
+					// @include flex-center;
 					h2 {
+						position: absolute;
+						top: 50%;
+						left: 30%;
+						transform: translateY(-50%);
 						text-align: center;
 						font-family: 'Great Vibes', cursive;
+						font-size: 70px;
 						// font-family: 'Dancing Script', cursive;
-						font-size: 50px;
 						color: $color-main;
 					}
 				}
 			}
-			.Photos {
-				position: relative;
-				height: 50%;
-				width: 100%;
-				// background: $color-secondary;
-			}
+
 			.Amenities {
 				position: relative;
 				height: 50%;
@@ -242,7 +255,7 @@
 			&Enter {
 				@extend .Main;
 
-				border-radius: 10px 10px 0 0;
+				// border-radius: 10px 10px 0 0;
 
 				overflow-y: scroll;
 				scrollbar-width: none; /* Firefox */
@@ -259,9 +272,11 @@
 			transform: translateY(50%);
 			height: 100px;
 			width: 70%;
+
 			@include flex-center;
 			border-radius: 10px;
 			box-shadow: 0 5px 20px rgb(188, 188, 188);
+			// box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
 			overflow: hidden;
 
 			// transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
@@ -322,7 +337,7 @@
 
 			&Enter {
 				@extend .Booking;
-				animation: bookingBarEnter 2s forwards;
+				// animation: bookingBarEnter 2s forwards;
 			}
 		}
 	}

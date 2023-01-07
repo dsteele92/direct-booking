@@ -3,6 +3,7 @@ import Style from './app.module.scss';
 import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile } from 'components';
 import { taborInfo } from './content/taborInfo.js';
 import { HiArrowRight } from 'react-icons/hi';
+import { BsArrowDown } from 'react-icons/bs';
 
 function App() {
 	const [enter, setEnter] = useState(false);
@@ -26,11 +27,14 @@ function App() {
 							</div>
 						</div>
 					</section>
+					<section className={Style.Photos}>
+						<GalleryWeb />
+					</section>
 					<section className={Style.Description}>
 						<div className={Style.Left}>
 							<div className={Style.InfoBox}>
-								<div className={Style.Square1}></div>
-								<div className={Style.Square2}></div>
+								{/* <div className={Style.Square1}></div>
+								<div className={Style.Square2}></div> */}
 								<p>{taborInfo.aboutTheSpace}</p>
 								<div className={Style.ShowMore}>
 									{/* Add onClick modal open function */}
@@ -41,9 +45,6 @@ function App() {
 						<div className={Style.Right}>
 							<h2>Welcome</h2>
 						</div>
-					</section>
-					<section className={Style.Photos}>
-						<GalleryWeb />
 					</section>
 					<section className={Style.Amenities}>Amenities</section>
 					<section className={Style.Reviews}>Reviews</section>
