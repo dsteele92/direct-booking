@@ -1,20 +1,27 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './app.module.scss';
-import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile, AmenitiesWeb, AmenitiesMobile } from 'components';
+import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile, AmenitiesMatrix, AmenitiesMobile } from 'components';
 import { taborInfo } from './content/taborInfo.js';
 import { BsDoorClosed, BsDoorOpen } from 'react-icons/bs';
+import { amenitiesIconData } from './iconData.js';
 
 function App() {
 	const [enter, setEnter] = useState(false);
-	const [offset, setOffset] = useState(0);
 	const [scroll, setScroll] = useState(false);
+	const [show, setShow] = useState(-1);
+	const [showAll, setShowAll] = useState(false);
 
 	const main = useRef();
+	const matrixEven = useRef();
+	const matrixOdd = useRef();
 
 	useEffect(() => {
 		const handleScroll = (event) => {
-			const bottom = (event.target.scrollTop / (1.4 * event.target.clientHeight)) * 100;
-			setOffset(bottom);
+			// console.log(event.target.scrollTop / (1.6 * event.target.clientHeight));
+			const delta = (event.target.scrollTop / (1.6 * event.target.clientHeight)) * 16;
+
+			matrixEven.current.style.transform = `translateY(${-8 + delta}%)`;
+			matrixOdd.current.style.transform = `translateY(${8 - delta}%)`;
 
 			if (event.target.scrollTop > 0.5 * event.target.clientHeight) {
 				setScroll(true);
@@ -35,7 +42,7 @@ function App() {
 	return (
 		<div className={Style.App}>
 			<div className={Style.Full}>
-				<main className={scroll ? Style.MainScroll : Style.Main} ref={main}>
+				<main className={`${Style.Main} ${scroll ? Style.Scroll : ''} ${enter ? Style.Enter : ''}`} ref={main}>
 					<section className={enter ? Style.HomeBannerEnter : Style.HomeBanner}>
 						<div className={Style.Tint}></div>
 						<div className={Style.MainHeader}>
@@ -72,7 +79,31 @@ function App() {
 						</div>
 					</section>
 					<section className={Style.Amenities}>
-						<AmenitiesWeb offset={offset} scroll={scroll} />
+						<div className={scroll ? Style.HeaderScroll : Style.Header}>
+							<h2>Our Amenities:</h2>
+							<h4
+								className={Style.ShowAll}
+								onMouseEnter={() => setShowAll(true)}
+								onMouseLeave={() => setShowAll(false)}>
+								Show All
+							</h4>
+						</div>
+						<div className={Style.Matrix} ref={matrixEven}>
+							<AmenitiesMatrix scroll={scroll} modulo={0} show={show} showAll={showAll} />
+						</div>
+						<div className={Style.Matrix} ref={matrixOdd}>
+							<AmenitiesMatrix scroll={scroll} modulo={1} show={show} showAll={showAll} />
+						</div>
+						<div className={Style.MatrixHoverGrid}>
+							{amenitiesIconData.map((amenity, index) => (
+								<div className={Style.GridSlot} key={index}>
+									<div
+										className={Style.HoverDiv}
+										onMouseEnter={() => setShow(index)}
+										onMouseLeave={() => setShow(-1)}></div>
+								</div>
+							))}
+						</div>
 					</section>
 					<section className={Style.Reviews}>Reviews</section>
 					<section className={Style.Host}>Host</section>
