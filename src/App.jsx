@@ -1,13 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './app.module.scss';
-import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile, AmenitiesMatrix, AmenitiesMobile } from 'components';
-import { taborInfo } from './content/taborInfo.js';
-import { BsDoorClosed, BsDoorOpen } from 'react-icons/bs';
-import { amenitiesIconData } from './iconData.js';
+import {
+	BookingWeb,
+	BookingMobile,
+	GalleryWeb,
+	GalleryMobile,
+	AmenitiesMatrix,
+	AmenitiesMobile,
+	GoogleMaps,
+} from 'components';
+import { taborInfo, amenitiesIconData, hostIntro, houseRulesMain, highlightedReviews } from 'content';
+import { BsDoorClosed, BsDoorOpen, BsStarFill } from 'react-icons/bs';
+
+// const fs = require('fs');
+// const path = require('path');
+// require('dotenv').config({ path: __dirname + '/.env' });
 
 function App() {
 	const [enter, setEnter] = useState(false);
-	const [scroll, setScroll] = useState(false);
+	const [scroll, setScroll] = useState(0);
 	const [show, setShow] = useState(-1);
 	const [showAll, setShowAll] = useState(false);
 
@@ -17,16 +28,21 @@ function App() {
 
 	useEffect(() => {
 		const handleScroll = (event) => {
-			// console.log(event.target.scrollTop / (1.6 * event.target.clientHeight));
-			const delta = (event.target.scrollTop / (1.6 * event.target.clientHeight)) * 16;
+			console.log(event.target.scrollTop / event.target.clientHeight);
+			let scrollTop = event.target.scrollTop;
+			let pageHeight = event.target.clientHeight;
+
+			const delta = (scrollTop / (1.6 * pageHeight)) * 16;
 
 			matrixEven.current.style.transform = `translateY(${-8 + delta}%)`;
 			matrixOdd.current.style.transform = `translateY(${8 - delta}%)`;
 
-			if (event.target.scrollTop > 0.5 * event.target.clientHeight) {
-				setScroll(true);
-			} else {
-				setScroll(false);
+			if (scrollTop <= 0.5 * pageHeight) {
+				setScroll(0);
+			} else if (scrollTop > 0.5 * pageHeight && scrollTop <= 1.4 * pageHeight) {
+				setScroll(1);
+			} else if (scrollTop > 1.4 * pageHeight) {
+				setScroll(2);
 			}
 		};
 
@@ -42,7 +58,7 @@ function App() {
 	return (
 		<div className={Style.App}>
 			<div className={Style.Full}>
-				<main className={`${Style.Main} ${scroll ? Style.Scroll : ''} ${enter ? Style.Enter : ''}`} ref={main}>
+				<main className={`${Style[`Main${scroll}`]} ${enter ? Style.Enter : ''}`} ref={main}>
 					<section className={enter ? Style.HomeBannerEnter : Style.HomeBanner}>
 						<div className={Style.Tint}></div>
 						<div className={Style.MainHeader}>
@@ -79,7 +95,7 @@ function App() {
 						</div>
 					</section>
 					<section className={Style.Amenities}>
-						<div className={scroll ? Style.HeaderScroll : Style.Header}>
+						<div className={Style.Header}>
 							<h2>Our Amenities:</h2>
 							<h4
 								className={Style.ShowAll}
@@ -105,8 +121,85 @@ function App() {
 							))}
 						</div>
 					</section>
-					<section className={Style.Reviews}>Reviews</section>
-					<section className={Style.Host}>Host</section>
+					<div className={Style.LineBreak}></div>
+					<section className={Style.Host}>
+						<div className={Style.HostPhoto}>
+							<div className={Style.Signature}>
+								Your Hosts,
+								<br />
+								Brenson & Alaina
+							</div>
+						</div>
+						<div className={Style.HostIntro}>
+							<p>{hostIntro.hostIntro1}</p>
+							<p>{hostIntro.hostIntro2}</p>
+							<p>{hostIntro.hostIntro3}</p>
+						</div>
+					</section>
+					<div className={Style.LineBreak}></div>
+					<section className={Style.Info}>
+						<div className={Style.Container}>
+							<div className={Style.Tab}>
+								<h4>Location</h4>
+							</div>
+							<div className={Style.InfoInner}>
+								<p className={Style.Location}>
+									Mt. Tabor neighborhood is best known for its beautiful city park, Mt. Tabor Park- an
+									extinct volcano just a short 5-minute walk from here. The park features numerous
+									walking paths, tennis courts, basketball courts, majestic fir trees, and
+									breathtaking panoramic views of the city and water reservoirs at the peak of the
+									park.
+								</p>
+								<div className={Style.Expand}>
+									View Map <span>></span>
+								</div>
+							</div>
+						</div>
+						<div className={Style.Container}>
+							<div className={Style.Tab}>
+								<h4>Reviews</h4>
+							</div>
+							<div className={Style.InfoInner}>
+								<h2 className={Style.FiveStars}>
+									5{' '}
+									<span>
+										<BsStarFill />
+									</span>{' '}
+									Rating on Air B&B
+								</h2>
+								<ul className={Style.HighlightedReviews}>
+									{highlightedReviews.map((highlight, index) => (
+										<li key={index}>
+											<div>"{highlight[1]}"</div>
+											<div className={Style.Name}>-{highlight[0]}</div>
+										</li>
+									))}
+								</ul>
+								<div className={Style.Expand}>
+									See reviews <span>></span>
+								</div>
+							</div>
+						</div>
+						<div className={Style.Container}>
+							<div className={Style.Tab}>
+								<h4>Rules</h4>
+							</div>
+							<div className={Style.InfoInner}>
+								<ul className={Style.RulesMain}>
+									{houseRulesMain.map((rule, index) => (
+										<li key={index}>
+											<div>{rule[1]}</div>
+											<h4>{rule[0]}</h4>
+										</li>
+									))}
+								</ul>
+								<div className={Style.Expand}>
+									House rules <span>></span>
+								</div>
+							</div>
+						</div>
+					</section>
+					<div className={Style.LineBreak}></div>
 				</main>
 				<section className={Style.Booking}>
 					<BookingWeb />

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Style from './amenitiesMatrix.module.scss';
 
-import { amenitiesIconData } from '../../iconData.js';
+import { amenitiesIconData } from 'content';
 
 export default function AmenitiesMatrix(props) {
 	return (
 		<div className={Style.AmenitiesMatrix}>
 			{amenitiesIconData.map((amenity, index) => (
 				<div
-					className={`${Style.Amenity} ${props.scroll ? Style.Scroll : ''} ${
-						props.show === index ? Style.Show : ''
+					className={`${Style[`Amenity${props.scroll}`]} ${
+						props.show === index ? Style[`Show${props.scroll}`] : ''
 					}`}
 					key={index}>
 					{index % 2 === props.modulo ? (

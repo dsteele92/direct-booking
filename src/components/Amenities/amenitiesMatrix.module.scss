@@ -10,7 +10,6 @@
 
 	.Amenity {
 		position: relative;
-		color: black;
 		@include flex-center;
 		flex-direction: column;
 		text-align: center;
@@ -37,14 +36,36 @@
 				opacity: 1;
 			}
 		}
+
+		&0 {
+			@extend .Amenity;
+			color: black;
+		}
+		&1 {
+			@extend .Amenity;
+			color: white;
+		}
+		&2 {
+			@extend .Amenity;
+			color: black;
+		}
 	}
-	.Scroll {
-		color: white;
-	}
+
 	.Show {
-		color: $color-yellow;
 		.Description {
 			opacity: 1;
+		}
+		&0 {
+			@extend .Show;
+			color: $color-dark;
+		}
+		&1 {
+			@extend .Show;
+			color: $color-yellow;
+		}
+		&2 {
+			@extend .Show;
+			color: $color-dark;
 		}
 	}
 }

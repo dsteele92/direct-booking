@@ -24,7 +24,6 @@
 			overflow: hidden;
 			box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
 			// padding-bottom: 50px;
-			background-color: $color-secondary;
 			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 
 			.HomeBanner {
@@ -184,14 +183,8 @@
 						display: flex;
 						justify-content: flex-end;
 						align-items: center;
-						color: black;
 						p {
 							text-align: justify;
-							// height: 30%;
-							// top: 40%;
-							// left: 50%;
-							// transform: translateX(-50%);
-							// make overflow go to ellipsis
 							font-family: 'Marcellus', serif;
 							@include flex-center;
 							font-size: 16px;
@@ -215,17 +208,13 @@
 				}
 				.Right {
 					position: relative;
-					// @include flex-center;
 					h2 {
 						position: absolute;
 						top: 50%;
 						left: 30%;
-						// transform: translateY(-50%);
 						text-align: center;
 						font-family: 'Great Vibes', cursive;
 						font-size: 70px;
-						// font-family: 'Dancing Script', cursive;
-						color: $color-main;
 					}
 				}
 			}
@@ -241,8 +230,6 @@
 					width: 75%;
 					top: 0;
 					left: 12%;
-					color: black;
-					margin-bottom: 20px;
 
 					display: flex;
 					justify-content: space-between;
@@ -265,17 +252,12 @@
 							color: $color-yellow;
 						}
 					}
-
-					&Scroll {
-						@extend .Header;
-						color: white;
-					}
 				}
 
 				.Matrix {
 					position: absolute;
-					top: 8%;
-					height: 92%;
+					top: 10%;
+					height: 90%;
 					width: 90%;
 
 					&HoverGrid {
@@ -298,19 +280,323 @@
 					}
 				}
 			}
-			.Reviews {
-				position: relative;
-				height: 50%;
-				width: 100%;
-				@include flex-center;
-			}
+
 			.Host {
 				position: relative;
 				height: 50%;
 				width: 100%;
+				display: flex;
+				justify-content: space-evenly;
+				align-items: center;
+
+				.HostPhoto {
+					position: relative;
+					height: 80%;
+					width: 30%;
+					min-width: 300px;
+					background-image: url('./images/host.jpeg');
+					background-size: cover;
+					background-position: center;
+					border: solid $color-light;
+					border-width: 10px 10px 50px;
+					border-radius: 10px;
+
+					.Signature {
+						position: absolute;
+						bottom: -30px;
+						right: 5%;
+						font-family: 'Great Vibes', cursive;
+						font-size: 25px;
+						transform: rotateZ(-15deg);
+						text-shadow: 2px 2px 5px white;
+					}
+				}
+
+				.HostIntro {
+					position: relative;
+					height: auto;
+					width: 35%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: flex-start;
+					p {
+						margin: 5px;
+						text-align: justify;
+						font-family: 'Marcellus', serif;
+						@include flex-center;
+						font-size: 18px;
+						line-height: 1.4;
+						@media screen and (max-height: 1000px) {
+							font-size: 13px;
+						}
+					}
+				}
+			}
+
+			.Info {
+				position: relative;
+				height: 40%;
+				width: 100%;
+				padding: 0 5%;
+				@include flex-center;
+				display: grid;
+				grid-template-columns: repeat(3, 25%);
+				gap: 5%;
+
+				.Container {
+					z-index: 1;
+					height: 90%;
+					overflow: hidden;
+					display: flex;
+					flex-direction: column;
+
+					.Tab {
+						border-radius: 10px;
+						@include flex-center;
+						height: 7%;
+						overflow: hidden;
+						// border: 1px solid $color-light;
+						// background-color: $color-light;
+						border-bottom: groove;
+						border-radius: 10px;
+						h4 {
+							// transform: rotateZ(-90deg);
+							text-transform: uppercase;
+							font-family: 'Marcellus', serif;
+							letter-spacing: 1pt;
+							font-size: 18px;
+							// color: $color-dark;
+						}
+					}
+
+					.InfoInner {
+						position: relative;
+						height: 100%;
+						width: 100%;
+						padding: 5%;
+						overflow: hidden;
+						font-family: 'Marcellus', serif;
+						text-align: center;
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						justify-content: flex-start;
+
+						.Location {
+							font-family: 'Roboto', serif;
+							font-weight: 100;
+							font-size: 16px;
+							line-height: 130%;
+							text-align: justify;
+							// color: black;
+						}
+						.FiveStars {
+							font-family: 'Roboto', serif;
+							font-weight: 300;
+							font-size: 22px;
+							color: white;
+							text-shadow: 2px 2px 5px rgb(162, 162, 162);
+
+							span {
+								color: rgb(255, 255, 115);
+							}
+						}
+
+						.HighlightedReviews {
+							height: 80%;
+							max-height: 140px;
+							display: flex;
+							flex-direction: column;
+							justify-content: space-evenly;
+							li {
+								width: 100%;
+								list-style: none;
+								display: flex;
+								flex-direction: column;
+								align-items: center;
+								justify-content: center;
+								text-align: center;
+								font-size: 18px;
+								div {
+									font-family: 'Marcellus', serif;
+									font-weight: 300;
+								}
+								.Name {
+									// align-self: flex-end;
+									margin-right: 10px;
+									font-style: italic;
+									margin-top: 3px;
+									font-size: 14px;
+									// font-family: 'Roboto', serif;
+									font-weight: 100;
+								}
+							}
+						}
+
+						.RulesMain {
+							height: 90%;
+							max-height: 220px;
+							display: flex;
+							flex-direction: column;
+							justify-content: space-between;
+							li {
+								width: 100%;
+								list-style: none;
+								display: flex;
+								align-items: center;
+								justify-content: flex-start;
+								div {
+									color: $color-light;
+									font-size: 18px;
+								}
+								h4 {
+									text-align: left;
+									margin-left: 10px;
+									font-family: 'Roboto', serif;
+									font-weight: 100;
+									font-size: 18px;
+								}
+							}
+						}
+
+						.Expand {
+							position: relative;
+							width: 100%;
+							text-align: end;
+							margin-top: 10px;
+							font-size: 15px;
+							font-weight: 100;
+							cursor: pointer;
+							// color: black;
+							span {
+								font-weight: 300;
+							}
+						}
+					}
+				}
+			}
+
+			.LineBreak {
+				position: relative;
+				width: 100%;
+				height: 5%;
 				@include flex-center;
 			}
+
+			// Color changes for different scroll positions ----->
+
+			&0 {
+				@extend .Main;
+				background-color: $color-light;
+				.Description {
+					.Left {
+						.InfoBox {
+							color: black;
+						}
+					}
+					.Right {
+						h2 {
+							color: $color-dark;
+						}
+					}
+				}
+				.Amenities {
+					color: black;
+				}
+				.Host {
+					.HostIntro {
+						color: black;
+					}
+				}
+				.Info {
+					.Container {
+						.Tab {
+							h4 {
+								color: black;
+							}
+						}
+						.InfoInner {
+							color: black;
+						}
+					}
+				}
+			}
+			&1 {
+				@extend .Main;
+				background-color: $color-dark;
+				.Description {
+					.Left {
+						.InfoBox {
+							color: $color-light;
+						}
+					}
+					.Right {
+						h2 {
+							color: $color-aqua;
+						}
+					}
+				}
+				.Amenities {
+					color: white;
+				}
+				.Host {
+					.HostIntro {
+						color: $color-light;
+					}
+				}
+				.Info {
+					.Container {
+						.Tab {
+							h4 {
+								color: $color-light;
+							}
+						}
+						.InfoInner {
+							color: white;
+						}
+					}
+				}
+			}
+			&2 {
+				@extend .Main;
+				background-color: $color-three;
+				.Description {
+					.Left {
+						.InfoBox {
+							color: black;
+						}
+					}
+					.Right {
+						h2 {
+							color: $color-dark;
+						}
+					}
+				}
+				.Amenities {
+					color: black;
+				}
+				.Host {
+					.HostIntro {
+						color: black;
+					}
+				}
+				.Info {
+					.Container {
+						.Tab {
+							h4 {
+								color: black;
+							}
+						}
+						.InfoInner {
+							color: black;
+						}
+					}
+				}
+			}
 		}
+
+		// add Enter class to allow for scrolling
 		.Enter {
 			overflow-y: scroll;
 			scrollbar-width: none; /* Firefox */
@@ -319,22 +605,7 @@
 				display: none;
 			}
 		}
-		.Scroll {
-			background-color: $color-main;
 
-			.Description {
-				.Left {
-					.InfoBox {
-						color: $color-secondary;
-					}
-				}
-				.Right {
-					h2 {
-						color: $color-aqua;
-					}
-				}
-			}
-		}
 		.Booking {
 			position: absolute;
 			z-index: 101;

@@ -46,7 +46,7 @@
 		@include flex-center;
 
 		font-size: 25px;
-		color: $color-main;
+		color: $color-dark;
 
 		&Left {
 			@extend .Arrow;
@@ -54,7 +54,7 @@
 
 			&Disable {
 				@extend .ArrowLeft;
-				color: rgba($color: $color-main, $alpha: 0.7);
+				color: rgba($color: $color-dark, $alpha: 0.7);
 				cursor: default;
 			}
 		}
@@ -64,7 +64,7 @@
 
 			&Disable {
 				@extend .ArrowRight;
-				color: rgba($color: $color-main, $alpha: 0.7);
+				color: rgba($color: $color-dark, $alpha: 0.7);
 				cursor: default;
 			}
 		}
