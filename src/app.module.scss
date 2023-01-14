@@ -14,6 +14,15 @@
 		max-width: 1900px;
 		@include flex-center;
 
+		@media screen and (max-width: $breakpoint-tablet) {
+			position: relative;
+			top: 0;
+			left: 0;
+			transform: none;
+			height: 100%;
+			width: 100%;
+		}
+
 		.Main {
 			height: 100%;
 			width: 100%;
@@ -21,8 +30,12 @@
 			// @include flex-center;
 			// flex-direction: column;
 			border-radius: 10px;
+			@media screen and (max-width: $breakpoint-tablet) {
+				border-radius: 0;
+			}
 			overflow: hidden;
 			box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
+
 			// padding-bottom: 50px;
 			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 
@@ -158,24 +171,48 @@
 				}
 			}
 
-			.Photos {
+			.Gallery {
 				position: relative;
 				height: 60%;
 				width: 100%;
+				@media screen and (max-width: $breakpoint-medium) {
+					height: 50%;
+				}
+				@media screen and (max-width: $breakpoint-gallery-change) {
+					display: none;
+				}
+			}
+
+			.GalleryMobile {
+				display: none;
+				@media screen and (max-width: $breakpoint-medium) {
+					display: block;
+					position: relative;
+					height: 50%;
+					width: 100%;
+				}
 			}
 
 			.Description {
 				position: relative;
 				height: 40%;
 				width: 100%;
-				display: grid;
-				grid-template-columns: 1fr 1fr;
+				display: flex;
 				padding-bottom: 50px;
+				@media screen and (max-width: $breakpoint-gallery-change) {
+					padding-bottom: 0;
+					flex-direction: row-reverse;
+				}
 				.Left {
 					position: relative;
+					height: 100%;
+					width: 100%;
 					display: flex;
 					justify-content: flex-end;
 					align-items: center;
+					@media screen and (max-width: $breakpoint-gallery-change) {
+						justify-content: flex-start;
+					}
 					.InfoBox {
 						position: relative;
 						height: auto;
@@ -208,14 +245,21 @@
 				}
 				.Right {
 					position: relative;
+					height: 100%;
+					width: 100%;
 					h2 {
 						position: absolute;
 						top: 50%;
-						left: 30%;
+						transform: translateY(-50%);
+						left: 25%;
 						text-align: center;
 						font-family: 'Great Vibes', cursive;
 						font-size: 70px;
 					}
+				}
+
+				@media screen and (max-width: $breakpoint-medium) {
+					height: 50%;
 				}
 			}
 
@@ -619,6 +663,11 @@
 			box-shadow: 0 5px 20px rgb(188, 188, 188);
 			// box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
 			overflow: hidden;
+
+			@media screen and (max-width: $breakpoint-tablet) {
+				transform: translateY(-10px);
+				width: 85%;
+			}
 		}
 	}
 }

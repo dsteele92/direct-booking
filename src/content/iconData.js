@@ -7,10 +7,9 @@ import {
 	MdMicrowave,
 	MdOutlineCoffeeMaker,
 } from 'react-icons/md';
-import { TbToolsKitchen, TbHanger } from 'react-icons/tb';
+import { TbToolsKitchen, TbHanger, TbTemperature } from 'react-icons/tb';
 import { GiThermometerCold, GiCctvCamera, GiSoap, GiTowel, GiFireplace, GiCook, GiWineGlass } from 'react-icons/gi';
 import { FaShower, FaFireExtinguisher } from 'react-icons/fa';
-import { CiTempHigh } from 'react-icons/ci';
 import { BiFirstAid } from 'react-icons/bi';
 import { TfiGame } from 'react-icons/tfi';
 import { HiOutlineKey } from 'react-icons/hi';
@@ -23,7 +22,7 @@ export const amenitiesIconData = [
 	['Park View', <MdOutlinePark />],
 	['65 Inch HDTV with Netflix', <BsTv />],
 	['Central AC', <GiThermometerCold />],
-	['Central Heating', <CiTempHigh />],
+	['Central Heating', <TbTemperature />],
 	['Washer & Dryer', <MdLocalLaundryService />],
 	['Full Kitchen', <MdKitchen />],
 	['Microwave', <MdMicrowave />],

@@ -18,11 +18,13 @@ import { BsDoorClosed, BsDoorOpen, BsStarFill } from 'react-icons/bs';
 
 function App() {
 	const [enter, setEnter] = useState(false);
+	// for background color -->
+	const main = useRef();
 	const [scroll, setScroll] = useState(0);
+	// for amenities matrix -->
 	const [show, setShow] = useState(-1);
 	const [showAll, setShowAll] = useState(false);
 
-	const main = useRef();
 	const matrixEven = useRef();
 	const matrixOdd = useRef();
 
@@ -46,12 +48,12 @@ function App() {
 			}
 		};
 
-		const window = main.current;
+		const mainFrame = main.current;
 
-		window.addEventListener('scroll', handleScroll);
+		mainFrame.addEventListener('scroll', handleScroll);
 
 		return () => {
-			window.removeEventListener('scroll', handleScroll);
+			mainFrame.removeEventListener('scroll', handleScroll);
 		};
 	}, []);
 
@@ -77,7 +79,7 @@ function App() {
 							</div>
 						</div>
 					</section>
-					<section className={Style.Photos}>
+					<section className={Style.Gallery}>
 						<GalleryWeb />
 					</section>
 					<section className={Style.Description}>
@@ -93,6 +95,9 @@ function App() {
 						<div className={Style.Right}>
 							<h2>Welcome</h2>
 						</div>
+					</section>
+					<section className={Style.GalleryMobile}>
+						<GalleryMobile />
 					</section>
 					<section className={Style.Amenities}>
 						<div className={Style.Header}>
