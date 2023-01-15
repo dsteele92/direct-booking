@@ -3,6 +3,7 @@
 .Book {
 	height: 100%;
 	width: 100%;
+	border-radius: 10px;
 	background: rgba($color: white, $alpha: 1);
 	transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 	// transition: height 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -15,21 +16,124 @@
 		justify-content: space-evenly;
 		align-items: center;
 
-		div {
-			height: 40px;
-			width: 130px;
-			border: 1px solid rgba(0, 0, 0, 0.5);
-			border-radius: 2px;
-			box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
-			@include flex-center;
-			padding: 10px;
-			// background: rgba($color: whitesmoke, $alpha: 0.5);
+		.Dates {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.Icon {
+				font-size: 25px;
+				color: grey;
+				@include flex-center;
+			}
+
+			.DatePickerContainer {
+				margin-left: 20px;
+				flex-shrink: 0;
+				position: relative;
+				width: 332px;
+				height: 55px;
+				border-radius: 10px;
+				box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
+				overflow: visible;
+
+				.SelectDates {
+					position: absolute;
+					left: 0;
+					bottom: 0;
+					height: 55px;
+					width: 332px;
+					// border: 1px solid rgba(0, 0, 0, 0.5);
+					border-radius: 10px;
+					@include flex-center;
+					padding: 10px;
+					overflow: hidden;
+					.DateRange {
+						position: absolute;
+						left: 0;
+						top: 0;
+						overflow: hidden;
+						border-radius: 10px;
+						transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+					}
+					.DateRangeOpen {
+						position: absolute;
+						left: 0;
+						bottom: 0;
+						overflow: hidden;
+						border-radius: 10px;
+						transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+					}
+
+					transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+					&Open {
+						@extend .SelectDates;
+						height: 385px;
+					}
+				}
+			}
+		}
+
+		.Guests {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			.Icon {
+				font-size: 25px;
+				color: grey;
+				@include flex-center;
+			}
+			.Select {
+				position: relative;
+				margin-left: 20px;
+				height: 52px;
+				width: 130px;
+				// border: 1px solid rgba(0, 0, 0, 0.5);
+				border-radius: 10px;
+				box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
+				padding: 10px;
+				padding-right: 40px;
+				// background: rgba($color: whitesmoke, $alpha: 0.5);
+				@include flex-center;
+				overflow: hidden;
+
+				font-size: 16px;
+				font-weight: 300;
+
+				.Arrows {
+					position: absolute;
+					height: 100%;
+					width: 30px;
+					top: 0;
+					right: 0;
+					display: grid;
+					grid-template-rows: 1fr 1fr;
+					// background-color: $color-aqua;
+
+					.Arrow {
+						height: 100%;
+						width: 100%;
+						@include flex-center;
+						border-left: 1px solid $color-aqua;
+						cursor: pointer;
+
+						&:first-of-type {
+							border-bottom: 1px solid $color-aqua;
+						}
+					}
+
+					.Disable {
+						color: rgba($color: black, $alpha: 0.5);
+						cursor: default;
+					}
+				}
+			}
 		}
 	}
 
 	.Button {
 		height: 100%;
 		width: 100%;
+		border-radius: 0 10px 10px 0;
 		background-color: $color-aqua;
 		@include flex-center;
 
