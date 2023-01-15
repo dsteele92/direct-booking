@@ -75,6 +75,18 @@ export default function GalleryMobile() {
 
 	return (
 		<div className={Style.GalleryMobile}>
+			<nav>
+				<ul>
+					{rooms.map((room, index) => (
+						<li
+							className={galleryRoom === index ? Style.LiCurrent : Style.Li}
+							onClick={() => handleRoomSelect(index)}
+							key={index}>
+							{room}
+						</li>
+					))}
+				</ul>
+			</nav>
 			<div
 				className={galleryIndex > 0 ? Style.ArrowLeft : Style.ArrowLeftDisable}
 				onClick={() => handleArrow(-1)}>
@@ -99,18 +111,6 @@ export default function GalleryMobile() {
 					))}
 				</div>
 			</div>
-			<nav>
-				<ul>
-					{rooms.map((room, index) => (
-						<li
-							className={galleryRoom === index ? Style.LiCurrent : Style.Li}
-							onClick={() => handleRoomSelect(index)}
-							key={index}>
-							{room}
-						</li>
-					))}
-				</ul>
-			</nav>
 		</div>
 	);
 }

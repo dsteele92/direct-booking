@@ -10,12 +10,16 @@ import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { add } from 'date-fns';
 
 export default function BookingWeb() {
-	const [startDate, setStartDate] = useState(new Date());
-	const [endDate, setEndDate] = useState(add(new Date(), { days: 1 }));
+	const [startDate, setStartDate] = useState(null);
+	const [endDate, setEndDate] = useState(null);
+	// const [startDate, setStartDate] = useState(new Date());
+	// const [endDate, setEndDate] = useState(add(new Date(), { days: 1 }));
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 	const [guests, setGuests] = useState(1);
 
 	const datePicker = useRef();
+
+	const disabledDates = [add(new Date(), { days: 1 }), add(new Date(), { days: 3 })];
 
 	useEffect(() => {
 		const handleKeydown = (e) => {
@@ -68,8 +72,10 @@ export default function BookingWeb() {
 								onChange={handleSelect}
 								minDate={new Date()}
 								rangeColors={['#90d2d2']}
-								disabledDates={[]}
+								disabledDates={disabledDates}
 								monthHeight={6}
+								startDatePlaceholder={'Check-in'}
+								endDatePlaceholder={'Checkout'}
 								// months={2}
 								// direction={'horizontal'}
 							/>

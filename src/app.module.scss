@@ -175,10 +175,10 @@
 				position: relative;
 				height: 60%;
 				width: 100%;
-				@media screen and (max-width: $breakpoint-medium) {
+				@media screen and (max-width: $breakpoint-gallery-change) {
 					height: 50%;
 				}
-				@media screen and (max-width: $breakpoint-gallery-change) {
+				@media screen and (max-width: $breakpoint-medium) {
 					display: none;
 				}
 			}
@@ -188,8 +188,13 @@
 				@media screen and (max-width: $breakpoint-medium) {
 					display: block;
 					position: relative;
-					height: 50%;
+					height: 60%;
 					width: 100%;
+					padding-bottom: 100px;
+				}
+				@media screen and (max-width: $breakpoint-tablet) {
+					height: 50%;
+					padding-bottom: 0;
 				}
 			}
 
@@ -200,8 +205,15 @@
 				display: flex;
 				padding-bottom: 50px;
 				@media screen and (max-width: $breakpoint-gallery-change) {
+					height: 50%;
+				}
+				@media screen and (max-width: $breakpoint-medium) {
+					height: 40%;
 					padding-bottom: 0;
 					flex-direction: row-reverse;
+				}
+				@media screen and (max-width: $breakpoint-tablet) {
+					height: 50%;
 				}
 				.Left {
 					position: relative;
@@ -210,7 +222,7 @@
 					display: flex;
 					justify-content: flex-end;
 					align-items: center;
-					@media screen and (max-width: $breakpoint-gallery-change) {
+					@media screen and (max-width: $breakpoint-medium) {
 						justify-content: flex-start;
 					}
 					.InfoBox {
@@ -256,10 +268,6 @@
 						font-family: 'Great Vibes', cursive;
 						font-size: 70px;
 					}
-				}
-
-				@media screen and (max-width: $breakpoint-medium) {
-					height: 50%;
 				}
 			}
 
@@ -656,7 +664,7 @@
 			bottom: 0;
 			transform: translateY(50%);
 			height: 100px;
-			width: 70%;
+			width: 900px;
 
 			@include flex-center;
 			border-radius: 10px;
