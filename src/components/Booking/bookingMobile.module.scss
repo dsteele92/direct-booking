@@ -1,1 +1,8 @@
 @import 'sass';
+
+.BookingMobile {
+	height: 100%;
+	width: 100%;
+	background-color: $color-aqua;
+	@include flex-center;
+}

@@ -4,7 +4,7 @@ import { DateRange, DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { TfiArrowCircleRight } from 'react-icons/tfi';
-import { BsCalendarRange } from 'react-icons/bs';
+import { BsCalendarRange, BsPeopleFill } from 'react-icons/bs';
 import { RxPerson } from 'react-icons/rx';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { add } from 'date-fns';
@@ -12,14 +12,22 @@ import { add } from 'date-fns';
 export default function BookingWeb() {
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
-	// const [startDate, setStartDate] = useState(new Date());
-	// const [endDate, setEndDate] = useState(add(new Date(), { days: 1 }));
+	const [reserveActive, setReserveActive] = useState(false);
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 	const [guests, setGuests] = useState(1);
 
 	const datePicker = useRef();
+	const button = useRef();
 
 	const disabledDates = [add(new Date(), { days: 1 }), add(new Date(), { days: 3 })];
+
+	useEffect(() => {
+		if (startDate !== endDate) {
+			setReserveActive(true);
+		} else {
+			setReserveActive(false);
+		}
+	}, [startDate, endDate]);
 
 	useEffect(() => {
 		const handleKeydown = (e) => {
@@ -27,9 +35,13 @@ export default function BookingWeb() {
 				setOpenDatePicker(false);
 			}
 		};
-
 		const handleClick = (e) => {
-			if (datePicker.current && !datePicker.current.contains(e.target)) {
+			if (
+				datePicker.current &&
+				!datePicker.current.contains(e.target) &&
+				button.current &&
+				!button.current.contains(e.target)
+			) {
 				setOpenDatePicker(false);
 			}
 		};
@@ -39,11 +51,18 @@ export default function BookingWeb() {
 
 		return () => {
 			document.removeEventListener('keydown', handleKeydown);
+			document.removeEventListener('click', handleClick);
 		};
 	}, []);
 
 	const handleSelect = (ranges) => {
 		console.log(ranges);
+		// if (ranges.selection.startDate === ranges.selection.endDate) {
+		// 	const start = ranges.selection.startDate;
+		// 	setStartDate(ranges.selection.startDate);
+		// 	setEndDate(add(new Date(start), { days: 1 }));
+		// }
+
 		setStartDate(ranges.selection.startDate);
 		setEndDate(ranges.selection.endDate);
 	};
@@ -52,6 +71,10 @@ export default function BookingWeb() {
 		startDate: startDate,
 		endDate: endDate,
 		key: 'selection',
+	};
+
+	const reserve = () => {
+		console.log('reserve');
 	};
 
 	return (
@@ -84,7 +107,7 @@ export default function BookingWeb() {
 				</div>
 				<div className={Style.Guests}>
 					<div className={Style.Icon}>
-						<RxPerson />
+						<BsPeopleFill />
 					</div>
 					<div className={Style.Select}>
 						<div className={Style.Count}>{`${guests} guest${guests > 1 ? 's' : ''}`} </div>
@@ -107,12 +130,25 @@ export default function BookingWeb() {
 					</div>
 				</div>
 			</div>
-			<div className={Style.Button}>
-				<h4>
+			<div
+				className={reserveActive ? Style.ButtonReserve : Style.Button}
+				onClick={() => {
+					if (reserveActive) {
+						reserve();
+					} else {
+						console.log('wtf');
+						setOpenDatePicker(!openDatePicker);
+					}
+				}}
+				ref={button}>
+				<h4 className={Style.Check}>
 					Check <br />
 					Availability
 				</h4>
-				<TfiArrowCircleRight />
+				<h4 className={Style.Reserve}>Reserve</h4>
+				<div className={Style.Icon}>
+					<TfiArrowCircleRight />
+				</div>
 			</div>
 		</div>
 	);

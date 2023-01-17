@@ -51,7 +51,7 @@ export default function GalleryMobile() {
 	let total = 0;
 	let breakpoint = 0;
 	gallery.forEach((arr, index) => {
-		breakpoints.set(index, breakpoint ? breakpoint - 1 : breakpoint);
+		breakpoints.set(index, breakpoint);
 		breakpoint += arr.length;
 		for (const photo in arr) {
 			galleryMap.set(total, index);
@@ -98,7 +98,7 @@ export default function GalleryMobile() {
 				<BsFillArrowRightCircleFill />
 			</div>
 			<div className={Style.CarouselFrameOuter}>
-				<div className={Style.CarouselFrameInner} style={{ transform: `translateX(-${galleryIndex * 50}%)` }}>
+				<div className={Style.CarouselFrameInner} style={{ transform: `translateX(-${galleryIndex}00%)` }}>
 					{gallery.map((room, index) => (
 						<div className={Style.CarouselRooms} style={{ width: `${room.length}00%` }} key={index}>
 							{room.map((photo, index) => (
@@ -109,6 +109,18 @@ export default function GalleryMobile() {
 							))}
 						</div>
 					))}
+				</div>
+			</div>
+			<div className={Style.MobileArrows}>
+				<div
+					className={galleryIndex > 0 ? Style.MobileArrow : Style.MobileArrowDisable}
+					onClick={() => handleArrow(-1)}>
+					<BsFillArrowLeftCircleFill />
+				</div>
+				<div
+					className={galleryIndex < total - 2 ? Style.MobileArrow : Style.MobileArrowDisable}
+					onClick={() => handleArrow(1)}>
+					<BsFillArrowRightCircleFill />
 				</div>
 			</div>
 		</div>

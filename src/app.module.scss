@@ -1,10 +1,17 @@
 @import 'sass';
 
 .App {
-	height: 100vh;
+	// position: relative;
 	width: 100vw;
+	height: 100vh;
+	// height: 100%;
+	// min-height: 100%;
+	// box-sizing: border-box;
+	// overflow-x: hidden;
+	// overflow-y: hidden;
 	// @include flex-center;
-	.Full {
+
+	.Main {
 		position: absolute;
 		top: 5%;
 		left: 50%;
@@ -12,670 +19,705 @@
 		height: 85vh;
 		width: 95vw;
 		max-width: 1900px;
-		@include flex-center;
-
 		@media screen and (max-width: $breakpoint-tablet) {
 			position: relative;
 			top: 0;
 			left: 0;
 			transform: none;
-			height: 100%;
+			height: 90%;
 			width: 100%;
 		}
+		// height: 100%;
+		// width: 100%;
+		// position: absolute;
+		// @include flex-center;
+		// flex-direction: column;
+		border-radius: 10px;
+		@media screen and (max-width: $breakpoint-tablet) {
+			border-radius: 0;
+		}
+		overflow: hidden;
+		box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
 
-		.Main {
-			height: 100%;
-			width: 100%;
+		// padding-bottom: 50px;
+		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+		.HomeBanner {
+			z-index: 100;
 			position: absolute;
-			// @include flex-center;
-			// flex-direction: column;
+			width: 100%;
+			height: 100%;
+			background-image: url('./images/living_room_1.jpeg');
+			background-size: cover;
+			background-repeat: no-repeat;
+			background-position: center 70%;
 			border-radius: 10px;
-			@media screen and (max-width: $breakpoint-tablet) {
-				border-radius: 0;
-			}
 			overflow: hidden;
-			box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
+			// transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+			transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
-			// padding-bottom: 50px;
-			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-evenly;
 
-			.HomeBanner {
-				z-index: 100;
+			.Tint {
+				z-index: -10;
 				position: absolute;
-				width: 100%;
 				height: 100%;
-				background-image: url('./images/living_room_1.jpeg');
-				background-size: cover;
-				background-repeat: no-repeat;
-				background-position: center 70%;
+				width: 100%;
 				border-radius: 10px;
-				overflow: hidden;
-				// transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
-				transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: space-evenly;
-
-				.Tint {
-					z-index: -10;
-					position: absolute;
-					height: 100%;
-					width: 100%;
-					border-radius: 10px;
-					background-color: rgba($color: black, $alpha: 0.2);
-				}
-
-				.Enter {
-					height: 60px;
-					width: 200px;
-					border: 1.5px solid white;
-					border-radius: 2px;
-					// background-color: rgba($color: $color-yellow, $alpha: 0.1);
-					@include flex-center;
-					cursor: pointer;
-					color: white;
-					// box-shadow: 0 0 20px 5px rgba($color: rgb(114, 114, 114), $alpha: 0.2);
-
-					transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-					// text-shadow: rgba(0, 0, 0, 0.6) 1px 0px 20px;
-
-					h3 {
-						// font-family: 'Roboto', serif;
-						// font-family: 'Aboreto', 'Roboto', serif;
-						font-family: 'Marcellus', serif;
-						font-weight: 300;
-						letter-spacing: 1pt;
-						font-size: 30px;
-						margin-right: 30px;
-						// text-transform: uppercase;
-					}
-					.Door {
-						position: relative;
-						.Closed {
-							opacity: 1;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%, -55%);
-							@include flex-center;
-							position: absolute;
-							font-size: 30px;
-							transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-						}
-
-						.Open {
-							opacity: 0;
-							top: 50%;
-							left: 50%;
-							transform: translate(-50%, -55%);
-							@include flex-center;
-							position: absolute;
-							font-size: 30px;
-							transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-						}
-					}
-
-					&:hover {
-						// background-color: white;
-						// border: 1px solid white;
-						border-color: $color-aqua;
-						// background-color: rgba($color: $color-yellow, $alpha: 0.1);
-						// border: 1px solid rgba($color: $color-yellow, $alpha: 0.8);
-						// box-shadow: inset 0 0 5px;
-
-						.Arrow {
-							.Rotate {
-								transform: translate(-50%, -50%) rotateZ(90deg);
-							}
-						}
-
-						.Closed {
-							opacity: 0;
-						}
-						.Open {
-							opacity: 1;
-						}
-					}
-				}
-
-				.MainHeader {
-					h1 {
-						text-align: center;
-						margin-bottom: 10px;
-						// font-family: 'Great Vibes', cursive;
-						font-family: 'Marcellus', serif;
-						letter-spacing: 1pt;
-
-						font-size: 50px;
-						color: white;
-						text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 10px;
-						// choose font
-						// set responsive font sizes
-					}
-					h3 {
-						text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 20px;
-						text-align: center;
-						font-family: 'Marcellus', serif;
-						font-size: 24px;
-						color: white;
-						letter-spacing: 0.5pt;
-						// choose font
-						// set responsive font sizes
-					}
-				}
-
-				&Enter {
-					@extend .HomeBanner;
-					transform: translateY(-105%);
-				}
+				background-color: rgba($color: black, $alpha: 0.2);
 			}
 
-			.Gallery {
-				position: relative;
-				height: 60%;
-				width: 100%;
-				@media screen and (max-width: $breakpoint-gallery-change) {
-					height: 50%;
-				}
-				@media screen and (max-width: $breakpoint-medium) {
-					display: none;
-				}
-			}
+			.Enter {
+				height: 60px;
+				width: 200px;
+				border: 1.5px solid white;
+				border-radius: 2px;
+				// background-color: rgba($color: $color-yellow, $alpha: 0.1);
+				@include flex-center;
+				cursor: pointer;
+				color: white;
+				// box-shadow: 0 0 20px 5px rgba($color: rgb(114, 114, 114), $alpha: 0.2);
 
-			.GalleryMobile {
-				display: none;
-				@media screen and (max-width: $breakpoint-medium) {
-					display: block;
-					position: relative;
-					height: 60%;
-					width: 100%;
-					padding-bottom: 100px;
-				}
-				@media screen and (max-width: $breakpoint-tablet) {
-					height: 50%;
-					padding-bottom: 0;
-				}
-			}
+				transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+				// text-shadow: rgba(0, 0, 0, 0.6) 1px 0px 20px;
 
-			.Description {
-				position: relative;
-				height: 40%;
-				width: 100%;
-				display: flex;
-				padding-bottom: 50px;
-				@media screen and (max-width: $breakpoint-gallery-change) {
-					height: 50%;
+				h3 {
+					// font-family: 'Roboto', serif;
+					// font-family: 'Aboreto', 'Roboto', serif;
+					font-family: 'Marcellus', serif;
+					font-weight: 300;
+					letter-spacing: 1pt;
+					font-size: 30px;
+					margin-right: 30px;
+					// text-transform: uppercase;
 				}
-				@media screen and (max-width: $breakpoint-medium) {
-					height: 40%;
-					padding-bottom: 0;
-					flex-direction: row-reverse;
-				}
-				@media screen and (max-width: $breakpoint-tablet) {
-					height: 50%;
-				}
-				.Left {
+				.Door {
 					position: relative;
-					height: 100%;
-					width: 100%;
-					display: flex;
-					justify-content: flex-end;
-					align-items: center;
-					@media screen and (max-width: $breakpoint-medium) {
-						justify-content: flex-start;
-					}
-					.InfoBox {
-						position: relative;
-						height: auto;
-						width: 80%;
-						display: flex;
-						justify-content: flex-end;
-						align-items: center;
-						p {
-							text-align: justify;
-							font-family: 'Marcellus', serif;
-							@include flex-center;
-							font-size: 16px;
-							line-height: 1.4;
-							@media screen and (max-height: 1000px) {
-								font-size: 13px;
-							}
-						}
-						.ShowMore {
-							position: absolute;
-							bottom: -35px;
-							left: -25px;
-							font-size: 15px;
-							font-weight: 100;
-							cursor: pointer;
-							span {
-								font-weight: 300;
-							}
-						}
-					}
-				}
-				.Right {
-					position: relative;
-					height: 100%;
-					width: 100%;
-					h2 {
-						position: absolute;
+					.Closed {
+						opacity: 1;
 						top: 50%;
-						transform: translateY(-50%);
-						left: 25%;
-						text-align: center;
-						font-family: 'Great Vibes', cursive;
-						font-size: 70px;
+						left: 50%;
+						transform: translate(-50%, -55%);
+						@include flex-center;
+						position: absolute;
+						font-size: 30px;
+						transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+					}
+
+					.Open {
+						opacity: 0;
+						top: 50%;
+						left: 50%;
+						transform: translate(-50%, -55%);
+						@include flex-center;
+						position: absolute;
+						font-size: 30px;
+						transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+					}
+				}
+
+				&:hover {
+					// background-color: white;
+					// border: 1px solid white;
+					border-color: $color-aqua;
+					// background-color: rgba($color: $color-yellow, $alpha: 0.1);
+					// border: 1px solid rgba($color: $color-yellow, $alpha: 0.8);
+					// box-shadow: inset 0 0 5px;
+
+					.Arrow {
+						.Rotate {
+							transform: translate(-50%, -50%) rotateZ(90deg);
+						}
+					}
+
+					.Closed {
+						opacity: 0;
+					}
+					.Open {
+						opacity: 1;
 					}
 				}
 			}
 
-			.Amenities {
+			.MainHeader {
+				h1 {
+					text-align: center;
+					margin-bottom: 10px;
+					// font-family: 'Great Vibes', cursive;
+					font-family: 'Marcellus', serif;
+					letter-spacing: 1pt;
+
+					font-size: 50px;
+					color: white;
+					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 10px;
+					// choose font
+					// set responsive font sizes
+				}
+				h3 {
+					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 20px;
+					text-align: center;
+					font-family: 'Marcellus', serif;
+					font-size: 24px;
+					color: white;
+					letter-spacing: 0.5pt;
+					// choose font
+					// set responsive font sizes
+				}
+			}
+
+			&Enter {
+				@extend .HomeBanner;
+				transform: translateY(-105%);
+			}
+		}
+
+		.Gallery {
+			position: relative;
+			height: 60%;
+			width: 100%;
+			@media screen and (max-width: 1500px) {
+				height: 50%;
+			}
+			@media screen and (max-width: 1200px) {
+				display: none;
+			}
+		}
+
+		.GalleryMobile {
+			display: none;
+			@media screen and (max-width: 1200px) {
+				display: block;
 				position: relative;
 				height: 60%;
 				width: 100%;
-				padding: 0 5%;
-
-				.Header {
-					position: absolute;
-					width: 75%;
-					top: 0;
-					left: 12%;
-
-					display: flex;
-					justify-content: space-between;
-
-					h2 {
-						font-family: 'Marcellus', serif;
-						letter-spacing: 1pt;
-					}
-					h4 {
-						// transform: translateX(-30%);
-						z-index: 10;
-						margin-top: 5px;
-						font-size: 15px;
-						font-weight: 100;
-						cursor: default;
-						// text-transform: uppercase;
-						border-bottom: 0.5px solid;
-
-						&:hover {
-							color: $color-yellow;
-						}
-					}
-				}
-
-				.Matrix {
-					position: absolute;
-					top: 10%;
-					height: 90%;
-					width: 90%;
-
-					&HoverGrid {
-						@extend .Matrix;
-						display: grid;
-						grid-template-columns: repeat(7, 1fr);
-						grid-template-rows: repeat(4, 1fr);
-
-						.GridSlot {
-							// height: 100%;
-							// width: 100%;
-							@include flex-center;
-
-							.HoverDiv {
-								width: 30%;
-								height: 80%;
-								// border: 1px solid black;
-							}
-						}
-					}
-				}
 			}
-
-			.Host {
-				position: relative;
+			@media screen and (max-width: $breakpoint-tablet) {
 				height: 50%;
+				padding-bottom: 0;
+			}
+		}
+
+		.Description {
+			position: relative;
+			height: 40%;
+			width: 100%;
+			display: flex;
+			padding-bottom: 50px;
+			@media screen and (max-width: 1500px) {
+				height: 50%;
+			}
+			@media screen and (max-width: 1200px) {
+				height: 40%;
+				padding-bottom: 0;
+				flex-direction: row-reverse;
+			}
+			@media screen and (max-width: $breakpoint-tablet) {
+				height: 50%;
+			}
+			@media screen and (max-width: $breakpoint-small) {
+				flex-direction: column-reverse;
+				align-items: center;
+				justify-content: center;
+			}
+			.Left {
+				position: relative;
+				height: 100%;
 				width: 100%;
 				display: flex;
-				justify-content: space-evenly;
+				justify-content: flex-end;
 				align-items: center;
-
-				.HostPhoto {
-					position: relative;
-					height: 80%;
-					width: 30%;
-					min-width: 300px;
-					background-image: url('./images/host.jpeg');
-					background-size: cover;
-					background-position: center;
-					border: solid $color-light;
-					border-width: 10px 10px 50px;
-					border-radius: 10px;
-
-					.Signature {
-						position: absolute;
-						bottom: -30px;
-						right: 5%;
-						font-family: 'Great Vibes', cursive;
-						font-size: 25px;
-						transform: rotateZ(-15deg);
-						text-shadow: 2px 2px 5px white;
-					}
+				@media screen and (max-width: 1200px) {
+					justify-content: flex-start;
 				}
-
-				.HostIntro {
+				@media screen and (max-width: $breakpoint-small) {
+					justify-content: center;
+					height: fit-content;
+					margin-bottom: 50px;
+				}
+				.InfoBox {
 					position: relative;
 					height: auto;
-					width: 35%;
-					display: flex;
-					flex-direction: column;
-					justify-content: center;
-					align-items: flex-start;
+					width: 80%;
+					@include flex-center;
 					p {
-						margin: 5px;
 						text-align: justify;
 						font-family: 'Marcellus', serif;
 						@include flex-center;
-						font-size: 18px;
+						font-size: 16px;
 						line-height: 1.4;
-						@media screen and (max-height: 1000px) {
-							font-size: 13px;
+						@media screen and (max-width: $breakpoint-tablet) {
+							font-size: 14px;
+						}
+						@media screen and (max-width: $breakpoint-mobile) {
+							font-size: 12px;
+						}
+					}
+					.ShowMore {
+						position: absolute;
+						bottom: -35px;
+						left: -25px;
+						font-size: 15px;
+						@media screen and (max-width: $breakpoint-tablet) {
+							font-size: 12px;
+							bottom: -25px;
+							left: -15px;
+						}
+						font-weight: 100;
+						cursor: pointer;
+						span {
+							font-weight: 300;
 						}
 					}
 				}
 			}
-
-			.Info {
+			.Right {
 				position: relative;
-				height: 40%;
+				height: 100%;
 				width: 100%;
-				padding: 0 5%;
-				@include flex-center;
-				display: grid;
-				grid-template-columns: repeat(3, 25%);
-				gap: 5%;
+				@media screen and (max-width: $breakpoint-small) {
+					height: fit-content;
+					margin-bottom: 30px;
+				}
+				h2 {
+					position: absolute;
+					top: 50%;
+					transform: translateY(-50%);
+					left: 25%;
+					text-align: center;
+					font-family: 'Great Vibes', cursive;
+					font-size: 70px;
 
-				.Container {
-					z-index: 1;
-					height: 90%;
+					@media screen and (max-width: $breakpoint-small) {
+						position: relative;
+						transform: none;
+						top: 0;
+						left: 0;
+					}
+				}
+			}
+		}
+
+		.Amenities {
+			position: relative;
+			height: 60%;
+			width: 100%;
+			padding: 0 5%;
+
+			.Header {
+				position: absolute;
+				width: 75%;
+				top: 0;
+				left: 12%;
+
+				display: flex;
+				justify-content: space-between;
+
+				h2 {
+					font-family: 'Marcellus', serif;
+					letter-spacing: 1pt;
+				}
+				h4 {
+					// transform: translateX(-30%);
+					z-index: 10;
+					margin-top: 5px;
+					font-size: 15px;
+					font-weight: 100;
+					cursor: default;
+					// text-transform: uppercase;
+					border-bottom: 0.5px solid;
+
+					&:hover {
+						color: $color-yellow;
+					}
+				}
+			}
+
+			.Matrix {
+				position: absolute;
+				top: 10%;
+				height: 90%;
+				width: 90%;
+
+				&HoverGrid {
+					@extend .Matrix;
+					display: grid;
+					grid-template-columns: repeat(7, 1fr);
+					grid-template-rows: repeat(4, 1fr);
+
+					.GridSlot {
+						// height: 100%;
+						// width: 100%;
+						@include flex-center;
+
+						.HoverDiv {
+							width: 30%;
+							height: 80%;
+							// border: 1px solid black;
+						}
+					}
+				}
+			}
+		}
+
+		.Host {
+			position: relative;
+			height: 50%;
+			width: 100%;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+
+			.HostPhoto {
+				position: relative;
+				height: 80%;
+				width: 30%;
+				min-width: 300px;
+				background-image: url('./images/host.jpeg');
+				background-size: cover;
+				background-position: center;
+				border: solid $color-light;
+				border-width: 10px 10px 50px;
+				border-radius: 10px;
+
+				.Signature {
+					position: absolute;
+					bottom: -30px;
+					right: 5%;
+					font-family: 'Great Vibes', cursive;
+					font-size: 25px;
+					transform: rotateZ(-15deg);
+					text-shadow: 2px 2px 5px white;
+				}
+			}
+
+			.HostIntro {
+				position: relative;
+				height: auto;
+				width: 35%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: flex-start;
+				p {
+					margin: 5px;
+					text-align: justify;
+					font-family: 'Marcellus', serif;
+					@include flex-center;
+					font-size: 18px;
+					line-height: 1.4;
+					@media screen and (max-height: 1000px) {
+						font-size: 13px;
+					}
+				}
+			}
+		}
+
+		.Info {
+			position: relative;
+			height: 40%;
+			width: 100%;
+			padding: 0 5%;
+			@include flex-center;
+			display: grid;
+			grid-template-columns: repeat(3, 25%);
+			gap: 5%;
+
+			.Container {
+				z-index: 1;
+				height: 90%;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+
+				.Tab {
+					border-radius: 10px;
+					@include flex-center;
+					height: 7%;
 					overflow: hidden;
+					// border: 1px solid $color-light;
+					// background-color: $color-light;
+					border-bottom: groove;
+					border-radius: 10px;
+					h4 {
+						// transform: rotateZ(-90deg);
+						text-transform: uppercase;
+						font-family: 'Marcellus', serif;
+						letter-spacing: 1pt;
+						font-size: 18px;
+						// color: $color-dark;
+					}
+				}
+
+				.InfoInner {
+					position: relative;
+					height: 100%;
+					width: 100%;
+					padding: 5%;
+					overflow: hidden;
+					font-family: 'Marcellus', serif;
+					text-align: center;
 					display: flex;
 					flex-direction: column;
+					align-items: center;
+					justify-content: flex-start;
 
-					.Tab {
-						border-radius: 10px;
-						@include flex-center;
-						height: 7%;
-						overflow: hidden;
-						// border: 1px solid $color-light;
-						// background-color: $color-light;
-						border-bottom: groove;
-						border-radius: 10px;
-						h4 {
-							// transform: rotateZ(-90deg);
-							text-transform: uppercase;
-							font-family: 'Marcellus', serif;
-							letter-spacing: 1pt;
-							font-size: 18px;
-							// color: $color-dark;
+					.Location {
+						font-family: 'Roboto', serif;
+						font-weight: 100;
+						font-size: 16px;
+						line-height: 130%;
+						text-align: justify;
+						// color: black;
+					}
+					.FiveStars {
+						font-family: 'Roboto', serif;
+						font-weight: 300;
+						font-size: 22px;
+						color: white;
+						text-shadow: 2px 2px 5px rgb(162, 162, 162);
+
+						span {
+							color: rgb(255, 255, 115);
 						}
 					}
 
-					.InfoInner {
-						position: relative;
-						height: 100%;
-						width: 100%;
-						padding: 5%;
-						overflow: hidden;
-						font-family: 'Marcellus', serif;
-						text-align: center;
+					.HighlightedReviews {
+						height: 80%;
+						max-height: 140px;
 						display: flex;
 						flex-direction: column;
-						align-items: center;
-						justify-content: flex-start;
-
-						.Location {
-							font-family: 'Roboto', serif;
-							font-weight: 100;
-							font-size: 16px;
-							line-height: 130%;
-							text-align: justify;
-							// color: black;
-						}
-						.FiveStars {
-							font-family: 'Roboto', serif;
-							font-weight: 300;
-							font-size: 22px;
-							color: white;
-							text-shadow: 2px 2px 5px rgb(162, 162, 162);
-
-							span {
-								color: rgb(255, 255, 115);
-							}
-						}
-
-						.HighlightedReviews {
-							height: 80%;
-							max-height: 140px;
-							display: flex;
-							flex-direction: column;
-							justify-content: space-evenly;
-							li {
-								width: 100%;
-								list-style: none;
-								display: flex;
-								flex-direction: column;
-								align-items: center;
-								justify-content: center;
-								text-align: center;
-								font-size: 18px;
-								div {
-									font-family: 'Marcellus', serif;
-									font-weight: 300;
-								}
-								.Name {
-									// align-self: flex-end;
-									margin-right: 10px;
-									font-style: italic;
-									margin-top: 3px;
-									font-size: 14px;
-									// font-family: 'Roboto', serif;
-									font-weight: 100;
-								}
-							}
-						}
-
-						.RulesMain {
-							height: 90%;
-							max-height: 220px;
-							display: flex;
-							flex-direction: column;
-							justify-content: space-between;
-							li {
-								width: 100%;
-								list-style: none;
-								display: flex;
-								align-items: center;
-								justify-content: flex-start;
-								div {
-									color: $color-light;
-									font-size: 18px;
-								}
-								h4 {
-									text-align: left;
-									margin-left: 10px;
-									font-family: 'Roboto', serif;
-									font-weight: 100;
-									font-size: 18px;
-								}
-							}
-						}
-
-						.Expand {
-							position: relative;
+						justify-content: space-evenly;
+						li {
 							width: 100%;
-							text-align: end;
-							margin-top: 10px;
-							font-size: 15px;
-							font-weight: 100;
-							cursor: pointer;
-							// color: black;
-							span {
+							list-style: none;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							justify-content: center;
+							text-align: center;
+							font-size: 18px;
+							div {
+								font-family: 'Marcellus', serif;
 								font-weight: 300;
 							}
+							.Name {
+								// align-self: flex-end;
+								margin-right: 10px;
+								font-style: italic;
+								margin-top: 3px;
+								font-size: 14px;
+								// font-family: 'Roboto', serif;
+								font-weight: 100;
+							}
+						}
+					}
+
+					.RulesMain {
+						height: 90%;
+						max-height: 220px;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						li {
+							width: 100%;
+							list-style: none;
+							display: flex;
+							align-items: center;
+							justify-content: flex-start;
+							div {
+								color: $color-light;
+								font-size: 18px;
+							}
+							h4 {
+								text-align: left;
+								margin-left: 10px;
+								font-family: 'Roboto', serif;
+								font-weight: 100;
+								font-size: 18px;
+							}
+						}
+					}
+
+					.Expand {
+						position: relative;
+						width: 100%;
+						text-align: end;
+						margin-top: 10px;
+						font-size: 15px;
+						font-weight: 100;
+						cursor: pointer;
+						// color: black;
+						span {
+							font-weight: 300;
 						}
 					}
 				}
 			}
+		}
 
-			.LineBreak {
-				position: relative;
-				width: 100%;
-				height: 5%;
-				@include flex-center;
-			}
+		.LineBreak {
+			position: relative;
+			width: 100%;
+			height: 5%;
+			@include flex-center;
+		}
 
-			// Color changes for different scroll positions ----->
+		// Color changes for different scroll positions ----->
 
-			&0 {
-				@extend .Main;
-				background-color: $color-light;
-				.Description {
-					.Left {
-						.InfoBox {
-							color: black;
-						}
-					}
-					.Right {
-						h2 {
-							color: $color-dark;
-						}
-					}
-				}
-				.Amenities {
-					color: black;
-				}
-				.Host {
-					.HostIntro {
+		&0 {
+			@extend .Main;
+			background-color: $color-light;
+			.Description {
+				.Left {
+					.InfoBox {
 						color: black;
 					}
 				}
-				.Info {
-					.Container {
-						.Tab {
-							h4 {
-								color: black;
-							}
-						}
-						.InfoInner {
-							color: black;
-						}
+				.Right {
+					h2 {
+						color: $color-dark;
 					}
 				}
 			}
-			&1 {
-				@extend .Main;
-				background-color: $color-dark;
-				.Description {
-					.Left {
-						.InfoBox {
-							color: $color-light;
+			.Amenities {
+				color: black;
+			}
+			.Host {
+				.HostIntro {
+					color: black;
+				}
+			}
+			.Info {
+				.Container {
+					.Tab {
+						h4 {
+							color: black;
 						}
 					}
-					.Right {
-						h2 {
-							color: $color-aqua;
-						}
+					.InfoInner {
+						color: black;
 					}
 				}
-				.Amenities {
-					color: white;
-				}
-				.Host {
-					.HostIntro {
+			}
+		}
+		&1 {
+			@extend .Main;
+			background-color: $color-dark;
+			.Description {
+				.Left {
+					.InfoBox {
 						color: $color-light;
 					}
 				}
-				.Info {
-					.Container {
-						.Tab {
-							h4 {
-								color: $color-light;
-							}
-						}
-						.InfoInner {
-							color: white;
-						}
+				.Right {
+					h2 {
+						color: $color-aqua;
 					}
 				}
 			}
-			&2 {
-				@extend .Main;
-				background-color: $color-three;
-				.Description {
-					.Left {
-						.InfoBox {
-							color: black;
+			.Amenities {
+				color: white;
+			}
+			.Host {
+				.HostIntro {
+					color: $color-light;
+				}
+			}
+			.Info {
+				.Container {
+					.Tab {
+						h4 {
+							color: $color-light;
 						}
 					}
-					.Right {
-						h2 {
-							color: $color-dark;
-						}
+					.InfoInner {
+						color: white;
 					}
 				}
-				.Amenities {
-					color: black;
-				}
-				.Host {
-					.HostIntro {
+			}
+		}
+		&2 {
+			@extend .Main;
+			background-color: $color-three;
+			.Description {
+				.Left {
+					.InfoBox {
 						color: black;
 					}
 				}
-				.Info {
-					.Container {
-						.Tab {
-							h4 {
-								color: black;
-							}
-						}
-						.InfoInner {
+				.Right {
+					h2 {
+						color: $color-dark;
+					}
+				}
+			}
+			.Amenities {
+				color: black;
+			}
+			.Host {
+				.HostIntro {
+					color: black;
+				}
+			}
+			.Info {
+				.Container {
+					.Tab {
+						h4 {
 							color: black;
 						}
+					}
+					.InfoInner {
+						color: black;
 					}
 				}
 			}
 		}
+	}
 
-		// add Enter class to allow for scrolling
-		.Enter {
-			overflow-y: scroll;
-			scrollbar-width: none; /* Firefox */
-			-ms-overflow-style: none; /* Internet Explorer 10+ */
-			&::-webkit-scrollbar {
-				display: none;
-			}
+	// add Enter class to allow for scrolling
+	.Enter {
+		overflow-y: scroll;
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+		&::-webkit-scrollbar {
+			display: none;
 		}
+	}
 
-		.Booking {
-			position: absolute;
-			z-index: 101;
-			bottom: 0;
-			transform: translateY(50%);
-			height: 100px;
-			width: 900px;
+	.BookingWeb {
+		position: absolute;
+		z-index: 101;
+		bottom: 10vh;
+		left: 50%;
+		transform: translate(-50%, 50%);
+		height: 100px;
+		width: 900px;
 
+		@include flex-center;
+		border-radius: 10px;
+		box-shadow: 0 5px 20px rgb(188, 188, 188);
+		// box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
+		// overflow: hidden;
+
+		@media screen and (max-width: $breakpoint-tablet) {
+			display: none;
+		}
+	}
+
+	.BookingMobile {
+		display: none;
+		@media screen and (max-width: $breakpoint-tablet) {
+			display: flex;
 			@include flex-center;
-			border-radius: 10px;
-			box-shadow: 0 5px 20px rgb(188, 188, 188);
-			// box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
-			// overflow: hidden;
-
-			@media screen and (max-width: $breakpoint-tablet) {
-				transform: translateY(-10px);
-				width: 85%;
-			}
+			position: relative;
+			top: 0;
+			left: 0;
+			transform: none;
+			height: 10%;
+			width: 100%;
 		}
 	}
 }

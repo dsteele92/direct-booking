@@ -116,6 +116,10 @@
 						border-left: 1px solid $color-aqua;
 						cursor: pointer;
 
+						&:active {
+							background-color: rgba($color: gray, $alpha: 0.1);
+						}
+
 						&:first-of-type {
 							border-bottom: 1px solid $color-aqua;
 						}
@@ -131,19 +135,58 @@
 	}
 
 	.Button {
+		position: relative;
 		height: 100%;
 		width: 100%;
 		border-radius: 0 10px 10px 0;
 		background-color: $color-aqua;
 		@include flex-center;
+		cursor: pointer;
+		transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 
 		font-size: 24px;
 		h4 {
-			font-size: 18px;
+			transform: translateY(-50%);
+			font-size: 16px;
 			font-family: 'Marcellus', serif;
 			letter-spacing: 1pt;
-			margin-right: 30px;
+			margin-right: 25px;
 			text-transform: uppercase;
+		}
+		.Check {
+			position: absolute;
+			left: 15%;
+			top: 50%;
+			opacity: 1;
+			transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+		.Reserve {
+			position: absolute;
+			left: 20%;
+			top: 50%;
+			opacity: 0;
+			transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+
+		.Icon {
+			position: absolute;
+			right: 15%;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		&Reserve {
+			@extend .Button;
+			.Check {
+				opacity: 0;
+			}
+			.Reserve {
+				opacity: 1;
+			}
+		}
+
+		&:hover {
+			background-color: #90dbdb;
 		}
 	}
 
