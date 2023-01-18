@@ -1,15 +1,12 @@
 @import 'sass';
 
 .App {
-	// position: relative;
+	position: fixed;
 	width: 100vw;
-	height: 100vh;
-	// height: 100%;
-	// min-height: 100%;
-	// box-sizing: border-box;
-	// overflow-x: hidden;
-	// overflow-y: hidden;
-	// @include flex-center;
+	height: 100%;
+	min-height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
 
 	.Main {
 		position: absolute;
@@ -19,28 +16,21 @@
 		height: 85vh;
 		width: 95vw;
 		max-width: 1900px;
+		border-radius: 10px;
+		// overflow hidden until page opened --> add .Enter class
+		overflow: hidden;
+		box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
+		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
 		@media screen and (max-width: $breakpoint-tablet) {
-			position: relative;
+			position: absolute;
 			top: 0;
 			left: 0;
 			transform: none;
 			height: 90%;
 			width: 100%;
-		}
-		// height: 100%;
-		// width: 100%;
-		// position: absolute;
-		// @include flex-center;
-		// flex-direction: column;
-		border-radius: 10px;
-		@media screen and (max-width: $breakpoint-tablet) {
 			border-radius: 0;
 		}
-		overflow: hidden;
-		box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
-
-		// padding-bottom: 50px;
-		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 
 		.HomeBanner {
 			z-index: 100;
@@ -52,6 +42,9 @@
 			background-repeat: no-repeat;
 			background-position: center 70%;
 			border-radius: 10px;
+			@media screen and (max-width: $breakpoint-tablet) {
+				border-radius: 0;
+			}
 			overflow: hidden;
 			// transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 			transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
@@ -67,6 +60,9 @@
 				height: 100%;
 				width: 100%;
 				border-radius: 10px;
+				@media screen and (max-width: $breakpoint-tablet) {
+					border-radius: 0;
+				}
 				background-color: rgba($color: black, $alpha: 0.2);
 			}
 
@@ -75,14 +71,11 @@
 				width: 200px;
 				border: 1.5px solid white;
 				border-radius: 2px;
-				// background-color: rgba($color: $color-yellow, $alpha: 0.1);
 				@include flex-center;
 				cursor: pointer;
 				color: white;
-				// box-shadow: 0 0 20px 5px rgba($color: rgb(114, 114, 114), $alpha: 0.2);
 
 				transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
-				// text-shadow: rgba(0, 0, 0, 0.6) 1px 0px 20px;
 
 				h3 {
 					// font-family: 'Roboto', serif;
@@ -174,6 +167,10 @@
 			}
 		}
 
+		section {
+			min-height: 350px;
+		}
+
 		.Gallery {
 			position: relative;
 			height: 60%;
@@ -222,7 +219,7 @@
 				align-items: center;
 				justify-content: center;
 			}
-			.Left {
+			.Intro {
 				position: relative;
 				height: 100%;
 				width: 100%;
@@ -273,13 +270,14 @@
 					}
 				}
 			}
-			.Right {
+			.Welcome {
 				position: relative;
 				height: 100%;
 				width: 100%;
 				@media screen and (max-width: $breakpoint-small) {
 					height: fit-content;
-					margin-bottom: 30px;
+					margin-top: 30px;
+					margin-bottom: 20px;
 				}
 				h2 {
 					position: absolute;
@@ -300,7 +298,11 @@
 			}
 		}
 
-		.Amenities {
+		.AmenitiesWeb {
+			@media screen and (max-width: $breakpoint-small) {
+				display: none;
+			}
+
 			position: relative;
 			height: 60%;
 			width: 100%;
@@ -362,7 +364,18 @@
 			}
 		}
 
+		.AmenitiesMobile {
+			display: none;
+			@media screen and (max-width: $breakpoint-small) {
+				display: block;
+				position: relative;
+				height: 50%;
+				width: 100%;
+			}
+		}
+
 		.Host {
+			margin-top: 10%;
 			position: relative;
 			height: 50%;
 			width: 100%;
@@ -370,11 +383,28 @@
 			justify-content: space-evenly;
 			align-items: center;
 
+			@media screen and (max-width: $breakpoint-small) {
+				flex-direction: column;
+				height: fit-content;
+			}
+
 			.HostPhoto {
 				position: relative;
 				height: 80%;
 				width: 30%;
 				min-width: 300px;
+				@media screen and (max-width: $breakpoint-small) {
+					flex-shrink: 0;
+					height: 300px;
+					width: 400px;
+					margin-bottom: 20px;
+				}
+				@media screen and (max-width: $breakpoint-mobile) {
+					flex-shrink: 0;
+					height: 250px;
+					width: 80%;
+					margin-bottom: 20px;
+				}
 				background-image: url('./images/host.jpeg');
 				background-size: cover;
 				background-position: center;
@@ -397,6 +427,12 @@
 				position: relative;
 				height: auto;
 				width: 35%;
+				@media screen and (max-width: $breakpoint-small) {
+					width: 80%;
+				}
+				@media screen and (max-width: $breakpoint-mobile) {
+					width: 80%;
+				}
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -416,6 +452,8 @@
 		}
 
 		.Info {
+			margin-top: 10%;
+			margin-bottom: 5%;
 			position: relative;
 			height: 40%;
 			width: 100%;
@@ -558,31 +596,24 @@
 			}
 		}
 
-		.LineBreak {
-			position: relative;
-			width: 100%;
-			height: 5%;
-			@include flex-center;
-		}
-
 		// Color changes for different scroll positions ----->
 
 		&0 {
 			@extend .Main;
 			background-color: $color-light;
 			.Description {
-				.Left {
+				.Intro {
 					.InfoBox {
 						color: black;
 					}
 				}
-				.Right {
+				.Welcome {
 					h2 {
 						color: $color-dark;
 					}
 				}
 			}
-			.Amenities {
+			.AmenitiesWeb {
 				color: black;
 			}
 			.Host {
@@ -607,18 +638,18 @@
 			@extend .Main;
 			background-color: $color-dark;
 			.Description {
-				.Left {
+				.Intro {
 					.InfoBox {
 						color: $color-light;
 					}
 				}
-				.Right {
+				.Welcome {
 					h2 {
 						color: $color-aqua;
 					}
 				}
 			}
-			.Amenities {
+			.AmenitiesWeb {
 				color: white;
 			}
 			.Host {
@@ -643,18 +674,18 @@
 			@extend .Main;
 			background-color: $color-three;
 			.Description {
-				.Left {
+				.Intro {
 					.InfoBox {
 						color: black;
 					}
 				}
-				.Right {
+				.Welcome {
 					h2 {
 						color: $color-dark;
 					}
 				}
 			}
-			.Amenities {
+			.AmenitiesWeb {
 				color: black;
 			}
 			.Host {
@@ -710,10 +741,11 @@
 	.BookingMobile {
 		display: none;
 		@media screen and (max-width: $breakpoint-tablet) {
+			z-index: 101;
 			display: flex;
 			@include flex-center;
-			position: relative;
-			top: 0;
+			position: fixed;
+			bottom: 0;
 			left: 0;
 			transform: none;
 			height: 10%;

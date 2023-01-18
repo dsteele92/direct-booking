@@ -36,35 +36,38 @@
 				opacity: 1;
 			}
 		}
-
-		&0 {
-			@extend .Amenity;
-			color: black;
-		}
-		&1 {
-			@extend .Amenity;
-			color: white;
-		}
-		&2 {
-			@extend .Amenity;
-			color: black;
-		}
 	}
 
 	.Show {
 		.Description {
 			opacity: 1;
 		}
-		&0 {
-			@extend .Show;
+	}
+
+	&0 {
+		@extend .AmenitiesMatrix;
+		.Amenity {
+			color: black;
+		}
+		.Show {
 			color: $color-dark;
 		}
-		&1 {
-			@extend .Show;
+	}
+	&1 {
+		@extend .AmenitiesMatrix;
+		.Amenity {
+			color: white;
+		}
+		.Show {
 			color: $color-yellow;
 		}
-		&2 {
-			@extend .Show;
+	}
+	&2 {
+		@extend .AmenitiesMatrix;
+		.Amenity {
+			color: black;
+		}
+		.Show {
 			color: $color-dark;
 		}
 	}

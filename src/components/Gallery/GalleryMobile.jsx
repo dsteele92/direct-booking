@@ -31,7 +31,7 @@ import {
 	EXT,
 } from 'images';
 
-export default function GalleryMobile() {
+export default function GalleryMobile(props) {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [galleryIndex, setGalleryIndex] = useState(0);
 
@@ -88,12 +88,14 @@ export default function GalleryMobile() {
 				</ul>
 			</nav>
 			<div
-				className={galleryIndex > 0 ? Style.ArrowLeft : Style.ArrowLeftDisable}
+				className={`${Style[`Arrow${props.scroll}`]} ${galleryIndex > 0 ? '' : Style.Disable}`}
+				style={{ left: '5%' }}
 				onClick={() => handleArrow(-1)}>
 				<BsFillArrowLeftCircleFill />
 			</div>
 			<div
-				className={galleryIndex < total - 2 ? Style.ArrowRight : Style.ArrowRightDisable}
+				className={`${Style[`Arrow${props.scroll}`]} ${galleryIndex < total - 2 ? '' : Style.Disable}`}
+				style={{ right: '5%' }}
 				onClick={() => handleArrow(1)}>
 				<BsFillArrowRightCircleFill />
 			</div>
@@ -111,14 +113,14 @@ export default function GalleryMobile() {
 					))}
 				</div>
 			</div>
-			<div className={Style.MobileArrows}>
+			<div className={Style[`MobileArrows${props.scroll}`]}>
 				<div
-					className={galleryIndex > 0 ? Style.MobileArrow : Style.MobileArrowDisable}
+					className={`${Style.MobileArrow} ${galleryIndex > 0 ? Style.Disable : ''}`}
 					onClick={() => handleArrow(-1)}>
 					<BsFillArrowLeftCircleFill />
 				</div>
 				<div
-					className={galleryIndex < total - 2 ? Style.MobileArrow : Style.MobileArrowDisable}
+					className={`${Style.MobileArrow} ${galleryIndex > 0 ? Style.Disable : ''}`}
 					onClick={() => handleArrow(1)}>
 					<BsFillArrowRightCircleFill />
 				</div>

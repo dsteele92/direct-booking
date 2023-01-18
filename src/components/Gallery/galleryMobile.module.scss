@@ -9,6 +9,10 @@
 	padding-bottom: 80px;
 	@media screen and (max-width: $breakpoint-tablet) {
 		padding-top: 0;
+		padding-bottom: 50px;
+	}
+	@media screen and (max-width: $breakpoint-mobile) {
+		padding-top: 0;
 		padding-bottom: 20px;
 	}
 
@@ -22,7 +26,7 @@
 			justify-content: space-evenly;
 			align-items: center;
 			flex-wrap: wrap;
-			padding: 0 10px;
+			padding: 0 5%;
 
 			.Li {
 				list-style: none;
@@ -58,33 +62,36 @@
 		width: fit-content;
 		cursor: pointer;
 		@include flex-center;
-
 		font-size: 25px;
-		color: $color-dark;
+
+		transition: opacity 0.1s linear;
+		&:active {
+			opacity: 0.7;
+		}
 
 		@media screen and (max-width: $breakpoint-small) {
 			display: none;
 		}
 
-		&Left {
+		&0 {
 			@extend .Arrow;
-			left: 5%;
-
-			&Disable {
-				@extend .ArrowLeft;
-				color: rgba($color: $color-dark, $alpha: 0.7);
-				cursor: default;
-			}
+			color: $color-dark;
 		}
-		&Right {
+		&1 {
 			@extend .Arrow;
-			right: 5%;
+			color: $color-light;
+		}
+		&2 {
+			@extend .Arrow;
+			color: $color-dark;
+		}
+	}
 
-			&Disable {
-				@extend .ArrowRight;
-				color: rgba($color: $color-dark, $alpha: 0.7);
-				cursor: default;
-			}
+	.Disable {
+		opacity: 0.7;
+		cursor: default;
+		&:active {
+			opacity: 1;
 		}
 	}
 
@@ -93,15 +100,23 @@
 		.MobileArrow {
 			margin: 15px 10px 0;
 			font-size: 25px;
-			color: $color-dark;
-			&Disable {
-				@extend .MobileArrow;
-				color: rgba($color: $color-dark, $alpha: 0.7);
-				cursor: default;
-			}
 		}
+
 		@media screen and (max-width: $breakpoint-small) {
 			display: flex;
+		}
+
+		&0 {
+			@extend .MobileArrows;
+			color: $color-dark;
+		}
+		&1 {
+			@extend .MobileArrows;
+			color: $color-light;
+		}
+		&2 {
+			@extend .MobileArrows;
+			color: $color-dark;
 		}
 	}
 
@@ -121,6 +136,9 @@
 		}
 		@media screen and (max-width: 400px) {
 			height: 50%;
+		}
+		@media screen and (max-height: 500px) {
+			max-width: 500px;
 		}
 		border-radius: 10px;
 		overflow: hidden;

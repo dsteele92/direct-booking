@@ -48,25 +48,17 @@
 		font-size: 25px;
 		color: $color-dark;
 
-		&Left {
-			@extend .Arrow;
-			left: 5%;
-
-			&Disable {
-				@extend .ArrowLeft;
-				color: rgba($color: $color-dark, $alpha: 0.7);
-				cursor: default;
-			}
+		transition: opacity 0.1s linear;
+		&:active {
+			opacity: 0.7;
 		}
-		&Right {
-			@extend .Arrow;
-			right: 5%;
+	}
 
-			&Disable {
-				@extend .ArrowRight;
-				color: rgba($color: $color-dark, $alpha: 0.7);
-				cursor: default;
-			}
+	.Disable {
+		opacity: 0.7;
+		cursor: default;
+		&:active {
+			opacity: 1;
 		}
 	}
 

@@ -12,19 +12,15 @@ import {
 import { taborInfo, amenitiesIconData, hostIntro, houseRulesMain, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill } from 'react-icons/bs';
 
-// const fs = require('fs');
-// const path = require('path');
-// require('dotenv').config({ path: __dirname + '/.env' });
-
 function App() {
+	// for opening page enter button -->
 	const [enter, setEnter] = useState(false);
 	// for background color -->
-	const main = useRef();
 	const [scroll, setScroll] = useState(0);
+	const main = useRef();
 	// for amenities matrix -->
 	const [show, setShow] = useState(-1);
 	const [showAll, setShowAll] = useState(false);
-
 	const matrixEven = useRef();
 	const matrixOdd = useRef();
 
@@ -32,12 +28,20 @@ function App() {
 		const handleScroll = (event) => {
 			console.log(event.target.scrollTop / event.target.clientHeight);
 			let scrollTop = event.target.scrollTop;
-			let pageHeight = event.target.clientHeight;
+			// let pageHeight = event.target.clientHeight;
+			let pageHeight = window.innerHeight;
+
+			// ---> can use scrollHeight of element for total pixels of page
+			// console.log(main.current.scrollHeight);
 
 			const delta = (scrollTop / (1.6 * pageHeight)) * 16;
+			// parralax amenities matrix only displayed above breakpoint-small
+			if (window.innerWidth >= 750) {
+				matrixEven.current.style.transform = `translateY(${-8 + delta}%)`;
+				matrixOdd.current.style.transform = `translateY(${8 - delta}%)`;
+			}
 
-			matrixEven.current.style.transform = `translateY(${-8 + delta}%)`;
-			matrixOdd.current.style.transform = `translateY(${8 - delta}%)`;
+			// ---> Add different parralax breakpoints for mobile
 
 			if (scrollTop <= 0.5 * pageHeight) {
 				setScroll(0);
@@ -60,7 +64,7 @@ function App() {
 	return (
 		<div className={Style.App}>
 			<main className={`${Style[`Main${scroll}`]} ${enter ? Style.Enter : ''}`} ref={main}>
-				<section className={enter ? Style.HomeBannerEnter : Style.HomeBanner}>
+				<div className={enter ? Style.HomeBannerEnter : Style.HomeBanner}>
 					<div className={Style.Tint}></div>
 					<div className={Style.MainHeader}>
 						<h1>{taborInfo.mainHeader}</h1>
@@ -77,12 +81,12 @@ function App() {
 							</div>
 						</div>
 					</div>
-				</section>
+				</div>
 				<section className={Style.Gallery}>
-					<GalleryWeb />
+					<GalleryWeb scroll={scroll} />
 				</section>
 				<section className={Style.Description}>
-					<div className={Style.Left}>
+					<div className={Style.Intro}>
 						<div className={Style.InfoBox}>
 							<p>{taborInfo.aboutTheSpace}</p>
 							<div className={Style.ShowMore}>
@@ -91,14 +95,14 @@ function App() {
 							</div>
 						</div>
 					</div>
-					<div className={Style.Right}>
+					<div className={Style.Welcome}>
 						<h2>Welcome</h2>
 					</div>
 				</section>
 				<section className={Style.GalleryMobile}>
-					<GalleryMobile />
+					<GalleryMobile scroll={scroll} />
 				</section>
-				<section className={Style.Amenities}>
+				<section className={Style.AmenitiesWeb}>
 					<div className={Style.Header}>
 						<h2>Our Amenities:</h2>
 						<h4
@@ -125,7 +129,9 @@ function App() {
 						))}
 					</div>
 				</section>
-				<div className={Style.LineBreak}></div>
+				<section className={Style.AmenitiesMobile}>
+					<AmenitiesMobile scroll={scroll} />
+				</section>
 				<section className={Style.Host}>
 					<div className={Style.HostPhoto}>
 						<div className={Style.Signature}>
@@ -140,7 +146,6 @@ function App() {
 						<p>{hostIntro.hostIntro3}</p>
 					</div>
 				</section>
-				<div className={Style.LineBreak}></div>
 				<section className={Style.Info}>
 					<div className={Style.Container}>
 						<div className={Style.Tab}>
@@ -202,7 +207,6 @@ function App() {
 						</div>
 					</div>
 				</section>
-				<div className={Style.LineBreak}></div>
 			</main>
 			<section className={Style.BookingWeb}>
 				<BookingWeb />

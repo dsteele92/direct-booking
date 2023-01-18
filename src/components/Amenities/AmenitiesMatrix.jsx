@@ -5,13 +5,9 @@ import { amenitiesIconData } from 'content';
 
 export default function AmenitiesMatrix(props) {
 	return (
-		<div className={Style.AmenitiesMatrix}>
+		<div className={Style[`AmenitiesMatrix${props.scroll}`]}>
 			{amenitiesIconData.map((amenity, index) => (
-				<div
-					className={`${Style[`Amenity${props.scroll}`]} ${
-						props.show === index ? Style[`Show${props.scroll}`] : ''
-					}`}
-					key={index}>
+				<div className={`${Style.Amenity} ${props.show === index ? Style.Show : ''}`} key={index}>
 					{index % 2 === props.modulo ? (
 						<div>
 							<div className={Style.Icon}>{amenity[1]}</div>

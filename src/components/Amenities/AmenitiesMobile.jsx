@@ -1,24 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import Style from './amenitiesMobile.module.scss';
+import { amenitiesIconData } from 'content';
 
-export default function AmenitiesMobile() {
-	const [scroll, setScroll] = useState(false);
+export default function AmenitiesMobile(props) {
+	const [showAll, setShowAll] = useState(0);
 
-	useEffect(() => {
-		const onScroll = (event) => {
-			if (window.pageYOffset >= 50) {
-				setScroll(true);
-			} else {
-				setScroll(false);
-			}
-		};
+	useEffect(() => {}, []);
 
-		window.addEventListener('scroll', onScroll);
-
-		return () => {
-			window.removeEventListener('scroll', onScroll);
-		};
-	}, []);
-
-	return <div className={Style.App}></div>;
+	return (
+		<div className={Style[`AmenitiesMobile${props.scroll}`]}>
+			<h2>Our Amenities:</h2>
+			<div className={Style.MobileMatrix}>
+				{amenitiesIconData.map((amenity, index) => (
+					<div className={`${index < 12 ? Style.Amenity : Style[`AmenityAll${showAll}`]}`} key={index}>
+						<div>
+							<div className={Style.Icon}>{amenity[1]}</div>
+							<div className={Style.Description}>{amenity[0]}</div>
+						</div>
+					</div>
+				))}
+			</div>
+		</div>
+	);
 }
