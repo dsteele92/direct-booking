@@ -46,7 +46,6 @@
 				border-radius: 0;
 			}
 			overflow: hidden;
-			// transition: all 0.5s cubic-bezier(0.645, 0.045, 0.355, 1);
 			transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
 
 			display: flex;
@@ -74,8 +73,12 @@
 				@include flex-center;
 				cursor: pointer;
 				color: white;
-
 				transition: all 0.3s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+				@media screen and (max-width: $breakpoint-mobile) {
+					height: 60px;
+					width: 150px;
+				}
 
 				h3 {
 					// font-family: 'Roboto', serif;
@@ -85,8 +88,12 @@
 					letter-spacing: 1pt;
 					font-size: 30px;
 					margin-right: 30px;
-					// text-transform: uppercase;
+
+					@media screen and (max-width: $breakpoint-mobile) {
+						font-size: 24px;
+					}
 				}
+
 				.Door {
 					position: relative;
 					.Closed {
@@ -113,12 +120,7 @@
 				}
 
 				&:hover {
-					// background-color: white;
-					// border: 1px solid white;
 					border-color: $color-aqua;
-					// background-color: rgba($color: $color-yellow, $alpha: 0.1);
-					// border: 1px solid rgba($color: $color-yellow, $alpha: 0.8);
-					// box-shadow: inset 0 0 5px;
 
 					.Arrow {
 						.Rotate {
@@ -136,28 +138,45 @@
 			}
 
 			.MainHeader {
+				width: 100%;
 				h1 {
+					width: 100%;
+					padding: 0 5%;
 					text-align: center;
 					margin-bottom: 10px;
-					// font-family: 'Great Vibes', cursive;
 					font-family: 'Marcellus', serif;
 					letter-spacing: 1pt;
-
 					font-size: 50px;
 					color: white;
 					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 10px;
-					// choose font
-					// set responsive font sizes
+					@media screen and (max-width: $breakpoint-tablet) {
+						font-size: 40px;
+					}
+					@media screen and (max-width: $breakpoint-small) {
+						font-size: 34px;
+					}
+					@media screen and (max-width: $breakpoint-mobile) {
+						font-size: 32px;
+					}
 				}
 				h3 {
+					width: 100%;
+					padding: 0 10%;
 					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 20px;
 					text-align: center;
 					font-family: 'Marcellus', serif;
 					font-size: 24px;
 					color: white;
 					letter-spacing: 0.5pt;
-					// choose font
-					// set responsive font sizes
+					@media screen and (max-width: $breakpoint-tablet) {
+						font-size: 20px;
+					}
+					@media screen and (max-width: $breakpoint-small) {
+						font-size: 18px;
+					}
+					@media screen and (max-width: $breakpoint-mobile) {
+						font-size: 16px;
+					}
 				}
 			}
 
@@ -193,7 +212,6 @@
 			}
 			@media screen and (max-width: $breakpoint-tablet) {
 				height: 50%;
-				padding-bottom: 0;
 			}
 		}
 
@@ -322,13 +340,11 @@
 					letter-spacing: 1pt;
 				}
 				h4 {
-					// transform: translateX(-30%);
 					z-index: 10;
 					margin-top: 5px;
 					font-size: 15px;
 					font-weight: 100;
 					cursor: default;
-					// text-transform: uppercase;
 					border-bottom: 0.5px solid;
 
 					&:hover {
@@ -350,14 +366,11 @@
 					grid-template-rows: repeat(4, 1fr);
 
 					.GridSlot {
-						// height: 100%;
-						// width: 100%;
 						@include flex-center;
 
 						.HoverDiv {
 							width: 30%;
 							height: 80%;
-							// border: 1px solid black;
 						}
 					}
 				}
@@ -375,15 +388,15 @@
 		}
 
 		.Host {
-			margin-top: 10%;
 			position: relative;
 			height: 50%;
 			width: 100%;
 			display: flex;
 			justify-content: space-evenly;
 			align-items: center;
-
+			margin-top: 20px;
 			@media screen and (max-width: $breakpoint-small) {
+				margin-top: 50px;
 				flex-direction: column;
 				height: fit-content;
 			}
@@ -393,6 +406,10 @@
 				height: 80%;
 				width: 30%;
 				min-width: 300px;
+				@media screen and (max-width: $breakpoint-tablet) {
+					height: 70%;
+					width: 40%;
+				}
 				@media screen and (max-width: $breakpoint-small) {
 					flex-shrink: 0;
 					height: 300px;
@@ -452,23 +469,35 @@
 		}
 
 		.Info {
-			margin-top: 10%;
-			margin-bottom: 5%;
 			position: relative;
-			height: 40%;
+			height: fit-content;
+			min-height: 40%;
 			width: 100%;
 			padding: 0 5%;
-			@include flex-center;
 			display: grid;
 			grid-template-columns: repeat(3, 25%);
+			justify-content: center;
 			gap: 5%;
+			margin-top: 20px;
+			margin-bottom: 50px;
+			@media screen and (max-width: $breakpoint-small) {
+				margin-top: 60px;
+				margin-bottom: 30px;
+				padding: 0 10%;
+				display: flex;
+				flex-direction: column;
+			}
 
 			.Container {
 				z-index: 1;
-				height: 90%;
+				height: fit-content;
 				overflow: hidden;
 				display: flex;
 				flex-direction: column;
+
+				@media screen and (max-width: $breakpoint-small) {
+					margin-bottom: 20px;
+				}
 
 				.Tab {
 					border-radius: 10px;
@@ -491,10 +520,12 @@
 
 				.InfoInner {
 					position: relative;
-					height: 100%;
+					height: fit-content;
 					width: 100%;
 					padding: 5%;
-					overflow: hidden;
+					@media screen and (max-width: $breakpoint-small) {
+						padding: 5% 0;
+					}
 					font-family: 'Marcellus', serif;
 					text-align: center;
 					display: flex;
@@ -508,7 +539,9 @@
 						font-size: 16px;
 						line-height: 130%;
 						text-align: justify;
-						// color: black;
+						@media screen and (max-width: $breakpoint-tablet) {
+							text-align: center;
+						}
 					}
 					.FiveStars {
 						font-family: 'Roboto', serif;
@@ -524,12 +557,12 @@
 
 					.HighlightedReviews {
 						height: 80%;
-						max-height: 140px;
 						display: flex;
 						flex-direction: column;
 						justify-content: space-evenly;
 						li {
 							width: 100%;
+							// height: fit-content;
 							list-style: none;
 							display: flex;
 							flex-direction: column;
@@ -537,9 +570,11 @@
 							justify-content: center;
 							text-align: center;
 							font-size: 18px;
+							margin: 5px 0;
 							div {
 								font-family: 'Marcellus', serif;
 								font-weight: 300;
+								// height: fit-content;
 							}
 							.Name {
 								// align-self: flex-end;
@@ -555,7 +590,6 @@
 
 					.RulesMain {
 						height: 90%;
-						max-height: 220px;
 						display: flex;
 						flex-direction: column;
 						justify-content: space-between;
@@ -565,6 +599,7 @@
 							display: flex;
 							align-items: center;
 							justify-content: flex-start;
+							margin: 5px 0;
 							div {
 								color: $color-light;
 								font-size: 18px;
@@ -578,19 +613,18 @@
 							}
 						}
 					}
-
-					.Expand {
-						position: relative;
-						width: 100%;
-						text-align: end;
-						margin-top: 10px;
-						font-size: 15px;
-						font-weight: 100;
-						cursor: pointer;
-						// color: black;
-						span {
-							font-weight: 300;
-						}
+				}
+				.Expand {
+					position: relative;
+					width: 100%;
+					text-align: end;
+					margin-top: 10px;
+					font-size: 15px;
+					font-weight: 100;
+					cursor: pointer;
+					// color: black;
+					span {
+						font-weight: 300;
 					}
 				}
 			}
@@ -631,6 +665,9 @@
 					.InfoInner {
 						color: black;
 					}
+					.Expand {
+						color: black;
+					}
 				}
 			}
 		}
@@ -667,6 +704,9 @@
 					.InfoInner {
 						color: white;
 					}
+					.Expand {
+						color: white;
+					}
 				}
 			}
 		}
@@ -701,6 +741,9 @@
 						}
 					}
 					.InfoInner {
+						color: black;
+					}
+					.Expand {
 						color: black;
 					}
 				}

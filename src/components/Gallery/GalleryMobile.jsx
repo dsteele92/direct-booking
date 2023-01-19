@@ -79,7 +79,7 @@ export default function GalleryMobile(props) {
 				<ul>
 					{rooms.map((room, index) => (
 						<li
-							className={galleryRoom === index ? Style.LiCurrent : Style.Li}
+							className={galleryRoom === index ? Style.LiCurrent : Style[`Li${props.scroll}`]}
 							onClick={() => handleRoomSelect(index)}
 							key={index}>
 							{room}

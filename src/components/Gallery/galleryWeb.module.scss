@@ -52,6 +52,19 @@
 		&:active {
 			opacity: 0.7;
 		}
+
+		&0 {
+			@extend .Arrow;
+			color: $color-dark;
+		}
+		&1 {
+			@extend .Arrow;
+			color: $color-light;
+		}
+		&2 {
+			@extend .Arrow;
+			color: $color-dark;
+		}
 	}
 
 	.Disable {

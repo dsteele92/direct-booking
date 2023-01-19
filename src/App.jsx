@@ -26,11 +26,12 @@ function App() {
 
 	useEffect(() => {
 		const handleScroll = (event) => {
-			console.log(event.target.scrollTop / event.target.clientHeight);
+			// console.log(event.target.scrollTop / event.target.clientHeight);
 			let scrollTop = event.target.scrollTop;
 			// let pageHeight = event.target.clientHeight;
 			let pageHeight = window.innerHeight;
 
+			let total = main.current.scrollHeight - window.innerHeight;
 			// ---> can use scrollHeight of element for total pixels of page
 			// console.log(main.current.scrollHeight);
 
@@ -41,14 +42,27 @@ function App() {
 				matrixOdd.current.style.transform = `translateY(${8 - delta}%)`;
 			}
 
+			// ***** Switch to intersection observer *****
 			// ---> Add different parralax breakpoints for mobile
 
-			if (scrollTop <= 0.5 * pageHeight) {
-				setScroll(0);
-			} else if (scrollTop > 0.5 * pageHeight && scrollTop <= 1.4 * pageHeight) {
-				setScroll(1);
-			} else if (scrollTop > 1.4 * pageHeight) {
-				setScroll(2);
+			if (window.innerWidth > 1000) {
+				if (scrollTop <= 0.5 * pageHeight) {
+					setScroll(0);
+				} else if (scrollTop > 0.5 * pageHeight && scrollTop <= 1.2 * pageHeight) {
+					setScroll(1);
+				} else if (scrollTop > 1.2 * pageHeight) {
+					setScroll(2);
+				}
+			} else {
+				console.log(scrollTop / total);
+				// console.log(total);
+				if (scrollTop / total <= 0.2) {
+					setScroll(0);
+				} else if (scrollTop / total > 0.2 && scrollTop / total <= 0.6) {
+					setScroll(1);
+				} else if (scrollTop / total > 0.6) {
+					setScroll(2);
+				}
 			}
 		};
 
@@ -158,9 +172,9 @@ function App() {
 								paths, tennis courts, basketball courts, majestic fir trees, and breathtaking panoramic
 								views of the city and water reservoirs at the peak of the park.
 							</p>
-							<div className={Style.Expand}>
-								View Map <span>></span>
-							</div>
+						</div>
+						<div className={Style.Expand}>
+							View Map <span>></span>
 						</div>
 					</div>
 					<div className={Style.Container}>
@@ -173,7 +187,7 @@ function App() {
 								<span>
 									<BsStarFill />
 								</span>{' '}
-								Rating on Air B&B
+								Rating on Airbnb
 							</h2>
 							<ul className={Style.HighlightedReviews}>
 								{highlightedReviews.map((highlight, index) => (
@@ -183,9 +197,9 @@ function App() {
 									</li>
 								))}
 							</ul>
-							<div className={Style.Expand}>
-								See reviews <span>></span>
-							</div>
+						</div>
+						<div className={Style.Expand}>
+							See reviews <span>></span>
 						</div>
 					</div>
 					<div className={Style.Container}>
@@ -201,9 +215,9 @@ function App() {
 									</li>
 								))}
 							</ul>
-							<div className={Style.Expand}>
-								House rules <span>></span>
-							</div>
+						</div>
+						<div className={Style.Expand}>
+							House rules <span>></span>
 						</div>
 					</div>
 				</section>

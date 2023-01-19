@@ -6,17 +6,31 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	h2 {
-		align-self: flex-start;
-		padding-left: 10%;
-		font-size: 20px;
-		display: block;
-		font-family: 'Marcellus', serif;
-		letter-spacing: 1pt;
+	.Header {
+		width: 80%;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: 10px;
+		h2 {
+			align-self: flex-start;
+			// padding-left: 10%;
+			font-size: 20px;
+			display: block;
+			font-family: 'Marcellus', serif;
+			letter-spacing: 1pt;
+		}
+		h4 {
+			padding-top: 3px;
+			font-family: 'Roboto', serif;
+			font-weight: 100;
+			font-size: 15px;
+			border-bottom: 0.5px solid;
+		}
 	}
 	.MobileMatrix {
 		height: 100%;
-		width: 80%;
+		width: 100%;
+		padding: 3% 10%;
 		display: grid;
 
 		grid-template-columns: repeat(4, 1fr);
@@ -58,33 +72,25 @@
 				display: none;
 			}
 		}
+		.Amen {
+			opacity: 0;
+			&Show {
+				@extend .Amen;
+				animation: fadeInLift 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+			}
+		}
 	}
 
 	&0 {
 		@extend .AmenitiesMobile;
-		.Amenity {
-			color: black;
-		}
-		h2 {
-			color: black;
-		}
+		color: black;
 	}
 	&1 {
 		@extend .AmenitiesMobile;
-		.Amenity {
-			color: white;
-		}
-		h2 {
-			color: white;
-		}
+		color: white;
 	}
 	&2 {
 		@extend .AmenitiesMobile;
-		.Amenity {
-			color: black;
-		}
-		h2 {
-			color: black;
-		}
+		color: black;
 	}
 }

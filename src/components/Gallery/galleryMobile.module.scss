@@ -32,7 +32,6 @@
 				list-style: none;
 				font-family: 'Marcellus', serif;
 				transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-				color: gray;
 				cursor: pointer;
 				font-size: 16px;
 				margin: 0 5px;
@@ -41,6 +40,19 @@
 				}
 				@media screen and (max-width: $breakpoint-mobile) {
 					font-size: 12px;
+				}
+
+				&0 {
+					@extend .Li;
+					color: gray;
+				}
+				&1 {
+					@extend .Li;
+					color: rgb(192, 192, 192);
+				}
+				&2 {
+					@extend .Li;
+					color: gray;
 				}
 
 				&Current {
