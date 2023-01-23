@@ -1,71 +1,126 @@
 @import 'sass';
 
 .App {
-	position: fixed;
-	width: 100vw;
+	// position: relative;
+	width: 100%;
 	height: 100%;
 	min-height: 100%;
 	box-sizing: border-box;
 	overflow: hidden;
+	// z-index: 0;
 
 	.Main {
-		position: absolute;
-		top: 5%;
-		left: 50%;
-		transform: translateX(-50%);
-		height: 85vh;
-		width: 95vw;
-		max-width: 1900px;
-		border-radius: 10px;
-		// overflow hidden until page opened --> add .Enter class
-		overflow: hidden;
-		box-shadow: 0 5px 20px 10px rgb(188, 188, 188);
+		position: relative;
+		height: 100vh;
+		width: 100%;
+		overflow-x: hidden;
+		overflow-y: scroll;
 		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+		// display: flex;
+		// flex-direction: column;
+		// align-items: center;
 
-		@media screen and (max-width: $breakpoint-tablet) {
-			position: absolute;
-			top: 0;
-			left: 0;
-			transform: none;
-			height: 90%;
-			width: 100%;
-			border-radius: 0;
+		// @media screen and (max-width: $breakpoint-tablet) {
+		// 	position: absolute;
+		// 	top: 0;
+		// 	left: 0;
+		// 	transform: none;
+		// 	height: 90%;
+		// 	width: 100%;
+		// 	border-radius: 0;
+		// }
+
+		section {
+			min-height: 350px;
+			max-width: 2400px;
 		}
 
 		.HomeBanner {
-			z-index: 100;
-			position: absolute;
+			position: relative;
 			width: 100%;
-			height: 100%;
-			background-image: url('./images/living_room_1.jpeg');
-			background-size: cover;
-			background-repeat: no-repeat;
-			background-position: center 70%;
-			border-radius: 10px;
-			@media screen and (max-width: $breakpoint-tablet) {
-				border-radius: 0;
-			}
-			overflow: hidden;
-			transition: all 0.5s cubic-bezier(0.785, 0.135, 0.15, 0.86);
+			height: 90%;
+			padding: 10px;
+			@include flex-center;
 
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-evenly;
-
-			.Tint {
-				z-index: -10;
-				position: absolute;
+			.BackgroundPhoto {
+				position: relative;
 				height: 100%;
 				width: 100%;
+				background-image: url('./images/living_room_1.jpeg');
+				background-size: cover;
+				background-repeat: no-repeat;
+				background-position: center 70%;
 				border-radius: 10px;
-				@media screen and (max-width: $breakpoint-tablet) {
-					border-radius: 0;
+				overflow: hidden;
+
+				.Tint {
+					z-index: 0;
+					position: absolute;
+					height: 100%;
+					width: 100%;
+					@media screen and (max-width: $breakpoint-tablet) {
+						border-radius: 0;
+					}
+					background-color: rgba($color: black, $alpha: 0.3);
 				}
-				background-color: rgba($color: black, $alpha: 0.2);
+			}
+
+			.MainHeader {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				z-index: 1;
+				width: 100%;
+				h1 {
+					width: 100%;
+					padding: 0 5%;
+					text-align: center;
+					margin-bottom: 10px;
+					// font-family: 'Marcellus', serif;
+					letter-spacing: 1pt;
+					font-size: 60px;
+					font-weight: 300;
+					color: white;
+					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 10px;
+					@media screen and (max-width: $breakpoint-tablet) {
+						font-size: 40px;
+					}
+					@media screen and (max-width: $breakpoint-small) {
+						font-size: 34px;
+					}
+					@media screen and (max-width: $breakpoint-mobile) {
+						font-size: 32px;
+					}
+				}
+				h3 {
+					width: 100%;
+					padding: 0 10%;
+					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 20px;
+					text-align: center;
+					// font-family: 'Marcellus', serif;
+					font-size: 28px;
+					font-weight: 300;
+					color: white;
+					letter-spacing: 0.5pt;
+					@media screen and (max-width: $breakpoint-tablet) {
+						font-size: 20px;
+					}
+					@media screen and (max-width: $breakpoint-small) {
+						font-size: 18px;
+					}
+					@media screen and (max-width: $breakpoint-mobile) {
+						font-size: 16px;
+					}
+				}
 			}
 
 			.Enter {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				z-index: 1;
 				height: 60px;
 				width: 200px;
 				border: 1.5px solid white;
@@ -136,135 +191,92 @@
 					}
 				}
 			}
-
-			.MainHeader {
-				width: 100%;
-				h1 {
-					width: 100%;
-					padding: 0 5%;
-					text-align: center;
-					margin-bottom: 10px;
-					font-family: 'Marcellus', serif;
-					letter-spacing: 1pt;
-					font-size: 50px;
-					color: white;
-					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 10px;
-					@media screen and (max-width: $breakpoint-tablet) {
-						font-size: 40px;
-					}
-					@media screen and (max-width: $breakpoint-small) {
-						font-size: 34px;
-					}
-					@media screen and (max-width: $breakpoint-mobile) {
-						font-size: 32px;
-					}
-				}
-				h3 {
-					width: 100%;
-					padding: 0 10%;
-					text-shadow: rgba(0, 0, 0, 0.4) 1px 0px 20px;
-					text-align: center;
-					font-family: 'Marcellus', serif;
-					font-size: 24px;
-					color: white;
-					letter-spacing: 0.5pt;
-					@media screen and (max-width: $breakpoint-tablet) {
-						font-size: 20px;
-					}
-					@media screen and (max-width: $breakpoint-small) {
-						font-size: 18px;
-					}
-					@media screen and (max-width: $breakpoint-mobile) {
-						font-size: 16px;
-					}
-				}
-			}
-
-			&Enter {
-				@extend .HomeBanner;
-				transform: translateY(-105%);
-			}
 		}
 
-		section {
-			min-height: 350px;
-		}
+		// -------------------------------------- BOOKING ---------------------------------------------->
 
-		.Gallery {
-			position: relative;
-			height: 60%;
+		.BookingWeb {
+			position: sticky;
+			top: 10px;
+			z-index: 1;
+			height: 10%;
 			width: 100%;
-			@media screen and (max-width: 1500px) {
-				height: 50%;
-			}
-			@media screen and (max-width: 1200px) {
+			padding: 0 10px 10px;
+			overflow: hidden;
+			@include flex-center;
+
+			@media screen and (max-width: $breakpoint-tablet) {
 				display: none;
 			}
 		}
 
-		.GalleryMobile {
+		.BookingMobileBar {
 			display: none;
-			@media screen and (max-width: 1200px) {
-				display: block;
-				position: relative;
-				height: 60%;
-				width: 100%;
-			}
 			@media screen and (max-width: $breakpoint-tablet) {
-				height: 50%;
+				position: sticky;
+				top: 10px;
+				z-index: 1;
+				height: 10%;
+				width: 100%;
+				padding: 0 10px 10px;
+				overflow: hidden;
+				@include flex-center;
 			}
 		}
+
+		// -------------------------------------- INTRO ---------------------------------------------->
 
 		.Description {
 			position: relative;
 			height: 40%;
 			width: 100%;
 			display: flex;
-			padding-bottom: 50px;
-			@media screen and (max-width: 1500px) {
-				height: 50%;
-			}
-			@media screen and (max-width: 1200px) {
-				height: 40%;
-				padding-bottom: 0;
-				flex-direction: row-reverse;
-			}
+			justify-content: center;
+			align-items: center;
+			padding: 10%;
 			@media screen and (max-width: $breakpoint-tablet) {
-				height: 50%;
+				flex-direction: column;
+				margin-bottom: 50px;
 			}
-			@media screen and (max-width: $breakpoint-small) {
-				flex-direction: column-reverse;
-				align-items: center;
-				justify-content: center;
+			.Welcome {
+				height: 100%;
+				width: auto;
+				@include flex-center;
+				h2 {
+					text-align: center;
+					font-family: 'Great Vibes', cursive;
+					font-size: 100px;
+					@media screen and (max-width: $breakpoint-small) {
+						font-size: 60px;
+					}
+				}
+				margin-right: 100px;
+				@media screen and (max-width: $breakpoint-tablet) {
+					margin-right: 0;
+					// margin-bottom: 50px;
+				}
 			}
 			.Intro {
-				position: relative;
 				height: 100%;
-				width: 100%;
-				display: flex;
-				justify-content: flex-end;
-				align-items: center;
-				@media screen and (max-width: 1200px) {
-					justify-content: flex-start;
-				}
-				@media screen and (max-width: $breakpoint-small) {
-					justify-content: center;
-					height: fit-content;
-					margin-bottom: 50px;
-				}
+				width: auto;
+				@include flex-center;
 				.InfoBox {
 					position: relative;
 					height: auto;
 					width: 80%;
+					max-width: 800px;
 					@include flex-center;
 					p {
 						text-align: justify;
 						font-family: 'Marcellus', serif;
 						@include flex-center;
-						font-size: 16px;
+						font-size: 20px;
 						line-height: 1.4;
+						@media screen and (max-width: $breakpoint-large) {
+							font-size: 18px;
+						}
 						@media screen and (max-width: $breakpoint-tablet) {
-							font-size: 14px;
+							font-size: 16px;
 						}
 						@media screen and (max-width: $breakpoint-mobile) {
 							font-size: 12px;
@@ -288,33 +300,34 @@
 					}
 				}
 			}
-			.Welcome {
-				position: relative;
-				height: 100%;
-				width: 100%;
-				@media screen and (max-width: $breakpoint-small) {
-					height: fit-content;
-					margin-top: 30px;
-					margin-bottom: 20px;
-				}
-				h2 {
-					position: absolute;
-					top: 50%;
-					transform: translateY(-50%);
-					left: 25%;
-					text-align: center;
-					font-family: 'Great Vibes', cursive;
-					font-size: 70px;
+		}
 
-					@media screen and (max-width: $breakpoint-small) {
-						position: relative;
-						transform: none;
-						top: 0;
-						left: 0;
-					}
-				}
+		// -------------------------------------- GALLERY ---------------------------------------------->
+
+		.Gallery {
+			position: relative;
+			height: 50%;
+			width: 100%;
+			margin-bottom: 75px;
+			@media screen and (max-width: 1200px) {
+				display: none;
 			}
 		}
+
+		.GalleryMobile {
+			display: none;
+			@media screen and (max-width: 1200px) {
+				display: block;
+				position: relative;
+				height: 60%;
+				width: 100%;
+			}
+			@media screen and (max-width: $breakpoint-tablet) {
+				height: 50%;
+			}
+		}
+
+		// -------------------------------------- AMENITIES ---------------------------------------------->
 
 		.AmenitiesWeb {
 			@media screen and (max-width: $breakpoint-small) {
@@ -340,7 +353,6 @@
 					letter-spacing: 1pt;
 				}
 				h4 {
-					z-index: 10;
 					margin-top: 5px;
 					font-size: 15px;
 					font-weight: 100;
@@ -386,6 +398,8 @@
 				width: 100%;
 			}
 		}
+
+		// -------------------------------------- HOST ---------------------------------------------->
 
 		.Host {
 			position: relative;
@@ -468,6 +482,8 @@
 			}
 		}
 
+		// -------------------------------------- INFO ---------------------------------------------->
+
 		.Info {
 			position: relative;
 			height: fit-content;
@@ -478,8 +494,11 @@
 			grid-template-columns: repeat(3, 25%);
 			justify-content: center;
 			gap: 5%;
-			margin-top: 20px;
-			margin-bottom: 50px;
+			margin-top: 50px;
+			margin-bottom: 20px;
+			@media screen and (max-width: $breakpoint-large) {
+				margin-bottom: 50px;
+			}
 			@media screen and (max-width: $breakpoint-small) {
 				margin-top: 60px;
 				margin-bottom: 30px;
@@ -489,7 +508,6 @@
 			}
 
 			.Container {
-				z-index: 1;
 				height: fit-content;
 				overflow: hidden;
 				display: flex;
@@ -630,8 +648,102 @@
 			}
 		}
 
-		// Color changes for different scroll positions ----->
+		// -------------------------------------- MODALS ---------------------------------------------->
 
+		.Modal {
+			position: fixed;
+			z-index: 2;
+			height: 100%;
+			width: 100%;
+			@include flex-center;
+
+			.ModalBackground {
+				z-index: -10;
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				background: rgba($color: black, $alpha: 0.5);
+			}
+
+			.Inner {
+				position: relative;
+				height: 60%;
+				width: 50%;
+				@media screen and (max-width: $breakpoint-tablet) {
+					width: 80%;
+				}
+				overflow-y: scroll;
+				background-color: $color-light;
+				border: 2px solid $color-dark;
+				border-radius: 10px;
+
+				.Close {
+					position: absolute;
+					top: 15px;
+					right: 15px;
+					@media screen and (max-width: $breakpoint-small) {
+						top: 10px;
+						right: 10px;
+					}
+					font-size: 28px;
+					color: $color-dark;
+					cursor: pointer;
+				}
+
+				.Content {
+					padding: 50px 10%;
+					@media screen and (max-width: $breakpoint-small) {
+						padding: 50px 5%;
+					}
+
+					h1 {
+						font-size: 32px;
+						@media screen and (max-width: $breakpoint-small) {
+							font-size: 24px;
+						}
+						margin-bottom: 25px;
+						font-family: 'Marcellus', serif;
+					}
+					h4 {
+						font-size: 22px;
+						@media screen and (max-width: $breakpoint-small) {
+							font-size: 18px;
+						}
+						font-family: 'Marcellus', serif;
+						margin-top: 25px;
+						margin-bottom: 15px;
+					}
+					p {
+						font-size: 16;
+						font-weight: 300;
+						letter-spacing: 0.5pt;
+					}
+					li {
+						height: fit-content;
+						width: 100%;
+						list-style: none;
+						font-weight: 300;
+						letter-spacing: 0.5pt;
+						display: flex;
+						align-items: center;
+						justify-content: flex-start;
+						margin: 5px 0;
+						font-size: 18px;
+
+						.Icon {
+							color: $color-dark;
+							text-align: left;
+							margin-right: 15px;
+							font-family: 'Roboto', serif;
+							font-weight: 100;
+							font-size: 20px;
+						}
+					}
+				}
+			}
+		}
+
+		// Color changes for different scroll positions ------------------------------------------>
 		&0 {
 			@extend .Main;
 			background-color: $color-light;
@@ -748,51 +860,6 @@
 					}
 				}
 			}
-		}
-	}
-
-	// add Enter class to allow for scrolling
-	.Enter {
-		overflow-y: scroll;
-		scrollbar-width: none; /* Firefox */
-		-ms-overflow-style: none; /* Internet Explorer 10+ */
-		&::-webkit-scrollbar {
-			display: none;
-		}
-	}
-
-	.BookingWeb {
-		position: absolute;
-		z-index: 101;
-		bottom: 10vh;
-		left: 50%;
-		transform: translate(-50%, 50%);
-		height: 100px;
-		width: 900px;
-
-		@include flex-center;
-		border-radius: 10px;
-		box-shadow: 0 5px 20px rgb(188, 188, 188);
-		// box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
-		// overflow: hidden;
-
-		@media screen and (max-width: $breakpoint-tablet) {
-			display: none;
-		}
-	}
-
-	.BookingMobile {
-		display: none;
-		@media screen and (max-width: $breakpoint-tablet) {
-			z-index: 101;
-			display: flex;
-			@include flex-center;
-			position: fixed;
-			bottom: 0;
-			left: 0;
-			transform: none;
-			height: 10%;
-			width: 100%;
 		}
 	}
 }

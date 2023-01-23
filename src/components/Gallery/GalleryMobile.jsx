@@ -115,12 +115,12 @@ export default function GalleryMobile(props) {
 			</div>
 			<div className={Style[`MobileArrows${props.scroll}`]}>
 				<div
-					className={`${Style.MobileArrow} ${galleryIndex > 0 ? Style.Disable : ''}`}
+					className={`${Style.MobileArrow} ${galleryIndex > 0 ? '' : Style.Disable}`}
 					onClick={() => handleArrow(-1)}>
 					<BsFillArrowLeftCircleFill />
 				</div>
 				<div
-					className={`${Style.MobileArrow} ${galleryIndex > 0 ? Style.Disable : ''}`}
+					className={`${Style.MobileArrow} ${galleryIndex < total - 2 ? '' : Style.Disable}`}
 					onClick={() => handleArrow(1)}>
 					<BsFillArrowRightCircleFill />
 				</div>

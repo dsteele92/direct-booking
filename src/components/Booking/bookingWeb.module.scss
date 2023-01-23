@@ -4,14 +4,18 @@
 	height: 100%;
 	width: 100%;
 	border-radius: 10px;
+	overflow: hidden;
 	background: rgba($color: white, $alpha: 1);
+	// background-color: white;
 	transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 	// transition: height 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 
 	display: grid;
 	grid-template-columns: 3fr 1fr;
+	// justify-items: center;
 
 	.Booker {
+		// max-width: 700px;
 		display: flex;
 		justify-content: space-evenly;
 		align-items: center;
@@ -138,7 +142,7 @@
 		position: relative;
 		height: 100%;
 		width: 100%;
-		border-radius: 0 10px 10px 0;
+		// border-radius: 0 10px 10px 0;
 		background-color: $color-aqua;
 		@include flex-center;
 		cursor: pointer;

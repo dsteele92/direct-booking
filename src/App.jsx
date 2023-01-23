@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './app.module.scss';
-import {
-	BookingWeb,
-	BookingMobile,
-	GalleryWeb,
-	GalleryMobile,
-	AmenitiesMatrix,
-	AmenitiesMobile,
-	GoogleMaps,
-} from 'components';
+import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile, AmenitiesMatrix, AmenitiesMobile } from 'components';
 import { taborInfo, amenitiesIconData, hostIntro, houseRulesMain, highlightedReviews } from 'content';
-import { BsDoorClosed, BsDoorOpen, BsStarFill } from 'react-icons/bs';
+import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange } from 'react-icons/bs';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 function App() {
 	// for opening page enter button -->
@@ -23,6 +16,11 @@ function App() {
 	const [showAll, setShowAll] = useState(false);
 	const matrixEven = useRef();
 	const matrixOdd = useRef();
+	// for modals --->
+	const [seeIntro, setSeeIntro] = useState(false);
+	const [seeMap, setSeeMap] = useState(false);
+	const [seeReviews, setSeeReviews] = useState(false);
+	const [seeRules, setSeeRules] = useState(false);
 
 	useEffect(() => {
 		const handleScroll = (event) => {
@@ -35,7 +33,7 @@ function App() {
 			// ---> can use scrollHeight of element for total pixels of page
 			// console.log(main.current.scrollHeight);
 
-			const delta = (scrollTop / (1.6 * pageHeight)) * 16;
+			const delta = (scrollTop / (2.8 * pageHeight)) * 16;
 			// parralax amenities matrix only displayed above breakpoint-small
 			if (window.innerWidth >= 750) {
 				matrixEven.current.style.transform = `translateY(${-8 + delta}%)`;
@@ -45,73 +43,82 @@ function App() {
 			// ***** Switch to intersection observer *****
 			// ---> Add different parralax breakpoints for mobile
 
-			if (window.innerWidth > 1000) {
-				if (scrollTop <= 0.5 * pageHeight) {
-					setScroll(0);
-				} else if (scrollTop > 0.5 * pageHeight && scrollTop <= 1.2 * pageHeight) {
-					setScroll(1);
-				} else if (scrollTop > 1.2 * pageHeight) {
-					setScroll(2);
-				}
-			} else {
-				console.log(scrollTop / total);
-				// console.log(total);
-				if (scrollTop / total <= 0.2) {
-					setScroll(0);
-				} else if (scrollTop / total > 0.2 && scrollTop / total <= 0.6) {
-					setScroll(1);
-				} else if (scrollTop / total > 0.6) {
-					setScroll(2);
-				}
+			// if (window.innerWidth > 1000) {
+			if (scrollTop <= 1.5 * pageHeight) {
+				setScroll(0);
+			} else if (scrollTop > 1.5 * pageHeight && scrollTop <= 2.3 * pageHeight) {
+				setScroll(1);
+			} else if (scrollTop > 2.3 * pageHeight) {
+				setScroll(2);
 			}
+			// } else {
+			// 	console.log(scrollTop / total);
+			// 	// console.log(total);
+			// 	if (scrollTop / total <= 0.2) {
+			// 		setScroll(0);
+			// 	} else if (scrollTop / total > 0.2 && scrollTop / total <= 0.6) {
+			// 		setScroll(1);
+			// 	} else if (scrollTop / total > 0.6) {
+			// 		setScroll(2);
+			// 	}
+			// }
 		};
 
-		const mainFrame = main.current;
+		const mainCurrent = main.current;
 
-		mainFrame.addEventListener('scroll', handleScroll);
+		mainCurrent.addEventListener('scroll', handleScroll);
 
 		return () => {
-			mainFrame.removeEventListener('scroll', handleScroll);
+			mainCurrent.removeEventListener('scroll', handleScroll);
 		};
 	}, []);
 
 	return (
 		<div className={Style.App}>
-			<main className={`${Style[`Main${scroll}`]} ${enter ? Style.Enter : ''}`} ref={main}>
-				<div className={enter ? Style.HomeBannerEnter : Style.HomeBanner}>
-					<div className={Style.Tint}></div>
+			<main className={Style[`Main${scroll}`]} ref={main}>
+				<div className={Style.HomeBanner}>
+					<div className={Style.BackgroundPhoto}>
+						<div className={Style.Tint}></div>
+					</div>
 					<div className={Style.MainHeader}>
 						<h1>{taborInfo.mainHeader}</h1>
 						<h3>{taborInfo.subHeader}</h3>
 					</div>
-					<div className={Style.Enter} onClick={() => setEnter(true)}>
-						<h3>Enter</h3>
-						<div className={Style.Door}>
-							<div className={Style.Closed}>
-								<BsDoorClosed />
-							</div>
-							<div className={Style.Open}>
-								<BsDoorOpen />
-							</div>
+					{/* <div className={Style.Enter} onClick={() => setEnter(true)}>
+					<h3>Enter</h3>
+					<div className={Style.Door}>
+						<div className={Style.Closed}>
+							<BsDoorClosed />
+						</div>
+						<div className={Style.Open}>
+							<BsDoorOpen />
 						</div>
 					</div>
+				</div> */}
 				</div>
-				<section className={Style.Gallery}>
-					<GalleryWeb scroll={scroll} />
-				</section>
+				<div className={Style.BookingWeb}>
+					{/* <BookingWeb /> */}
+					<BookingMobile />
+				</div>
+				<div className={Style.BookingMobileBar}>
+					<BookingMobile />
+				</div>
 				<section className={Style.Description}>
+					<div className={Style.Welcome}>
+						<h2>Welcome</h2>
+					</div>
 					<div className={Style.Intro}>
 						<div className={Style.InfoBox}>
 							<p>{taborInfo.aboutTheSpace}</p>
-							<div className={Style.ShowMore}>
+							<div className={Style.ShowMore} onClick={() => setSeeIntro(true)}>
 								{/* Add onClick modal open function */}
 								Show more <span>></span>
 							</div>
 						</div>
 					</div>
-					<div className={Style.Welcome}>
-						<h2>Welcome</h2>
-					</div>
+				</section>
+				<section className={Style.Gallery}>
+					<GalleryWeb scroll={scroll} />
 				</section>
 				<section className={Style.GalleryMobile}>
 					<GalleryMobile scroll={scroll} />
@@ -173,7 +180,7 @@ function App() {
 								views of the city and water reservoirs at the peak of the park.
 							</p>
 						</div>
-						<div className={Style.Expand}>
+						<div className={Style.Expand} onClick={() => setSeeMap(true)}>
 							View Map <span>></span>
 						</div>
 					</div>
@@ -198,7 +205,7 @@ function App() {
 								))}
 							</ul>
 						</div>
-						<div className={Style.Expand}>
+						<div className={Style.Expand} onClick={() => setSeeReviews(true)}>
 							See reviews <span>></span>
 						</div>
 					</div>
@@ -216,18 +223,83 @@ function App() {
 								))}
 							</ul>
 						</div>
-						<div className={Style.Expand}>
+						<div className={Style.Expand} onClick={() => setSeeRules(true)}>
 							House rules <span>></span>
 						</div>
 					</div>
 				</section>
+
+				{seeIntro && (
+					<div className={Style.Modal}>
+						<div className={Style.ModalBackground} onClick={() => setSeeIntro(false)}></div>
+						<div className={Style.Inner}>
+							<div className={Style.Close} onClick={() => setSeeIntro(false)}>
+								<AiFillCloseCircle />
+							</div>
+							<div className={Style.Content}>
+								<h1>About this space</h1>
+								<p>{taborInfo.aboutTheSpace}</p>
+								<h4>The space</h4>
+								<p>{taborInfo.aboutTheSpaceCont}</p>
+								<h4>Guest access</h4>
+								<p>{taborInfo.guestAccess}</p>
+								<h4>Other things to note</h4>
+								<p>{taborInfo.otherThingsToNote}</p>
+							</div>
+						</div>
+					</div>
+				)}
+				{seeMap && (
+					<div className={Style.Modal}>
+						<div className={Style.ModalBackground} onClick={() => setSeeMap(false)}></div>
+						<div className={Style.Inner}>
+							<div className={Style.Close} onClick={() => setSeeMap(false)}>
+								<AiFillCloseCircle />
+							</div>
+							<div className={Style.Content}>Yo yo yo</div>
+						</div>
+					</div>
+				)}
+				{seeReviews && (
+					<div className={Style.Modal}>
+						<div className={Style.ModalBackground} onClick={() => setSeeReviews(false)}></div>
+						<div className={Style.Inner}>
+							<div className={Style.Close} onClick={() => setSeeReviews(false)}>
+								<AiFillCloseCircle />
+							</div>
+							<div className={Style.Content}>Yo yo yo</div>
+						</div>
+					</div>
+				)}
+				{seeRules && (
+					<div className={Style.Modal}>
+						<div className={Style.ModalBackground} onClick={() => setSeeRules(false)}></div>
+						<div className={Style.Inner}>
+							<div className={Style.Close} onClick={() => setSeeRules(false)}>
+								<AiFillCloseCircle />
+							</div>
+							<div className={Style.Content}>
+								<h1>House Rules</h1>
+								<p>
+									Follow these rules to be a considerate guest and avoid any issues during your stay.
+								</p>
+								<h4>Who can stay</h4>
+								<ul>
+									<li>
+										<div className={Style.Icon}>{houseRulesMain[0][1]}</div>
+										<p>{houseRulesMain[0][0]}</p>
+									</li>
+									<li>
+										<div className={Style.Icon}>{houseRulesMain[1][1]}</div>
+										<p>{houseRulesMain[1][0]}</p>
+									</li>
+								</ul>
+								<h4>What's allowed</h4>
+							</div>
+						</div>
+					</div>
+				)}
 			</main>
-			<section className={Style.BookingWeb}>
-				<BookingWeb />
-			</section>
-			<section className={Style.BookingMobile}>
-				<BookingMobile />
-			</section>
 		</div>
 	);
 }

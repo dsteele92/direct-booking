@@ -3,6 +3,17 @@
 .BookingMobile {
 	height: 100%;
 	width: 100%;
+	border-radius: 10px;
+	overflow: hidden;
 	background-color: $color-aqua;
+
 	@include flex-center;
+
+	span {
+		margin-right: 10px;
+	}
+
+	h2 {
+		font-weight: 100;
+	}
 }
