@@ -20,3 +20,15 @@
 		transform: translateY(0%);
 	}
 }
+
+@keyframes bounce {
+	from {
+		transform: translateY(0);
+	}
+	60% {
+		transform: translateY(15px);
+	}
+	to {
+		transform: translateY(0);
+	}
+}
