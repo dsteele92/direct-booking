@@ -1,14 +1,28 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './app.module.scss';
-import { BookingWeb, BookingMobile, GalleryWeb, GalleryMobile, AmenitiesMatrix, AmenitiesMobile } from 'components';
-import { taborInfo, amenitiesIconData, hostIntro, houseRulesMain, highlightedReviews } from 'content';
+import {
+	BookingWeb,
+	BookingMobile,
+	GalleryWeb,
+	GalleryMobile,
+	AmenitiesMatrix,
+	AmenitiesMobile,
+	useHasIntersected,
+} from 'components';
+import {
+	taborInfo,
+	amenitiesIconData,
+	hostIntro,
+	houseRulesMain,
+	additionalRules,
+	reviews,
+	highlightedReviews,
+} from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 
 function App() {
-	// for opening page enter button -->
-	// const [enter, setEnter] = useState(false);
 	const [top, setTop] = useState(true);
 	// for background color -->
 	const [scroll, setScroll] = useState(0);
@@ -23,10 +37,12 @@ function App() {
 	const [seeMap, setSeeMap] = useState(false);
 	const [seeReviews, setSeeReviews] = useState(false);
 	const [seeRules, setSeeRules] = useState(false);
-	// ----->
-	const intro = useRef();
+	// for nav links to scroll into view & lazy loading ----->
+	// const intro = useRef();
 	const amenities = useRef();
 	const host = useRef();
+	const [intro, introIntersected] = useHasIntersected({ threshold: 1 });
+	const [info, infoIntersected] = useHasIntersected({ threshold: 0.5 });
 
 	useEffect(() => {
 		const handleScroll = (event) => {
@@ -39,9 +55,9 @@ function App() {
 			const total = main.current.scrollHeight - main.current.clientHeight;
 
 			// ------------------------PARALLAX------------------------>
-			const delta = ((scrollTop - windowHeight) / (2.5 * windowHeight)) * 16;
+			const delta = ((scrollTop - windowHeight) / (2 * windowHeight)) * 16;
 			// parralax amenities matrix only displayed above breakpoint-small ----->
-			if (window.innerWidth >= 750) {
+			if (window.innerWidth > 750) {
 				matrixEven.current.style.transform = `translateY(${-8 + delta}%)`;
 				matrixOdd.current.style.transform = `translateY(${8 - delta}%)`;
 			}
@@ -54,12 +70,22 @@ function App() {
 			}
 
 			const percentScrolled = scrollTop / total;
-			if (percentScrolled < 0.55) {
-				setScroll(0);
-			} else if (percentScrolled >= 0.55 && percentScrolled < 0.85) {
-				setScroll(1);
-			} else if (percentScrolled >= 0.85) {
-				setScroll(2);
+			if (window.innerWidth > 750) {
+				if (percentScrolled < 0.55) {
+					setScroll(0);
+				} else if (percentScrolled >= 0.55 && percentScrolled < 0.85) {
+					setScroll(1);
+				} else if (percentScrolled >= 0.85) {
+					setScroll(2);
+				}
+			} else {
+				if (percentScrolled < 0.4) {
+					setScroll(0);
+				} else if (percentScrolled >= 0.4 && percentScrolled < 0.65) {
+					setScroll(1);
+				} else if (percentScrolled >= 0.65) {
+					setScroll(2);
+				}
 			}
 		};
 
@@ -101,7 +127,9 @@ function App() {
 							<h1>{taborInfo.mainHeader}</h1>
 							<h3>{taborInfo.subHeader}</h3>
 						</div>
-						<div className={Style.Scroll}>
+						<div
+							className={Style.Scroll}
+							onClick={() => intro.current.scrollIntoView({ behavior: 'smooth' })}>
 							<div className={Style.Door}>
 								<div className={top ? Style.Current : ''}>
 									<BsDoorClosed />
@@ -128,7 +156,9 @@ function App() {
 					</div>
 				</div> */}
 					</div>
-					<section className={Style.Description} ref={intro}>
+					<section
+						className={introIntersected ? Style.DescriptionAnimatedPlay : Style.DescriptionAnimated}
+						ref={intro}>
 						<div className={Style.Welcome}>
 							<h2>Welcome</h2>
 						</div>
@@ -136,7 +166,6 @@ function App() {
 							<div className={Style.InfoBox}>
 								<p>{taborInfo.aboutTheSpace}</p>
 								<div className={Style.ShowMore} onClick={() => setSeeIntro(true)}>
-									{/* Add onClick modal open function */}
 									Show more <span>></span>
 								</div>
 							</div>
@@ -194,8 +223,11 @@ function App() {
 							<p>{hostIntro.hostIntro3}</p>
 						</div>
 					</section>
-					<section className={Style.Info}>
-						<div className={Style.Container}>
+					<section className={Style.Info} ref={info}>
+						<div
+							className={`${Style.Container} ${
+								infoIntersected ? Style.Intersected1 : Style.Intersected
+							}`}>
 							<div className={Style.Tab}>
 								<h4>Location</h4>
 							</div>
@@ -212,7 +244,10 @@ function App() {
 								View Map <span>></span>
 							</div>
 						</div>
-						<div className={Style.Container}>
+						<div
+							className={`${Style.Container} ${
+								infoIntersected ? Style.Intersected2 : Style.Intersected
+							}`}>
 							<div className={Style.Tab}>
 								<h4>Reviews</h4>
 							</div>
@@ -227,8 +262,8 @@ function App() {
 								<ul className={Style.HighlightedReviews}>
 									{highlightedReviews.map((highlight, index) => (
 										<li key={index}>
-											<div>"{highlight[1]}"</div>
-											<div className={Style.Name}>-{highlight[0]}</div>
+											<div>"{highlight.review}"</div>
+											<div className={Style.Name}>-{highlight.name}</div>
 										</li>
 									))}
 								</ul>
@@ -237,7 +272,10 @@ function App() {
 								See reviews <span>></span>
 							</div>
 						</div>
-						<div className={Style.Container}>
+						<div
+							className={`${Style.Container} ${
+								infoIntersected ? Style.Intersected3 : Style.Intersected
+							}`}>
 							<div className={Style.Tab}>
 								<h4>Rules</h4>
 							</div>
@@ -285,7 +323,9 @@ function App() {
 						<div className={Style.Close} onClick={() => setSeeMap(false)}>
 							<AiFillCloseCircle />
 						</div>
-						<div className={Style.Content}>Yo yo yo</div>
+						<div className={Style.Content}>
+							<h1>Location</h1>
+						</div>
 					</div>
 				</div>
 			)}
@@ -296,7 +336,17 @@ function App() {
 						<div className={Style.Close} onClick={() => setSeeReviews(false)}>
 							<AiFillCloseCircle />
 						</div>
-						<div className={Style.Content}>Yo yo yo</div>
+						<div className={Style.Content}>
+							<h1>Reviews</h1>
+							<ul>
+								{reviews.map((review, index) => [
+									<li key={index} className={Style.Review}>
+										<div className={Style.ReviewName}>{review.name}</div>
+										<div>{review.review}</div>
+									</li>,
+								])}
+							</ul>
+						</div>
 					</div>
 				</div>
 			)}
@@ -322,6 +372,32 @@ function App() {
 								</li>
 							</ul>
 							<h4>What's allowed</h4>
+							<ul>
+								<li>
+									<div className={Style.Icon}>{houseRulesMain[2][1]}</div>
+									<p>{houseRulesMain[2][0]}</p>
+								</li>
+								<li>
+									<div className={Style.Icon}>{houseRulesMain[3][1]}</div>
+									<p>{houseRulesMain[3][0]}</p>
+								</li>
+								<li>
+									<div className={Style.Icon}>{houseRulesMain[4][1]}</div>
+									<p>{houseRulesMain[4][0]}</p>
+								</li>
+								<li>
+									<div className={Style.Icon}>{houseRulesMain[5][1]}</div>
+									<p>{houseRulesMain[5][0]}</p>
+								</li>
+							</ul>
+							<h4>Additional Rules</h4>
+							<ul>
+								{additionalRules.map((rule, index) => (
+									<li className={Style.Additional} key={index}>
+										- {rule}
+									</li>
+								))}
+							</ul>
 						</div>
 					</div>
 				</div>
