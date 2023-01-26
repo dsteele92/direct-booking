@@ -11,7 +11,7 @@
 
 	// -------------------------------------- BOOKING ---------------------------------------------->
 
-	.BookingWeb {
+	.Nav {
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -22,7 +22,7 @@
 		overflow: hidden;
 		@include flex-center;
 
-		.Nav {
+		.NavInner {
 			position: relative;
 			height: 100%;
 			width: 100%;
@@ -73,35 +73,76 @@
 					}
 				}
 			}
-		}
 
-		.Book {
+			.Book {
+				height: 100%;
+				width: 100%;
+				background: rgba($color: black, $alpha: 0.1);
+				transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+				@media screen and (max-width: $breakpoint-small) {
+					background: none;
+				}
+				@include flex-center;
+				cursor: pointer;
+				font-size: 22px;
+				@media screen and (max-width: $breakpoint-large) {
+					font-size: 20px;
+				}
+				@media screen and (max-width: $breakpoint-tablet) {
+					font-size: 18px;
+				}
+				@media screen and (max-width: $breakpoint-small) {
+					font-size: 20px;
+				}
+				h4 {
+					font-family: 'Marcellus', serif;
+					letter-spacing: 1pt;
+					margin-right: 10px;
+				}
+				.Icon {
+					@include flex-center;
+				}
+
+				&:hover {
+					// background: rgba($color: black, $alpha: 0.15);
+					background: rgba($color: white, $alpha: 0.2);
+					box-shadow: inset 0 0 10px rgba($color: gray, $alpha: 0.2);
+				}
+			}
+		}
+	}
+
+	// -------------------------------------- BOOKING ---------------------------------------------->
+
+	.BookingContainer {
+		z-index: 10;
+		position: fixed;
+		top: 8%;
+		left: 0;
+		height: 0;
+		width: 100%;
+		padding: 10px;
+		overflow: hidden;
+		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+		.Booking {
+			z-index: 10;
 			height: 100%;
 			width: 100%;
-			background: rgba($color: black, $alpha: 0.1);
-			@media screen and (max-width: $breakpoint-small) {
-				background: none;
-			}
+			position: relative;
+			border-radius: 10px;
+			overflow: hidden;
+			// top: -101%;
+			// top: 0;
+			// left: 0;
+			background-color: $color-light-two;
 			@include flex-center;
-			cursor: pointer;
-			font-size: 22px;
-			@media screen and (max-width: $breakpoint-large) {
-				font-size: 20px;
-			}
-			@media screen and (max-width: $breakpoint-tablet) {
-				font-size: 18px;
-			}
-			@media screen and (max-width: $breakpoint-small) {
-				font-size: 20px;
-			}
-			h4 {
-				font-family: 'Marcellus', serif;
-				letter-spacing: 1pt;
-				margin-right: 10px;
-			}
-			.Icon {
-				@include flex-center;
-			}
+			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+		}
+
+		&Open {
+			@extend .BookingContainer;
+			height: 92%;
 		}
 	}
 
@@ -109,8 +150,6 @@
 		position: absolute;
 		top: 8%;
 		left: 0;
-		// left: 50%;
-		// transform: translateX(-50%);
 		height: 92%;
 		padding: 10px;
 		width: 100%;
@@ -125,22 +164,21 @@
 			overflow-x: hidden;
 			overflow-y: scroll;
 			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-			display: flex;
-			flex-direction: column;
-			align-items: center;
 			border-radius: 10px;
 
 			section {
-				flex-shrink: 0;
+				margin: 0 auto;
 				min-height: 350px;
 				max-width: 2100px;
 				@media screen and (max-width: $breakpoint-small) {
-					margin: 10px 0;
+					margin: 10px auto;
 				}
 			}
 
+			// -------------------------------------- TOP BANNER ---------------------------------------------->
+
 			.HomeBanner {
-				flex-shrink: 0;
+				margin: 0 auto;
 				position: relative;
 				width: 100%;
 				height: 100%;
@@ -464,91 +502,91 @@
 				}
 			}
 
-			.Description {
-				position: relative;
-				height: 45%;
-				@media screen and (max-width: $breakpoint-large) {
-					height: 50%;
-				}
-				width: 100%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				padding: 10%;
-				@media screen and (max-width: $breakpoint-tablet) {
-					flex-direction: column;
-				}
-				.Welcome {
-					height: 100%;
-					width: auto;
-					@include flex-center;
-					h2 {
-						text-align: center;
-						font-family: 'Great Vibes', cursive;
-						font-size: 100px;
-						@media screen and (max-width: $breakpoint-small) {
-							font-size: 80px;
-						}
-						@media screen and (max-width: $breakpoint-mobile) {
-							font-size: 60px;
-						}
-					}
-					margin: 0 5vw;
-					@media screen and (max-width: $breakpoint-tablet) {
-						margin-bottom: 10px;
-					}
-				}
-				.Intro {
-					height: 100%;
-					width: auto;
-					@include flex-center;
-					.InfoBox {
-						position: relative;
-						height: auto;
-						width: 80%;
-						max-width: 800px;
-						@include flex-center;
-						p {
-							text-align: justify;
-							font-family: 'Marcellus', serif;
-							@include flex-center;
-							font-size: 20px;
-							line-height: 1.4;
-							@media screen and (max-width: $breakpoint-large) {
-								font-size: 18px;
-							}
-							@media screen and (max-width: 1300px) {
-								font-size: 17px;
-							}
-							@media screen and (max-width: $breakpoint-tablet) {
-								font-size: 16px;
-							}
-							@media screen and (max-width: $breakpoint-small) {
-								font-size: 14px;
-							}
-							@media screen and (max-width: $breakpoint-mobile) {
-								font-size: 12px;
-							}
-						}
-						.ShowMore {
-							position: absolute;
-							bottom: -35px;
-							left: -25px;
-							font-size: 15px;
-							@media screen and (max-width: $breakpoint-tablet) {
-								font-size: 12px;
-								bottom: -25px;
-								left: -15px;
-							}
-							font-weight: 100;
-							cursor: pointer;
-							span {
-								font-weight: 300;
-							}
-						}
-					}
-				}
-			}
+			// .Description {
+			// 	position: relative;
+			// 	height: 45%;
+			// 	@media screen and (max-width: $breakpoint-large) {
+			// 		height: 50%;
+			// 	}
+			// 	width: 100%;
+			// 	display: flex;
+			// 	justify-content: center;
+			// 	align-items: center;
+			// 	padding: 10%;
+			// 	@media screen and (max-width: $breakpoint-tablet) {
+			// 		flex-direction: column;
+			// 	}
+			// 	.Welcome {
+			// 		height: 100%;
+			// 		width: auto;
+			// 		@include flex-center;
+			// 		h2 {
+			// 			text-align: center;
+			// 			font-family: 'Great Vibes', cursive;
+			// 			font-size: 100px;
+			// 			@media screen and (max-width: $breakpoint-small) {
+			// 				font-size: 80px;
+			// 			}
+			// 			@media screen and (max-width: $breakpoint-mobile) {
+			// 				font-size: 60px;
+			// 			}
+			// 		}
+			// 		margin: 0 5vw;
+			// 		@media screen and (max-width: $breakpoint-tablet) {
+			// 			margin-bottom: 10px;
+			// 		}
+			// 	}
+			// 	.Intro {
+			// 		height: 100%;
+			// 		width: auto;
+			// 		@include flex-center;
+			// 		.InfoBox {
+			// 			position: relative;
+			// 			height: auto;
+			// 			width: 80%;
+			// 			max-width: 800px;
+			// 			@include flex-center;
+			// 			p {
+			// 				text-align: justify;
+			// 				font-family: 'Marcellus', serif;
+			// 				@include flex-center;
+			// 				font-size: 20px;
+			// 				line-height: 1.4;
+			// 				@media screen and (max-width: $breakpoint-large) {
+			// 					font-size: 18px;
+			// 				}
+			// 				@media screen and (max-width: 1300px) {
+			// 					font-size: 17px;
+			// 				}
+			// 				@media screen and (max-width: $breakpoint-tablet) {
+			// 					font-size: 16px;
+			// 				}
+			// 				@media screen and (max-width: $breakpoint-small) {
+			// 					font-size: 14px;
+			// 				}
+			// 				@media screen and (max-width: $breakpoint-mobile) {
+			// 					font-size: 12px;
+			// 				}
+			// 			}
+			// 			.ShowMore {
+			// 				position: absolute;
+			// 				bottom: -35px;
+			// 				left: -25px;
+			// 				font-size: 15px;
+			// 				@media screen and (max-width: $breakpoint-tablet) {
+			// 					font-size: 12px;
+			// 					bottom: -25px;
+			// 					left: -15px;
+			// 				}
+			// 				font-weight: 100;
+			// 				cursor: pointer;
+			// 				span {
+			// 					font-weight: 300;
+			// 				}
+			// 			}
+			// 		}
+			// 	}
+			// }
 
 			// -------------------------------------- GALLERY ---------------------------------------------->
 

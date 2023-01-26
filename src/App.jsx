@@ -43,6 +43,13 @@ function App() {
 	const host = useRef();
 	const [intro, introIntersected] = useHasIntersected({ threshold: 1 });
 	const [info, infoIntersected] = useHasIntersected({ threshold: 0.5 });
+	// for booking ----->
+	const [openBook, setOpenBook] = useState(false);
+	const [startDate, setStartDate] = useState(null);
+	const [endDate, setEndDate] = useState(null);
+	const [reserveActive, setReserveActive] = useState(false);
+	const [openDatePicker, setOpenDatePicker] = useState(false);
+	const [guests, setGuests] = useState(1);
 
 	useEffect(() => {
 		const handleScroll = (event) => {
@@ -69,6 +76,7 @@ function App() {
 				setTop(true);
 			}
 
+			// ------------------------BACKGROUND COLOR------------------------>
 			const percentScrolled = scrollTop / total;
 			if (window.innerWidth > 750) {
 				if (percentScrolled < 0.55) {
@@ -98,8 +106,8 @@ function App() {
 
 	return (
 		<div className={Style.App}>
-			<div className={Style.BookingWeb}>
-				<div className={Style.Nav}>
+			<div className={Style.Nav}>
+				<div className={Style.NavInner}>
 					<nav>
 						<ul>
 							<li onClick={() => intro.current.scrollIntoView({ behavior: 'smooth' })}>Gallery</li>
@@ -107,15 +115,16 @@ function App() {
 							<li onClick={() => host.current.scrollIntoView({ behavior: 'smooth' })}>Host</li>
 						</ul>
 					</nav>
-					<div>
-						<div className={Style.Book}>
-							<h4>BOOK</h4>
-							<div className={Style.Icon}>
-								<TfiArrowCircleRight />
-							</div>
+					<div className={Style.Book} onClick={() => setOpenBook(!openBook)}>
+						<h4>BOOK</h4>
+						<div className={Style.Icon}>
+							<TfiArrowCircleRight />
 						</div>
 					</div>
 				</div>
+			</div>
+			<div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
+				<div className={Style.Booking}>Booking</div>
 			</div>
 			<div className={Style.Window}>
 				<main className={Style[`Main${scroll}`]} ref={main}>
