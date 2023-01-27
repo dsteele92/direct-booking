@@ -7,6 +7,7 @@ import {
 	GalleryMobile,
 	AmenitiesMatrix,
 	AmenitiesMobile,
+	GoogleMaps,
 	useHasIntersected,
 } from 'components';
 import {
@@ -124,7 +125,9 @@ function App() {
 				</div>
 			</div>
 			<div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
-				<div className={Style.Booking}>Booking</div>
+				<div className={Style.Booking}>
+					<BookingWeb />
+				</div>
 			</div>
 			<div className={Style.Window}>
 				<main className={Style[`Main${scroll}`]} ref={main}>
@@ -333,7 +336,7 @@ function App() {
 							<AiFillCloseCircle />
 						</div>
 						<div className={Style.Content}>
-							<h1>Location</h1>
+							<GoogleMaps />
 						</div>
 					</div>
 				</div>

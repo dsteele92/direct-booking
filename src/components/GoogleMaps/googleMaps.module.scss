@@ -1,15 +1,5 @@
 @import 'sass';
 
 .Maps {
-	height: 100%;
-	width: 100%;
-	// border: 1px solid black;
-	border-radius: 10px;
-}
-
-.Loading {
-	height: 100%;
-	width: 100%;
 	@include flex-center;
-	font-family: 'Marcellus', serif;
 }

@@ -79,22 +79,7 @@ export default function BookingWeb() {
 
 	return (
 		<div className={Style.Nav}>
-			<nav>
-				<ul>
-					<li>Gallery</li>
-					<li>Amenities</li>
-					<li>Host</li>
-				</ul>
-			</nav>
-			<div>
-				<div className={Style.Book}>
-					<h4>BOOK</h4>
-					<div className={Style.Icon}>
-						<TfiArrowCircleRight />
-					</div>
-				</div>
-			</div>
-			{/* <div className={Style.Booker}>
+			<div className={Style.Booker}>
 				<div className={Style.Dates}>
 					<div className={Style.Icon}>
 						<BsCalendarRange />
@@ -144,9 +129,9 @@ export default function BookingWeb() {
 						</div>
 					</div>
 				</div>
-			</div> */}
+			</div>
 
-			{/* <div
+			<div
 				className={reserveActive ? Style.ButtonReserve : Style.Button}
 				onClick={() => {
 					if (reserveActive) {
@@ -165,7 +150,7 @@ export default function BookingWeb() {
 				<div className={Style.Icon}>
 					<TfiArrowCircleRight />
 				</div>
-			</div> */}
+			</div>
 		</div>
 	);
 }
