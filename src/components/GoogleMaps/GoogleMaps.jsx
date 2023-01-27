@@ -18,7 +18,7 @@ const center = {
 function MyComponent() {
 	const { isLoaded } = useJsApiLoader({
 		id: 'google-map-script',
-		googleMapsApiKey: 'AIzaSyDIjgf_kME9edjRufmtOYRhE-vqYdjJrio',
+		googleMapsApiKey: '',
 	});
 
 	const [map, setMap] = React.useState(null);
@@ -60,7 +60,7 @@ export default React.memo(MyComponent);
 
 // 	return (
 // 		<div>
-// 			<LoadScript googleMapsApiKey='AIzaSyDIjgf_kME9edjRufmtOYRhE-vqYdjJrio'>
+// 			<LoadScript googleMapsApiKey=''>
 // 				<GoogleMap GoogleMapsStyle={mapStyles} zoom={13} center={defaultCenter} />
 // 			</LoadScript>
 // 		</div>
@@ -83,7 +83,7 @@ export default React.memo(MyComponent);
 // 	return (
 // 		<div>
 // 			<div>Hi</div>
-// 			<LoadScript googleMapsApiKey='AIzaSyDIjgf_kME9edjRufmtOYRhE-vqYdjJrio'>
+// 			<LoadScript googleMapsApiKey=''>
 // 				<GoogleMap GoogleMapsStyle={mapStyles} zoom={13} center={defaultCenter} />
 // 			</LoadScript>
 // 		</div>
