@@ -7,7 +7,12 @@ export default function AmenitiesMatrix(props) {
 	return (
 		<div className={Style[`AmenitiesMatrix${props.scroll}`]}>
 			{amenitiesIconData.map((amenity, index) => (
-				<div className={`${Style.Amenity} ${props.show === index ? Style.Show : ''}`} key={index}>
+				<div
+					className={`${Style.Amenity} ${props.show === index ? Style.Show : ''} ${
+						props.intersected ? Style.AmenShow : Style.Amen
+					}`}
+					style={{ animationDelay: `${Math.random() * 1}s` }}
+					key={index}>
 					{index % 2 === props.modulo ? (
 						<div>
 							<div className={Style.Icon}>{amenity[1]}</div>

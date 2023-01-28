@@ -78,8 +78,8 @@ export default function BookingWeb() {
 	};
 
 	return (
-		<div className={Style.Nav}>
-			<div className={Style.Booker}>
+		<div className={Style.Book}>
+			{/* <div className={Style.Booker}>
 				<div className={Style.Dates}>
 					<div className={Style.Icon}>
 						<BsCalendarRange />
@@ -150,7 +150,7 @@ export default function BookingWeb() {
 				<div className={Style.Icon}>
 					<TfiArrowCircleRight />
 				</div>
-			</div>
+			</div> */}
 		</div>
 	);
 }

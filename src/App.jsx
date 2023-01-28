@@ -10,15 +10,7 @@ import {
 	GoogleMaps,
 	useHasIntersected,
 } from 'components';
-import {
-	taborInfo,
-	amenitiesIconData,
-	hostIntro,
-	houseRulesMain,
-	additionalRules,
-	reviews,
-	highlightedReviews,
-} from 'content';
+import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
@@ -40,10 +32,11 @@ function App() {
 	const [seeRules, setSeeRules] = useState(false);
 	// for nav links to scroll into view & lazy loading ----->
 	// const intro = useRef();
-	const amenities = useRef();
+	// const amenities = useRef();
+	const [amenities, amenitiesIntersected] = useHasIntersected({ threshold: 0.25 });
 	const host = useRef();
 	const [intro, introIntersected] = useHasIntersected({ threshold: 1 });
-	const [info, infoIntersected] = useHasIntersected({ threshold: 0.5 });
+	const [info, infoIntersected] = useHasIntersected({ threshold: 0.25 });
 	// for booking ----->
 	const [openBook, setOpenBook] = useState(false);
 	const [startDate, setStartDate] = useState(null);
@@ -136,8 +129,8 @@ function App() {
 							<div className={Style.Tint}></div>
 						</div>
 						<div className={Style.MainHeader}>
-							<h1>{taborInfo.mainHeader}</h1>
-							<h3>{taborInfo.subHeader}</h3>
+							<h1>{propertyInfo.mainHeader}</h1>
+							<h3>{propertyInfo.subHeader}</h3>
 						</div>
 						<div
 							className={Style.Scroll}
@@ -176,7 +169,7 @@ function App() {
 						</div>
 						<div className={Style.Intro}>
 							<div className={Style.InfoBox}>
-								<p>{taborInfo.aboutTheSpace}</p>
+								<p>{propertyInfo.aboutTheSpace}</p>
 								<div className={Style.ShowMore} onClick={() => setSeeIntro(true)}>
 									Show more <span>></span>
 								</div>
@@ -201,10 +194,22 @@ function App() {
 						</div>
 						<div className={Style.MatrixContainer}>
 							<div className={Style.Matrix} ref={matrixEven}>
-								<AmenitiesMatrix scroll={scroll} modulo={0} show={show} showAll={showAll} />
+								<AmenitiesMatrix
+									scroll={scroll}
+									modulo={0}
+									show={show}
+									showAll={showAll}
+									intersected={amenitiesIntersected}
+								/>
 							</div>
 							<div className={Style.Matrix} ref={matrixOdd}>
-								<AmenitiesMatrix scroll={scroll} modulo={1} show={show} showAll={showAll} />
+								<AmenitiesMatrix
+									scroll={scroll}
+									modulo={1}
+									show={show}
+									showAll={showAll}
+									intersected={amenitiesIntersected}
+								/>
 							</div>
 							<div className={Style.MatrixHoverGrid}>
 								{amenitiesIconData.map((amenity, index) => (
@@ -230,9 +235,9 @@ function App() {
 							</div>
 						</div>
 						<div className={Style.HostIntro}>
-							<p>{hostIntro.hostIntro1}</p>
-							<p>{hostIntro.hostIntro2}</p>
-							<p>{hostIntro.hostIntro3}</p>
+							<p>{propertyInfo.hostIntro1}</p>
+							<p>{propertyInfo.hostIntro2}</p>
+							<p>{propertyInfo.hostIntro3}</p>
 						</div>
 					</section>
 					<section className={Style.Info} ref={info}>
@@ -244,13 +249,7 @@ function App() {
 								<h4>Location</h4>
 							</div>
 							<div className={Style.InfoInner}>
-								<p className={Style.Location}>
-									Mt. Tabor neighborhood is best known for its beautiful city park, Mt. Tabor Park- an
-									extinct volcano just a short 5-minute walk from here. The park features numerous
-									walking paths, tennis courts, basketball courts, majestic fir trees, and
-									breathtaking panoramic views of the city and water reservoirs at the peak of the
-									park.
-								</p>
+								<p className={Style.Location}>{propertyInfo.location}</p>
 							</div>
 							<div className={Style.Expand} onClick={() => setSeeMap(true)}>
 								View Map <span>></span>
@@ -317,13 +316,13 @@ function App() {
 						</div>
 						<div className={Style.Content}>
 							<h1>About this space</h1>
-							<p>{taborInfo.aboutTheSpace}</p>
+							<p>{propertyInfo.aboutTheSpace}</p>
 							<h4>The space</h4>
-							<p>{taborInfo.aboutTheSpaceCont}</p>
+							<p>{propertyInfo.aboutTheSpaceCont}</p>
 							<h4>Guest access</h4>
-							<p>{taborInfo.guestAccess}</p>
+							<p>{propertyInfo.guestAccess}</p>
 							<h4>Other things to note</h4>
-							<p>{taborInfo.otherThingsToNote}</p>
+							<p>{propertyInfo.otherThingsToNote}</p>
 						</div>
 					</div>
 				</div>
@@ -336,7 +335,20 @@ function App() {
 							<AiFillCloseCircle />
 						</div>
 						<div className={Style.Content}>
-							<GoogleMaps />
+							<h1>Where You'll Be</h1>
+							<div className={Style.Map}>
+								<GoogleMaps />
+							</div>
+							<h4>Portland, Oregon, United States</h4>
+							<p>{propertyInfo.location}</p>
+							<h4>Local Attractions</h4>
+							<ul>
+								{propertyInfo.localAttractions.map((item, index) => (
+									<li key={index}>{item}</li>
+								))}
+							</ul>
+							<h4>Getting Around</h4>
+							<p>{propertyInfo.gettingAround}</p>
 						</div>
 					</div>
 				</div>

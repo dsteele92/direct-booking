@@ -1,4 +1,4 @@
-export { taborInfo } from './taborInfo';
+export { propertyInfo } from './propertyInfo';
 export { amenitiesIconData } from './iconData';
 export { hostIntro } from './hostIntro';
 export { reviews, highlightedReviews } from './reviews';
