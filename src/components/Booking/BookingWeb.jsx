@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Style from './bookingWeb.module.scss';
 import { DateRange, DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -8,6 +9,8 @@ import { BsCalendarRange, BsPeopleFill } from 'react-icons/bs';
 import { RxPerson } from 'react-icons/rx';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { add } from 'date-fns';
+
+import { keys } from '../../api_keys.js';
 
 export default function BookingWeb() {
 	const [startDate, setStartDate] = useState(null);
@@ -20,6 +23,28 @@ export default function BookingWeb() {
 	const button = useRef();
 
 	const disabledDates = [add(new Date(), { days: 1 }), add(new Date(), { days: 3 })];
+
+	const options = {
+		method: 'GET',
+		url: 'https://api.hospitable.com/listings',
+		params: { page: '1', per_page: '10' },
+		headers: {
+			accept: 'application/json',
+			authorization: `Bearer ${keys.hospitable}`,
+			'Content-Type': 'application/vnd.hospitable.20190904+json',
+		},
+	};
+
+	const api = async () => {
+		await axios
+			.request(options)
+			.then(function (response) {
+				console.log(response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	};
 
 	useEffect(() => {
 		if (startDate !== endDate) {
@@ -79,6 +104,8 @@ export default function BookingWeb() {
 
 	return (
 		<div className={Style.Book}>
+			<h1>Booking currently unavailable</h1>
+			{/* <button onClick={() => api()}>API Request</button> */}
 			{/* <div className={Style.Booker}>
 				<div className={Style.Dates}>
 					<div className={Style.Icon}>

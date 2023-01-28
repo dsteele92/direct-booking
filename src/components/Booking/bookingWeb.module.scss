@@ -6,86 +6,22 @@
 	width: 100%;
 	border-radius: 10px;
 	overflow: hidden;
-	background: rgba($color: white, $alpha: 0.3);
 	background: rgba($color: $color-light-two, $alpha: 1);
-	// background: rgba($color: $color-dark, $alpha: 1);
 
-	transition: all 1s cubic-bezier(0.455, 0.03, 0.515, 0.955);
-	// transition: height 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	transition: all 1s cubic-bezier(0.39, 0.575, 0.565, 1);
 
-	display: grid;
-	grid-template-columns: 4fr 1fr;
-	@media screen and (max-width: $breakpoint-tablet) {
-		grid-template-columns: 3fr 1fr;
+	@include flex-center;
+	button {
+		height: 300px;
+		width: 400px;
 	}
-	@media screen and (max-width: $breakpoint-mobile) {
-		grid-template-columns: 1fr;
-	}
-
-	nav {
-		display: flex;
-		@media screen and (max-width: $breakpoint-mobile) {
-			display: none;
-		}
-		position: relative;
-		align-items: center;
-		justify-content: flex-start;
-		height: 100%;
-		width: 100%;
-		padding: 0 5%;
-		ul {
-			display: flex;
-			align-items: center;
-			justify-content: flex-start;
-			li {
-				cursor: pointer;
-				color: #545454;
-				margin-right: 5vw;
-				list-style: none;
-				font-family: 'Marcellus', serif;
-				letter-spacing: 1pt;
-				text-transform: uppercase;
-				font-size: 18px;
-				@media screen and (max-width: $breakpoint-tablet) {
-					font-size: 16px;
-				}
-				@media screen and (max-width: $breakpoint-small) {
-					font-size: 14px;
-				}
-			}
-		}
-	}
-
-	.Book {
-		height: 100%;
-		width: 100%;
-		background: rgba($color: black, $alpha: 0.1);
-		@media screen and (max-width: $breakpoint-mobile) {
-			background: none;
-		}
-		@include flex-center;
-		cursor: pointer;
-		font-size: 22px;
-		@media screen and (max-width: $breakpoint-large) {
-			font-size: 20px;
-		}
-		@media screen and (max-width: $breakpoint-tablet) {
-			font-size: 18px;
-		}
+	h1 {
+		font-size: 32px;
 		@media screen and (max-width: $breakpoint-small) {
-			font-size: 16px;
+			font-size: 24px;
 		}
-		@media screen and (max-width: $breakpoint-mobile) {
-			font-size: 20px;
-		}
-		h4 {
-			font-family: 'Marcellus', serif;
-			letter-spacing: 1pt;
-			margin-right: 10px;
-		}
-		.Icon {
-			@include flex-center;
-		}
+		margin-bottom: 25px;
+		font-family: 'Marcellus', serif;
 	}
 
 	.Booker {

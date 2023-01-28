@@ -39,11 +39,6 @@ function App() {
 	const [info, infoIntersected] = useHasIntersected({ threshold: 0.25 });
 	// for booking ----->
 	const [openBook, setOpenBook] = useState(false);
-	const [startDate, setStartDate] = useState(null);
-	const [endDate, setEndDate] = useState(null);
-	const [reserveActive, setReserveActive] = useState(false);
-	const [openDatePicker, setOpenDatePicker] = useState(false);
-	const [guests, setGuests] = useState(1);
 
 	useEffect(() => {
 		const handleScroll = (event) => {
