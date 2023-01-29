@@ -1,0 +1,37 @@
+@import 'sass';
+
+.Book {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	@media screen and (max-width: $breakpoint-small) {
+		width: 300%;
+		overflow: hidden;
+		left: 0;
+	}
+
+	section {
+		h1 {
+			@include flex-center;
+			height: 10%;
+			width: 100%;
+			font-size: 32px;
+			font-weight: 300;
+			@media screen and (max-width: $breakpoint-small) {
+				font-size: 24px;
+			}
+			margin-bottom: 25px;
+			font-family: 'Marcellus', serif;
+			border-bottom: 2px solid $color-grey;
+		}
+
+		border-right: 2px solid $color-grey;
+		&:last-of-type {
+			h1 {
+				border-right: none;
+			}
+		}
+	}
+}

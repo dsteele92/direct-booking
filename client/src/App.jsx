@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './app.module.scss';
 import {
-	BookingWeb,
-	BookingMobile,
+	Booking,
 	GalleryWeb,
 	GalleryMobile,
 	AmenitiesMatrix,
@@ -114,7 +113,7 @@ function App() {
 			</div>
 			<div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
 				<div className={Style.Booking}>
-					<BookingWeb />
+					<Booking />
 				</div>
 			</div>
 			<div className={Style.Window}>
