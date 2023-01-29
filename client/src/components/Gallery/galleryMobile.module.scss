@@ -1,0 +1,185 @@
+@import 'sass';
+
+.GalleryMobile {
+	height: 100%;
+	width: 100%;
+	padding-top: 20px;
+	@include flex-center;
+	flex-direction: column;
+	// padding-bottom: 80px;
+	@media screen and (max-width: $breakpoint-tablet) {
+		padding-top: 0;
+		// padding-bottom: 50px;
+	}
+	@media screen and (max-width: $breakpoint-mobile) {
+		padding-top: 0;
+		// padding-bottom: 20px;
+	}
+
+	nav {
+		height: 10%;
+		width: 100%;
+		ul {
+			height: 100%;
+			width: 100%;
+			display: flex;
+			justify-content: space-evenly;
+			align-items: center;
+			flex-wrap: wrap;
+			padding: 0 5%;
+
+			.Li {
+				list-style: none;
+				font-family: 'Marcellus', serif;
+				transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+				cursor: pointer;
+				font-size: 16px;
+				margin: 0 5px;
+				@media screen and (max-width: $breakpoint-tablet) {
+					font-size: 14px;
+				}
+				@media screen and (max-width: $breakpoint-mobile) {
+					font-size: 12px;
+				}
+
+				&0 {
+					@extend .Li;
+					color: gray;
+				}
+				&1 {
+					@extend .Li;
+					color: rgb(192, 192, 192);
+				}
+				&2 {
+					@extend .Li;
+					color: gray;
+				}
+
+				&Current {
+					@extend .Li;
+					// text-decoration: underline;
+					// color: white;
+					// text-shadow: rgb(255, 255, 255) 1px 0 3px;
+					// color: pink;
+					color: black;
+					border-bottom: 1px solid $color-aqua;
+				}
+			}
+		}
+	}
+
+	.Arrow {
+		position: absolute;
+		height: fit-content;
+		width: fit-content;
+		cursor: pointer;
+		@include flex-center;
+		font-size: 25px;
+
+		transition: opacity 0.1s linear;
+		&:active {
+			opacity: 0.7;
+		}
+
+		@media screen and (max-width: $breakpoint-small) {
+			display: none;
+		}
+
+		&0 {
+			@extend .Arrow;
+			color: $color-dark;
+		}
+		&1 {
+			@extend .Arrow;
+			color: $color-light;
+		}
+		&2 {
+			@extend .Arrow;
+			color: $color-dark;
+		}
+	}
+
+	.Disable {
+		opacity: 0.7;
+		cursor: default;
+		&:active {
+			opacity: 1;
+		}
+	}
+
+	.MobileArrows {
+		display: none;
+		.MobileArrow {
+			margin: 15px 10px 0;
+			font-size: 25px;
+		}
+
+		@media screen and (max-width: $breakpoint-small) {
+			display: flex;
+		}
+
+		&0 {
+			@extend .MobileArrows;
+			color: $color-dark;
+		}
+		&1 {
+			@extend .MobileArrows;
+			color: $color-light;
+		}
+		&2 {
+			@extend .MobileArrows;
+			color: $color-dark;
+		}
+	}
+
+	.CarouselFrameOuter {
+		position: relative;
+		margin-top: 20px;
+		height: 80%;
+		width: 70%;
+		max-width: 650px;
+		@media screen and (max-width: $breakpoint-small) {
+			height: 70%;
+			width: 80%;
+		}
+		@media screen and (max-width: $breakpoint-mobile) {
+			height: 60%;
+			width: 85%;
+		}
+		@media screen and (max-width: 400px) {
+			height: 50%;
+		}
+		@media screen and (max-height: 500px) {
+			max-width: 500px;
+		}
+		border-radius: 10px;
+		overflow: hidden;
+		// overflow-x: scroll;
+		.CarouselFrameInner {
+			height: 100%;
+			display: flex;
+			flex-direction: row;
+			overflow: visible;
+			transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+			.CarouselRooms {
+				flex-shrink: 0;
+				height: 100%;
+				display: flex;
+				justify-content: space-around;
+				align-items: center;
+
+				.Photo {
+					height: 100%;
+					width: 100%;
+					border-radius: 10px;
+					background-size: cover;
+					background-repeat: no-repeat;
+					background-position: center;
+
+					box-shadow: 0 8px 15px -6px rgba(88, 88, 88, 0.699);
+				}
+			}
+		}
+	}
+}
