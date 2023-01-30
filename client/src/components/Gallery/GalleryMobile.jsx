@@ -35,7 +35,6 @@ import {
 export default function GalleryMobile(props) {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [galleryIndex, setGalleryIndex] = useState(0);
-	const [fullScreen, setFullScreen] = useState(-1);
 
 	const photos = {
 		'Living & Dining': [LR1sm, LR2sm, LR3sm, LR4sm, LR5sm, LR6sm, LR7sm],
@@ -79,7 +78,6 @@ export default function GalleryMobile(props) {
 
 	return (
 		<div className={Style.GalleryMobile}>
-			{fullScreen >= 0 && <GalleryFullScreenMobile current={fullScreen} close={() => setFullScreen(-1)} />}
 			<nav>
 				<ul>
 					{rooms.map((room, index) => (
@@ -113,7 +111,7 @@ export default function GalleryMobile(props) {
 									className={Style.Photo}
 									style={{ backgroundImage: `url(${photo.url})` }}
 									key={index}
-									onClick={() => setFullScreen(index)}></div>
+									onClick={() => props.openFullScreen(index + 1)}></div>
 							))}
 						</div>
 					))}

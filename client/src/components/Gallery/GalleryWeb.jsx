@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
 import Style from './galleryWeb.module.scss';
 import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
-import { GalleryFullScreenWeb } from 'components';
 import {
-	LR1,
-	LR2,
-	LR3,
-	LR4,
-	LR5,
-	LR6,
-	LR7,
-	K1,
-	K2,
-	BDR1,
-	BDR2,
-	BDR3,
-	BDR4,
-	BDR5,
-	BDR6,
-	BDR7,
-	BDR8,
-	BDR9,
-	BTH1,
-	BTH2,
-	BTH3,
-	BTH4,
-	BTH5,
-	BTH6,
-	BTH7,
-	LND,
+	LR1sm,
+	LR2sm,
+	LR3sm,
+	LR4sm,
+	LR5sm,
+	LR6sm,
+	LR7sm,
+	K1sm,
+	K2sm,
+	BDR1sm,
+	BDR2sm,
+	BDR3sm,
+	BDR4sm,
+	BDR5sm,
+	BDR6sm,
+	BDR7sm,
+	BDR8sm,
+	BDR9sm,
+	BTH1sm,
+	BTH2sm,
+	BTH3sm,
+	BTH4sm,
+	BTH5sm,
+	BTH6sm,
+	BTH7sm,
+	LNDsm,
 	EXT,
 } from 'images';
 
@@ -36,16 +35,46 @@ export default function GalleryWeb(props) {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [galleryIndex, setGalleryIndex] = useState(0);
 
-	const photos = {
-		'Living & Dining': [LR1, LR2, LR3, LR4, LR5, LR6, LR7],
-		Kitchen: [K1, K2],
-		Bedrooms: [BDR1, BDR2, BDR3, BDR4, BDR5, BDR6, BDR7, BDR8, BDR9],
-		Bathrooms: [BTH1, BTH2, BTH3, BTH4, BTH5, BTH6, BTH7, LND],
+	const photos = [
+		LR1sm,
+		LR2sm,
+		LR3sm,
+		LR4sm,
+		LR5sm,
+		LR6sm,
+		LR7sm,
+		K1sm,
+		K2sm,
+		BDR1sm,
+		BDR2sm,
+		BDR3sm,
+		BDR4sm,
+		BDR5sm,
+		BDR6sm,
+		BDR7sm,
+		BDR8sm,
+		BDR9sm,
+		BTH1sm,
+		BTH2sm,
+		BTH3sm,
+		BTH4sm,
+		BTH5sm,
+		BTH6sm,
+		BTH7sm,
+		LNDsm,
+		EXT,
+	];
+
+	const homePhotos = {
+		'Living & Dining': [LR1sm, LR2sm, LR3sm, LR4sm, LR5sm, LR6sm, LR7sm],
+		Kitchen: [K1sm, K2sm],
+		Bedrooms: [BDR1sm, BDR2sm, BDR3sm, BDR4sm, BDR5sm, BDR6sm, BDR7sm, BDR8sm, BDR9sm],
+		Bathrooms: [BTH1sm, BTH2sm, BTH3sm, BTH4sm, BTH5sm, BTH6sm, BTH7sm, LNDsm],
 		Exterior: [EXT],
 	};
 
-	const gallery = Object.values(photos);
-	const rooms = Object.keys(photos);
+	const gallery = Object.values(homePhotos);
+	const rooms = Object.keys(homePhotos);
 
 	const galleryMap = new Map();
 	const breakpoints = new Map();
@@ -102,16 +131,15 @@ export default function GalleryWeb(props) {
 			</div>
 			<div className={Style.CarouselFrameOuter}>
 				<div className={Style.CarouselFrameInner} style={{ transform: `translateX(-${galleryIndex * 50}%)` }}>
-					{gallery.map((room, index) => (
-						<div className={Style.CarouselRooms} style={{ width: `${room.length * 50}%` }} key={index}>
-							{room.map((photo, index) => (
-								<div
-									className={Style.Photo}
-									style={{ backgroundImage: `url(${photo.url})` }}
-									key={index}></div>
-							))}
-						</div>
-					))}
+					<div className={Style.Photos} style={{ width: `${photos.length * 50}%` }}>
+						{photos.map((img, index) => (
+							<div
+								className={Style.Photo}
+								style={{ backgroundImage: `url(${img.url})` }}
+								key={index}
+								onClick={() => props.openFullScreen(index + 1)}></div>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>

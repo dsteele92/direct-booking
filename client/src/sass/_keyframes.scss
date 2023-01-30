@@ -9,6 +9,17 @@
 		transform: translateY(0);
 	}
 }
+@keyframes sideBounce {
+	from {
+		transform: translateX(0);
+	}
+	60% {
+		transform: translateX(15px);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
 
 @keyframes fadeInLift {
 	from {

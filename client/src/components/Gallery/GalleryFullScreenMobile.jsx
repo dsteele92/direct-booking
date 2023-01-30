@@ -34,6 +34,8 @@ import {
 export default function GalleryFullScreenMobile(props) {
 	const [current, setCurrent] = useState(props.current);
 
+	const carousel = useRef();
+
 	const photos = [
 		LR1sm,
 		LR2sm,
@@ -64,16 +66,16 @@ export default function GalleryFullScreenMobile(props) {
 		EXT,
 	];
 
-	const carousel = useRef();
-
 	useEffect(() => {
 		const handleScroll = (e) => {
+			// console.log(e);
 			const updateCurrent = Math.round((e.target.scrollLeft / e.target.scrollWidth) * 27) + 1;
 			setCurrent(updateCurrent);
 		};
 
 		const carouselCurrent = carousel.current;
 		carouselCurrent.addEventListener('scroll', handleScroll);
+
 		return () => {
 			carouselCurrent.removeEventListener('scroll', handleScroll);
 		};
@@ -86,7 +88,7 @@ export default function GalleryFullScreenMobile(props) {
 			</div>
 			<div className={Style.Tracker}>{`${current} / ${photos.length}`}</div>
 			<div className={Style.CarouselFrameOuter} ref={carousel}>
-				<div className={Style.CarouselFrameInner} style={{ transform: `translateX(-${props.current}00%)` }}>
+				<div className={Style.CarouselFrameInner} style={{ transform: `translateX(-${props.current - 1}00%)` }}>
 					{photos.map((photo, index) => (
 						<div className={Style.Current} key={index}>
 							<img src={photo.url} alt='gallery' className={Style.Photo} />

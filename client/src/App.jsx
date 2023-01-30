@@ -8,6 +8,8 @@ import {
 	AmenitiesMobile,
 	GoogleMaps,
 	useHasIntersected,
+	GalleryFullScreenMobile,
+	GalleryFullScreenWeb,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
@@ -38,6 +40,9 @@ function App() {
 	const [info, infoIntersected] = useHasIntersected({ threshold: 0.25 });
 	// for booking ----->
 	const [openBook, setOpenBook] = useState(false);
+	// for full screen gallery ----->
+	const [fullScreenMobile, setFullScreenMobile] = useState(-1);
+	const [fullScreenWeb, setFullScreenWeb] = useState(-1);
 
 	useEffect(() => {
 		const handleScroll = (event) => {
@@ -105,7 +110,7 @@ function App() {
 					</nav>
 					<div className={Style.Book} onClick={() => setOpenBook(!openBook)}>
 						<h4>BOOK</h4>
-						<div className={Style.Icon}>
+						<div className={openBook ? Style.IconRotate : Style.Icon}>
 							<TfiArrowCircleRight />
 						</div>
 					</div>
@@ -143,17 +148,6 @@ function App() {
 								</div>
 							</div>
 						</div>
-						{/* <div className={Style.Enter} onClick={() => setEnter(true)}>
-					<h3>Enter</h3>
-					<div className={Style.Door}>
-						<div className={Style.Closed}>
-							<BsDoorClosed />
-						</div>
-						<div className={Style.Open}>
-							<BsDoorOpen />
-						</div>
-					</div>
-				</div> */}
 					</div>
 					<section
 						className={introIntersected ? Style.DescriptionAnimatedPlay : Style.DescriptionAnimated}
@@ -171,10 +165,10 @@ function App() {
 						</div>
 					</section>
 					<section className={Style.Gallery}>
-						<GalleryWeb scroll={scroll} />
+						<GalleryWeb scroll={scroll} openFullScreen={(i) => setFullScreenWeb(i)} />
 					</section>
 					<section className={Style.GalleryMobile}>
-						<GalleryMobile scroll={scroll} />
+						<GalleryMobile scroll={scroll} openFullScreen={(i) => setFullScreenMobile(i)} />
 					</section>
 					<section className={Style.AmenitiesWeb} ref={amenities}>
 						<div className={Style.Header}>
@@ -420,6 +414,10 @@ function App() {
 					</div>
 				</div>
 			)}
+			{fullScreenMobile >= 0 && (
+				<GalleryFullScreenMobile current={fullScreenMobile} close={() => setFullScreenMobile(-1)} />
+			)}
+			{fullScreenWeb >= 0 && <GalleryFullScreenWeb current={fullScreenWeb} close={() => setFullScreenWeb(-1)} />}
 		</div>
 	);
 }

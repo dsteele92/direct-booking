@@ -110,6 +110,12 @@
 				}
 				.Icon {
 					@include flex-center;
+					transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+					&Rotate {
+						@extend .Icon;
+						transform: rotateZ(-90deg);
+					}
 				}
 
 				&:hover {

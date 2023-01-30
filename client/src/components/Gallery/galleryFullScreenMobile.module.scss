@@ -17,6 +17,7 @@
 		left: 15px;
 		color: white;
 		font-size: 30px;
+		cursor: pointer;
 	}
 	.Tracker {
 		z-index: 1;
@@ -50,14 +51,20 @@
 			transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 			.Current {
 				height: 100%;
-				width: 100vw;
 				@include flex-center;
 
 				.Photo {
 					flex-shrink: 0;
 					scroll-snap-align: center;
-					height: auto;
-					width: 100vw;
+					@media screen and (orientation: portrait) {
+						height: auto;
+						width: 100vw;
+					}
+					@media screen and (orientation: landscape) {
+						height: 100%;
+						width: auto;
+						margin: 0 10px;
+					}
 				}
 				.Description {
 					z-index: 100;
@@ -69,6 +76,9 @@
 					font-weight: 300;
 					color: white;
 					text-align: center;
+					@media screen and (orientation: landscape) {
+						display: none;
+					}
 				}
 			}
 		}
