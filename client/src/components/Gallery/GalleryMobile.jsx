@@ -1,45 +1,47 @@
 import React, { useState } from 'react';
 import Style from './galleryMobile.module.scss';
 import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
+import { GalleryFullScreenMobile } from 'components';
 import {
-	LR1,
-	LR2,
-	LR3,
-	LR4,
-	LR5,
-	LR6,
-	LR7,
-	K1,
-	K2,
-	BDR1,
-	BDR2,
-	BDR3,
-	BDR4,
-	BDR5,
-	BDR6,
-	BDR7,
-	BDR8,
-	BDR9,
-	BTH1,
-	BTH2,
-	BTH3,
-	BTH4,
-	BTH5,
-	BTH6,
-	BTH7,
-	LND,
+	LR1sm,
+	LR2sm,
+	LR3sm,
+	LR4sm,
+	LR5sm,
+	LR6sm,
+	LR7sm,
+	K1sm,
+	K2sm,
+	BDR1sm,
+	BDR2sm,
+	BDR3sm,
+	BDR4sm,
+	BDR5sm,
+	BDR6sm,
+	BDR7sm,
+	BDR8sm,
+	BDR9sm,
+	BTH1sm,
+	BTH2sm,
+	BTH3sm,
+	BTH4sm,
+	BTH5sm,
+	BTH6sm,
+	BTH7sm,
+	LNDsm,
 	EXT,
 } from 'images';
 
 export default function GalleryMobile(props) {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [galleryIndex, setGalleryIndex] = useState(0);
+	const [fullScreen, setFullScreen] = useState(-1);
 
 	const photos = {
-		'Living & Dining': [LR1, LR2, LR3, LR4, LR5, LR6, LR7],
-		Kitchen: [K1, K2],
-		Bedrooms: [BDR1, BDR2, BDR3, BDR4, BDR5, BDR6, BDR7, BDR8, BDR9],
-		Bathrooms: [BTH1, BTH2, BTH3, BTH4, BTH5, BTH6, BTH7, LND],
+		'Living & Dining': [LR1sm, LR2sm, LR3sm, LR4sm, LR5sm, LR6sm, LR7sm],
+		Kitchen: [K1sm, K2sm],
+		Bedrooms: [BDR1sm, BDR2sm, BDR3sm, BDR4sm, BDR5sm, BDR6sm, BDR7sm, BDR8sm, BDR9sm],
+		Bathrooms: [BTH1sm, BTH2sm, BTH3sm, BTH4sm, BTH5sm, BTH6sm, BTH7sm, LNDsm],
 		Exterior: [EXT],
 	};
 
@@ -73,8 +75,11 @@ export default function GalleryMobile(props) {
 		setGalleryRoom(galleryMap.get(next + 1));
 	};
 
+	// const closeFullScreen = () => setFullScreen(-1);
+
 	return (
 		<div className={Style.GalleryMobile}>
+			{fullScreen >= 0 && <GalleryFullScreenMobile current={fullScreen} close={() => setFullScreen(-1)} />}
 			<nav>
 				<ul>
 					{rooms.map((room, index) => (
@@ -106,8 +111,9 @@ export default function GalleryMobile(props) {
 							{room.map((photo, index) => (
 								<div
 									className={Style.Photo}
-									style={{ backgroundImage: `url(${photo})` }}
-									key={index}></div>
+									style={{ backgroundImage: `url(${photo.url})` }}
+									key={index}
+									onClick={() => setFullScreen(index)}></div>
 							))}
 						</div>
 					))}

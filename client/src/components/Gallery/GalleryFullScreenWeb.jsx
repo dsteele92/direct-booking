@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import Style from './galleryWeb.module.scss';
+import Style from './galleryFullScreenWeb.module.scss';
 import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
-import { GalleryFullScreenWeb } from 'components';
 import {
 	LR1,
 	LR2,
@@ -32,7 +31,7 @@ import {
 	EXT,
 } from 'images';
 
-export default function GalleryWeb(props) {
+export default function GalleryFullScreenWeb(props) {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [galleryIndex, setGalleryIndex] = useState(0);
 
@@ -107,7 +106,7 @@ export default function GalleryWeb(props) {
 							{room.map((photo, index) => (
 								<div
 									className={Style.Photo}
-									style={{ backgroundImage: `url(${photo.url})` }}
+									style={{ backgroundImage: `url(${photo})` }}
 									key={index}></div>
 							))}
 						</div>

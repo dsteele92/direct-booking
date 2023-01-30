@@ -1,5 +1,19 @@
 @import 'sass';
 
+.Construction {
+	height: 100%;
+	width: 100%;
+	@include flex-center;
+	h2 {
+		font-size: 32px;
+		font-weight: 300;
+		@media screen and (max-width: $breakpoint-small) {
+			font-size: 24px;
+		}
+		font-family: 'Marcellus', serif;
+	}
+}
+
 .Book {
 	position: absolute;
 	width: 100%;
@@ -10,6 +24,11 @@
 		width: 300%;
 		overflow: hidden;
 		left: 0;
+	}
+
+	img {
+		height: 300px;
+		width: 300px;
 	}
 
 	section {

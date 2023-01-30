@@ -12,11 +12,17 @@ import { add } from 'date-fns';
 
 import { keys } from '../../api_keys.js';
 
+import { imgUrl } from '../../firebase.js';
+
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+
 export default function Booking() {
 	const [step, setStep] = useState(0);
 
 	return (
-		<div className={Style.Book}>
+		<div className={Style.Construction}>
+			<h2>Booking Currently Unavailable</h2>
+			{/* <div className={Style.Book}>
 			<section>
 				<h1>Check Availability</h1>
 			</section>
@@ -26,6 +32,7 @@ export default function Booking() {
 			<section>
 				<h1>Review & Pay</h1>
 			</section>
+		</div> */}
 		</div>
 	);
 }
