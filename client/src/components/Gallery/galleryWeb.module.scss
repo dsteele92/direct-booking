@@ -95,6 +95,7 @@
 				align-items: center;
 
 				.Photo {
+					position: relative;
 					height: 90%;
 					width: 35vw;
 					max-width: 60vh;
@@ -103,8 +104,61 @@
 					background-repeat: no-repeat;
 					background-position: center;
 					cursor: pointer;
+					&::after {
+						content: '';
+						height: 100%;
+						width: 100%;
+						position: absolute;
+						top: 0;
+						left: 0;
+						border-radius: 10px;
+						background-color: black;
+						opacity: 0;
+						transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+					}
+					&:hover::after {
+						opacity: 0.1;
+					}
 				}
 			}
+		}
+	}
+	.ShowFull {
+		position: absolute;
+		top: 100%;
+		right: 10%;
+		font-size: 15px;
+		border: 1px solid;
+		border-radius: 10px;
+		padding: 5px 10px;
+		@media screen and (max-width: $breakpoint-tablet) {
+			font-size: 12px;
+			bottom: -25px;
+			left: -15px;
+		}
+		font-weight: 100;
+		cursor: pointer;
+		span {
+			margin-left: 5px;
+		}
+
+		transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+
+		&:hover {
+			background-color: rgba($color: $color-light-two, $alpha: 0.3);
+		}
+
+		&0,
+		&2 {
+			@extend .ShowFull;
+			border-color: $color-dark;
+			color: black;
+		}
+
+		&1 {
+			@extend .ShowFull;
+			border-color: $color-light;
+			color: $color-light;
 		}
 	}
 }

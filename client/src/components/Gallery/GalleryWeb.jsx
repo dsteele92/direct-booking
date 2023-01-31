@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Style from './galleryWeb.module.scss';
 import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
+import { IoIosPhotos } from 'react-icons/io';
 import {
 	LR1sm,
 	LR2sm,
@@ -137,10 +138,16 @@ export default function GalleryWeb(props) {
 								className={Style.Photo}
 								style={{ backgroundImage: `url(${img.url})` }}
 								key={index}
-								onClick={() => props.openFullScreen(index + 1)}></div>
+								onClick={() => props.openFullScreen(index)}></div>
 						))}
 					</div>
 				</div>
+			</div>
+			<div className={Style[`ShowFull${props.scroll}`]} onClick={() => props.openFullScreen(0)}>
+				Show All Photos{' '}
+				<span>
+					<IoIosPhotos />
+				</span>
 			</div>
 		</div>
 	);

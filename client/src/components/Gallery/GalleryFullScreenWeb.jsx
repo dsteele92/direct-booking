@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, createRef } from 'react';
 import Style from './galleryFullScreenWeb.module.scss';
 
 import { AiOutlineSmallDash, AiFillCloseCircle } from 'react-icons/ai';
@@ -35,7 +35,6 @@ import {
 export default function GalleryFullScreenWeb(props) {
 	const [galleryRoom, setGalleryRoom] = useState(0);
 	const [current, setCurrent] = useState(props.current);
-
 	const carousel = useRef();
 
 	const photos = [
@@ -68,8 +67,10 @@ export default function GalleryFullScreenWeb(props) {
 		EXT,
 	];
 
-	// const rooms = ['Living & Dining', 'Kitchen', 'Bedrooms', 'Bathrooms', 'Exterior'];
+	let photoRefs = [];
+	photoRefs = photos.map((img, i) => photoRefs[i] ?? createRef());
 
+	// for creating the maps that allow for navigation by rooms:
 	const homePhotos = {
 		'Living & Dining': [LR1, LR2, LR3, LR4, LR5, LR6, LR7],
 		Kitchen: [K1, K2],
@@ -95,21 +96,20 @@ export default function GalleryFullScreenWeb(props) {
 	});
 
 	useEffect(() => {
-		carousel.current.scrollTo({
-			left: carousel.current.scrollWidth * ((current - 1) / 27),
-		});
+		const handleLoad = () => {
+			photoRefs[current].current.scrollIntoView({
+				// behavior: 'smooth',
+				inline: 'center',
+			});
+		};
 
 		const handleScroll = (e) => {
-			// console.log(e);
-			const updateCurrent = Math.round((e.target.scrollLeft / e.target.scrollWidth) * 27) + 1;
+			const updateCurrent = Math.round((e.target.scrollLeft / e.target.scrollWidth) * 27);
 			setCurrent(updateCurrent);
-			setGalleryRoom(galleryMap.get(updateCurrent - 1));
+			setGalleryRoom(galleryMap.get(updateCurrent));
 		};
 
 		const handleWheel = (e) => {
-			// console.dir(carousel.current);
-			// console.log(galleryMap);
-			// console.log(breakpoints);
 			if (e.deltaY === 0) return;
 			e.preventDefault();
 			carouselCurrent.scrollTo({
@@ -119,12 +119,15 @@ export default function GalleryFullScreenWeb(props) {
 		};
 
 		const carouselCurrent = carousel.current;
+		const openingPhotoRef = photoRefs[current].current;
 		carouselCurrent.addEventListener('scroll', handleScroll);
 		carouselCurrent.addEventListener('wheel', handleWheel);
+		openingPhotoRef.addEventListener('load', handleLoad);
 
 		return () => {
 			carouselCurrent.removeEventListener('scroll', handleScroll);
 			carouselCurrent.removeEventListener('wheel', handleWheel);
+			openingPhotoRef.removeEventListener('load', handleLoad);
 		};
 	}, []);
 
@@ -139,10 +142,9 @@ export default function GalleryFullScreenWeb(props) {
 						<li
 							className={galleryRoom === index ? Style.LiCurrent : Style.Li}
 							onClick={() => {
-								carousel.current.scrollTo({
-									left:
-										carousel.current.scrollWidth * (breakpoints.get(index) / 27) +
-										index * (window.innerWidth * 0.01),
+								photoRefs[breakpoints.get(index)].current.scrollIntoView({
+									// behavior: 'smooth',
+									inline: 'center',
 								});
 							}}
 							key={index}>
@@ -152,8 +154,8 @@ export default function GalleryFullScreenWeb(props) {
 				</ul>
 			</nav>
 			<div className={Style.Description}>
-				<div className={Style.Tracker}>{`${current} / ${photos.length}`}</div>
-				<p>{photos[current - 1].description}</p>
+				<div className={Style.Tracker}>{`${current + 1} / ${photos.length}`}</div>
+				<p>{photos[current].description}</p>
 			</div>
 			<div className={Style.Scroll}>
 				<h4>Scroll</h4>
@@ -165,9 +167,7 @@ export default function GalleryFullScreenWeb(props) {
 			<div className={Style.CarouselFrameOuter} ref={carousel}>
 				<div className={Style.CarouselFrameInner}>
 					{photos.map((photo, index) => (
-						<div className={Style.Current} key={index}>
-							<img src={photo.url} alt='gallery' className={Style.Photo} />
-						</div>
+						<img src={photo.url} alt='gallery' className={Style.Photo} key={index} ref={photoRefs[index]} />
 					))}
 				</div>
 			</div>

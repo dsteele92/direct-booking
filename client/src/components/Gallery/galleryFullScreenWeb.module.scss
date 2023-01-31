@@ -134,19 +134,15 @@
 			flex-direction: row;
 			overflow: visible;
 			transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-			.Current {
+
+			.Photo {
 				flex-shrink: 0;
 				height: 100%;
-				@include flex-center;
+				width: auto;
+				margin: 0 10px;
 
-				.Photo {
-					height: 100%;
-					width: auto;
-					margin: 0 10px;
-
-					&:first-of-type {
-						margin-left: 0;
-					}
+				&:first-of-type {
+					margin-left: 0;
 				}
 			}
 		}
