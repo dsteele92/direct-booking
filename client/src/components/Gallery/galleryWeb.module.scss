@@ -23,6 +23,7 @@
 				color: gray;
 				cursor: pointer;
 				// text-transform: uppercase;
+				border-bottom: 1px solid rgba($color: $color-aqua, $alpha: 0);
 
 				&Current {
 					@extend .Li;
@@ -31,7 +32,7 @@
 					// text-shadow: rgb(255, 255, 255) 1px 0 3px;
 					// color: pink;
 					color: black;
-					border-bottom: 1px solid $color-aqua;
+					border-bottom: 1px solid rgba($color: $color-aqua, $alpha: 1);
 				}
 			}
 		}

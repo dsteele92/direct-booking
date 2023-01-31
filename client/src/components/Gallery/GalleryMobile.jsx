@@ -62,16 +62,16 @@ export default function GalleryMobile(props) {
 
 	const handleArrow = (change) => {
 		const next = galleryIndex + change;
-		if (next < 0 || next > total - 2) {
+		if (next < 0 || next > total - 1) {
 			return;
 		}
 		setGalleryIndex(next);
-		setGalleryRoom(galleryMap.get(next + 1));
+		setGalleryRoom(galleryMap.get(next));
 	};
 	const handleRoomSelect = (room) => {
 		const next = breakpoints.get(room);
 		setGalleryIndex(next);
-		setGalleryRoom(galleryMap.get(next + 1));
+		setGalleryRoom(galleryMap.get(next));
 	};
 
 	// const closeFullScreen = () => setFullScreen(-1);
@@ -97,7 +97,7 @@ export default function GalleryMobile(props) {
 				<BsFillArrowLeftCircleFill />
 			</div>
 			<div
-				className={`${Style[`Arrow${props.scroll}`]} ${galleryIndex < total - 2 ? '' : Style.Disable}`}
+				className={`${Style[`Arrow${props.scroll}`]} ${galleryIndex < total - 1 ? '' : Style.Disable}`}
 				style={{ right: '5%' }}
 				onClick={() => handleArrow(1)}>
 				<BsFillArrowRightCircleFill />

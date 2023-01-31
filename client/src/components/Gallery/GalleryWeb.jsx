@@ -82,7 +82,7 @@ export default function GalleryWeb(props) {
 	let total = 0;
 	let breakpoint = 0;
 	gallery.forEach((arr, index) => {
-		breakpoints.set(index, breakpoint ? breakpoint - 1 : breakpoint);
+		breakpoints.set(index, breakpoint === photos.length - 1 ? breakpoint - 1 : breakpoint);
 		breakpoint += arr.length;
 		for (const photo in arr) {
 			galleryMap.set(total, index);
@@ -92,16 +92,26 @@ export default function GalleryWeb(props) {
 
 	const handleArrow = (change) => {
 		const next = galleryIndex + change;
+		console.log(photos.length);
+		console.log(next);
 		if (next < 0 || next > total - 2) {
 			return;
 		}
 		setGalleryIndex(next);
-		setGalleryRoom(galleryMap.get(next + 1));
+		if (next !== photos.length - 2) {
+			setGalleryRoom(galleryMap.get(next));
+		} else {
+			setGalleryRoom(galleryMap.get(next + 1));
+		}
 	};
 	const handleRoomSelect = (room) => {
 		const next = breakpoints.get(room);
 		setGalleryIndex(next);
-		setGalleryRoom(galleryMap.get(next + 1));
+		if (next !== photos.length - 2) {
+			setGalleryRoom(galleryMap.get(next));
+		} else {
+			setGalleryRoom(galleryMap.get(next + 1));
+		}
 	};
 
 	return (

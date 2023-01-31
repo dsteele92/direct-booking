@@ -26,12 +26,11 @@ export default function BookingWeb() {
 
 	const options = {
 		method: 'GET',
-		url: 'https://api.hospitable.com/listings',
-		params: { page: '1', per_page: '10' },
+		url: 'https://api.hospitable.com/calendar/964610',
 		headers: {
 			accept: 'application/json',
-			authorization: `Bearer <API KEY>`,
 			'Content-Type': 'application/vnd.hospitable.20190904+json',
+			authorization: 'Bearer',
 		},
 	};
 
@@ -157,13 +156,14 @@ export default function BookingWeb() {
 			</div>
 			<div
 				className={reserveActive ? Style.ButtonReserve : Style.Button}
-				onClick={() => {
-					if (reserveActive) {
-						reserve();
-					} else {
-						setOpenDatePicker(!openDatePicker);
-					}
-				}}
+				// onClick={() => {
+				// 	if (reserveActive) {
+				// 		reserve();
+				// 	} else {
+				// 		setOpenDatePicker(!openDatePicker);
+				// 	}
+				// }}
+				onClick={() => api()}
 				ref={button}>
 				<h4 className={Style.Check}>
 					Check <br />

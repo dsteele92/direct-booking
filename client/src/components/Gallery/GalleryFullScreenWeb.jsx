@@ -98,13 +98,12 @@ export default function GalleryFullScreenWeb(props) {
 	useEffect(() => {
 		const handleLoad = () => {
 			photoRefs[current].current.scrollIntoView({
-				// behavior: 'smooth',
 				inline: 'center',
 			});
 		};
 
 		const handleScroll = (e) => {
-			const updateCurrent = Math.round((e.target.scrollLeft / e.target.scrollWidth) * 27);
+			const updateCurrent = Math.round((e.target.scrollLeft / e.target.scrollWidth) * photos.length);
 			setCurrent(updateCurrent);
 			setGalleryRoom(galleryMap.get(updateCurrent));
 		};
@@ -112,21 +111,20 @@ export default function GalleryFullScreenWeb(props) {
 		const handleWheel = (e) => {
 			if (e.deltaY === 0) return;
 			e.preventDefault();
-			carouselCurrent.scrollTo({
-				left: carouselCurrent.scrollLeft + e.deltaY,
-				// behavior: 'smooth',
+			carouselCurrent.scrollBy({
+				left: e.deltaY,
 			});
 		};
 
 		const carouselCurrent = carousel.current;
 		const openingPhotoRef = photoRefs[current].current;
 		carouselCurrent.addEventListener('scroll', handleScroll);
-		carouselCurrent.addEventListener('wheel', handleWheel);
+		window.addEventListener('wheel', handleWheel);
 		openingPhotoRef.addEventListener('load', handleLoad);
 
 		return () => {
 			carouselCurrent.removeEventListener('scroll', handleScroll);
-			carouselCurrent.removeEventListener('wheel', handleWheel);
+			window.removeEventListener('wheel', handleWheel);
 			openingPhotoRef.removeEventListener('load', handleLoad);
 		};
 	}, []);

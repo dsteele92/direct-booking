@@ -10,6 +10,7 @@ import {
 	useHasIntersected,
 	GalleryFullScreenMobile,
 	GalleryFullScreenWeb,
+	BookingWeb,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
@@ -119,6 +120,7 @@ function App() {
 			<div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
 				<div className={Style.Booking}>
 					<Booking />
+					{/* <BookingWeb /> */}
 				</div>
 			</div>
 			<div className={Style.Window}>
