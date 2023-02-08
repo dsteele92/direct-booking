@@ -1,6 +1,6 @@
 @import 'sass';
 
-.App {
+.Home {
 	// position: relative;
 	width: 100%;
 	height: 100%;
@@ -206,7 +206,7 @@
 					position: relative;
 					height: 100%;
 					width: 100%;
-					background-image: url('./images/living_room_3.jpg');
+					background-image: url('../../images/living_room_3.jpg');
 					background-size: cover;
 					background-repeat: no-repeat;
 					background-position: center 70%;
@@ -674,7 +674,7 @@
 						width: 80%;
 						margin-bottom: 20px;
 					}
-					background-image: url('./images/host.jpg');
+					background-image: url('../../images/host.jpg');
 					background-size: cover;
 					background-position: center;
 					border: solid $color-light;

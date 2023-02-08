@@ -21,18 +21,18 @@ export default function Booking() {
 
 	return (
 		<div className={Style.Construction}>
-			<h2>Booking Currently Unavailable</h2>
-			{/* <div className={Style.Book}>
-			<section>
-				<h1>Check Availability</h1>
-			</section>
-			<section>
-				<h1>Reserve</h1>
-			</section>
-			<section>
-				<h1>Review & Pay</h1>
-			</section>
-		</div> */}
+			{/* <h2>Booking Currently Unavailable</h2> */}
+			<div className={Style.Book}>
+				<section>
+					<h1>Check Availability</h1>
+				</section>
+				<section>
+					<h1>Reserve</h1>
+				</section>
+				<section>
+					<h1>Review & Pay</h1>
+				</section>
+			</div>
 		</div>
 	);
 }
