@@ -13,9 +13,8 @@
 	.Back {
 		z-index: 2;
 		position: absolute;
-		top: 50px;
-		left: 50px;
-		// color: $color-dark;
+		top: 4vh;
+		left: 4vh;
 		color: $color-three;
 		font-size: 40px;
 		cursor: pointer;
@@ -27,7 +26,6 @@
 		left: 0;
 		width: 20%;
 		height: 40%;
-		// transform: translateY(-50%);
 		@include flex-center;
 		ul {
 			height: 100%;

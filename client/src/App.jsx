@@ -10,7 +10,7 @@ import {
 	useHasIntersected,
 	GalleryFullScreenMobile,
 	GalleryFullScreenWeb,
-	BookingWeb,
+	// BookingWeb,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';

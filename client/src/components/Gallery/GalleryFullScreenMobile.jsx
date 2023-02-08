@@ -73,11 +73,21 @@ export default function GalleryFullScreenMobile(props) {
 			setCurrent(updateCurrent);
 		};
 
+		const handleWheel = (e) => {
+			if (e.deltaY === 0) return;
+			carouselCurrent.scrollBy({
+				left: e.deltaY,
+				behavior: 'smooth',
+			});
+		};
+
 		const carouselCurrent = carousel.current;
 		carouselCurrent.addEventListener('scroll', handleScroll);
+		window.addEventListener('wheel', handleWheel);
 
 		return () => {
 			carouselCurrent.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('wheel', handleWheel);
 		};
 	}, []);
 

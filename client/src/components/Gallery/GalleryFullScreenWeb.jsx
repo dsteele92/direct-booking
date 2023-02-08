@@ -110,7 +110,6 @@ export default function GalleryFullScreenWeb(props) {
 
 		const handleWheel = (e) => {
 			if (e.deltaY === 0) return;
-			e.preventDefault();
 			carouselCurrent.scrollBy({
 				left: e.deltaY,
 			});
