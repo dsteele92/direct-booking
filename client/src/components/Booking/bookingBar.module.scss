@@ -5,9 +5,9 @@
 	height: 100%;
 	width: 100%;
 	border-radius: 10px;
-	overflow: hidden;
+	overflow: visible;
 	background: rgba($color: $color-light-two, $alpha: 1);
-	padding: 10%;
+	// padding: 10%;
 
 	transition: all 1s cubic-bezier(0.39, 0.575, 0.565, 1);
 
@@ -24,64 +24,65 @@
 
 	.Booker {
 		// max-width: 700px;
+		position: absolute;
+		height: 100%;
+		width: 30%;
+		left: 35%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
 		align-items: center;
 
-		.Dates {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			.Icon {
-				font-size: 25px;
-				color: grey;
-				@include flex-center;
-			}
+		.Icon {
+			font-size: 25px;
+			color: grey;
+			@include flex-center;
+		}
 
-			.DatePickerContainer {
-				margin-left: 20px;
-				flex-shrink: 0;
-				position: relative;
-				width: 332px;
+		.DatePickerContainer {
+			margin-left: 20px;
+			flex-shrink: 0;
+			position: relative;
+			width: 332px;
+			height: 55px;
+			// border-radius: 10px;
+			// box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
+			overflow: visible;
+
+			.SelectDates {
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 400px;
 				height: 55px;
-				border-radius: 10px;
-				box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
-				overflow: visible;
-
-				.SelectDates {
+				width: 332px;
+				// border: 1px solid rgba(0, 0, 0, 0.5);
+				// border-radius: 10px;
+				@include flex-center;
+				// padding: 10px;
+				overflow: hidden;
+				.DatesOverlay {
+					position: absolute;
+					z-index: 3;
+					top: 0;
+					left: 0;
+					height: 57px;
+					width: 100%;
+					background-color: $color-light-two;
+				}
+				.DateRange {
 					position: absolute;
 					left: 0;
-					bottom: 0;
-					height: 55px;
-					width: 332px;
-					// border: 1px solid rgba(0, 0, 0, 0.5);
-					border-radius: 10px;
-					@include flex-center;
-					padding: 10px;
+					top: 0;
 					overflow: hidden;
-					.DateRange {
-						position: absolute;
-						left: 0;
-						top: 0;
-						overflow: hidden;
-						border-radius: 10px;
-						transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-					}
-					.DateRangeOpen {
-						position: absolute;
-						left: 0;
-						bottom: 0;
-						overflow: hidden;
-						border-radius: 10px;
-						transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-					}
-
+					// border-radius: 10px;
 					transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-					&Open {
-						@extend .SelectDates;
-						height: 385px;
-					}
+				}
+
+				transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+				&Open {
+					@extend .SelectDates;
+					height: 385px;
 				}
 			}
 		}
@@ -102,7 +103,7 @@
 				width: 130px;
 				// border: 1px solid rgba(0, 0, 0, 0.5);
 				border-radius: 10px;
-				box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
+				// box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
 				padding: 10px;
 				padding-right: 40px;
 				// background: rgba($color: whitesmoke, $alpha: 0.5);
@@ -148,9 +149,11 @@
 	}
 
 	.Button {
-		position: relative;
-		height: 150px;
-		width: 300px;
+		position: absolute;
+		height: 100%;
+		width: 18%;
+		right: 0;
+		border-radius: 0 10px 10px 0;
 		// border-radius: 0 10px 10px 0;
 		// background-color: $color-aqua;
 		// background: rgba($color: white, $alpha: 0.3);
@@ -159,10 +162,12 @@
 		cursor: pointer;
 		transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 
-		font-size: 24px;
 		h4 {
 			transform: translateY(-50%);
 			font-size: 16px;
+			@media screen and (max-width: $breakpoint-large) {
+				font-size: 14px;
+			}
 			font-family: 'Marcellus', serif;
 			letter-spacing: 1pt;
 			// margin-right: 25px;
@@ -170,22 +175,26 @@
 		}
 		.Check {
 			position: absolute;
-			left: 20%;
+			left: 15%;
 			top: 50%;
 			opacity: 1;
 			transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
 		}
 		.Reserve {
 			position: absolute;
-			left: 25%;
+			left: 15%;
 			top: 50%;
 			opacity: 0;
 			transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
 		}
 
 		.Icon {
+			font-size: 24px;
+			@media screen and (max-width: $breakpoint-large) {
+				font-size: 20px;
+			}
 			position: absolute;
-			right: 25%;
+			right: 15%;
 			top: 50%;
 			transform: translateY(-50%);
 		}

@@ -15,14 +15,14 @@
 		position: fixed;
 		top: 0;
 		left: 0;
-		z-index: 0;
+		z-index: 10;
 		height: 8%;
 		width: 100%;
 		padding: 10px 10px 0;
 		@media screen and (max-height: $breakpoint-mobile) {
 			padding: 5px 5px 0;
 		}
-		overflow: hidden;
+		overflow: visible;
 		@include flex-center;
 
 		.NavInner {

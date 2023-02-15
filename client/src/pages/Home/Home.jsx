@@ -10,7 +10,7 @@ import {
 	useHasIntersected,
 	GalleryFullScreenMobile,
 	GalleryFullScreenWeb,
-	// BookingWeb,
+	BookingBar,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
@@ -101,7 +101,8 @@ function Home() {
 	return (
 		<div className={Style.Home}>
 			<div className={Style.Nav}>
-				<div className={Style.NavInner}>
+				<BookingBar />
+				{/* <div className={Style.NavInner}>
 					<nav>
 						<ul>
 							<li onClick={() => intro.current.scrollIntoView({ behavior: 'smooth' })}>Gallery</li>
@@ -115,14 +116,13 @@ function Home() {
 							<TfiArrowCircleRight />
 						</div>
 					</div>
-				</div>
+				</div> */}
 			</div>
-			<div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
+			{/* <div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
 				<div className={Style.Booking}>
 					<Booking />
-					{/* <BookingWeb /> */}
 				</div>
-			</div>
+			</div> */}
 			<div className={Style.Window}>
 				<main className={Style[`Main${scroll}`]} ref={main}>
 					<div className={Style.HomeBanner}>

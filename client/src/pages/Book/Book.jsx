@@ -78,10 +78,35 @@ function Book() {
 		console.log(maxDateFormatted);
 	};
 
+	const getToken = async () => {
+		await axios
+			.post(
+				'https://auth.hospitable.com/oauth/token',
+				{
+					client_id: 'e6293599-0301-4e9e-912d-49d972392355',
+					client_secret: '5269803f2c1fdbd58ed4e24af472bce0961e2bd9795f58a50215e5a55a53970fe',
+					audience: 'api.hospitable.com',
+					grant_type: 'client_credentials',
+				}
+				// {
+				// 	headers: {
+				// 		'Content-Type': 'application/json',
+				// 	},
+				// }
+			)
+			.then((response) => {
+				console.log(response.access_token);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	};
+
 	return (
 		<div className={Style.Book}>
 			<button onClick={() => getDate()}>GET Date</button>
-			<button onClick={() => getCalendar()}>GET TOKEN</button>
+			<button onClick={() => getCalendar()}>GET Calendar</button>
+			<button onClick={() => getToken()}>GET Token</button>
 			<div className='date-picker'>
 				<DateRange
 					className='date-range'
