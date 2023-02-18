@@ -1,8 +1,144 @@
+@import 'sass';
+
 .Book {
-	position: relative;
-	height: 100vh;
-	width: 100vw;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+	position: absolute;
+	width: 100%;
+	max-width: 1100px;
+	height: fit-content;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	display: grid;
+	grid-template-columns: 1.5fr 1fr;
+	grid-template-rows: min-content min-content;
+	padding-top: 25px;
+
+	div {
+		font-size: 16px;
+	}
+	h1 {
+		font-family: 'Marcellus', serif;
+		letter-spacing: 1pt;
+		font-size: 30px;
+	}
+	h2 {
+		// font-family: 'Marcellus', serif;
+		font-weight: 500;
+		letter-spacing: 0.5pt;
+		font-size: 22px;
+		margin: 15px 0 10px;
+	}
+	h4 {
+		// font-family: 'Marcellus', serif;
+		font-weight: 100;
+		letter-spacing: 0.5pt;
+		font-size: 16px;
+		// margin: 15px 0 10px;
+	}
+
+	* {
+		letter-spacing: 0.3pt;
+	}
+
+	.Header {
+		grid-column: 1 / span 2;
+		padding: 25px 0 10px;
+		display: flex;
+		justify-content: flex-start;
+		align-items: center;
+
+		.Arrow {
+			height: 40px;
+			width: 40px;
+			border-radius: 50%;
+			@include flex-center;
+			margin-right: 25px;
+			cursor: pointer;
+
+			transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+			&:hover {
+				background-color: rgba($color: $color-light, $alpha: 0.5);
+			}
+		}
+	}
+	.Left {
+		padding-right: 75px;
+		section {
+			height: fit-content;
+			display: flex;
+			flex-direction: column;
+			padding: 20px 0;
+			border-bottom: 1px solid $color-light-two;
+
+			.SubSection {
+				margin: 15px 0;
+				height: 50px;
+				width: 100%;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				.Info {
+					display: flex;
+					flex-direction: column;
+					align-items: flex-start;
+					justify-content: space-between;
+
+					.Info1 {
+						font-weight: 500;
+					}
+					.Info2 {
+						font-weight: 300;
+					}
+				}
+				.Edit {
+					font-weight: 500;
+					text-decoration: underline;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+	.Right {
+		.Price {
+			border: 1px solid $color-light-two;
+			border-radius: 10px;
+			padding: 25px;
+
+			.Overview {
+				display: flex;
+				.Image {
+					flex-shrink: 0;
+					height: 100px;
+					width: 150px;
+					background-size: contain;
+					background-position: center;
+					border-radius: 10px;
+					margin-right: 25px;
+				}
+			}
+		}
+		.SubSection {
+			display: flex;
+			flex-direction: column;
+
+			.PriceDetails {
+				display: flex;
+				flex-direction: column;
+				.Detail {
+					margin: 10px 0;
+					display: flex;
+					justify-content: space-between;
+				}
+				.Total {
+					display: flex;
+					justify-content: space-between;
+					border-top: 1px solid $color-light-two;
+					padding-top: 25px;
+					margin: 15px 0;
+				}
+			}
+		}
+	}
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Style from './bookingBar.module.scss';
+import { Link } from 'react-router-dom';
 import { DateRange, DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
@@ -15,9 +16,9 @@ import { keys } from '../../api_keys.js';
 export default function BookingWeb() {
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
+	const [guests, setGuests] = useState(1);
 	const [reserveActive, setReserveActive] = useState(false);
 	const [openDatePicker, setOpenDatePicker] = useState(false);
-	const [guests, setGuests] = useState(1);
 
 	const datePicker = useRef();
 	const button = useRef();
@@ -46,7 +47,7 @@ export default function BookingWeb() {
 	};
 
 	useEffect(() => {
-		if (startDate !== endDate) {
+		if (JSON.stringify(startDate) !== JSON.stringify(endDate)) {
 			setReserveActive(true);
 		} else {
 			setReserveActive(false);
@@ -81,11 +82,6 @@ export default function BookingWeb() {
 
 	const handleSelect = (ranges) => {
 		console.log(ranges);
-		// if (ranges.selection.startDate === ranges.selection.endDate) {
-		// 	const start = ranges.selection.startDate;
-		// 	setStartDate(ranges.selection.startDate);
-		// 	setEndDate(add(new Date(start), { days: 1 }));
-		// }
 
 		setStartDate(ranges.selection.startDate);
 		setEndDate(ranges.selection.endDate);
@@ -95,10 +91,6 @@ export default function BookingWeb() {
 		startDate: startDate,
 		endDate: endDate,
 		key: 'selection',
-	};
-
-	const reserve = () => {
-		console.log('reserve');
 	};
 
 	return (
@@ -112,7 +104,15 @@ export default function BookingWeb() {
 						className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}
 						onClick={() => setOpenDatePicker(true)}
 						ref={datePicker}>
-						<div className={Style.DatesOverlay}></div>
+						<div className={Style.Dates}>
+							<div className={Style.Overlay}></div>
+							<div className={Style.Start}>
+								<h4>{startDate ? format(startDate, 'MMM dd') : 'Check-In'}</h4>
+							</div>
+							<div className={Style.End}>
+								<h4>{startDate !== endDate ? format(endDate, 'MMM dd') : 'Check-Out'}</h4>
+							</div>
+						</div>
 						<DateRange
 							className={Style.DateRange}
 							ranges={[selectionRange]}
@@ -134,7 +134,10 @@ export default function BookingWeb() {
 						<BsPeopleFill />
 					</div>
 					<div className={Style.Select}>
-						<div className={Style.Count}>{`${guests} guest${guests > 1 ? 's' : ''}`} </div>
+						<div className={Style.Overlay}></div>
+						<div className={Style.Count}>
+							<h4>{`${guests} Guest${guests > 1 ? 's' : ''}`}</h4>
+						</div>
 						<div className={Style.Arrows}>
 							<div
 								className={`${Style.Arrow} ${guests === 10 ? Style.Disable : ''}`}
@@ -154,25 +157,22 @@ export default function BookingWeb() {
 					</div>
 				</div>
 			</div>
-			<div
-				className={reserveActive ? Style.ButtonReserve : Style.Button}
-				// onClick={() => {
-				// 	if (reserveActive) {
-				// 		reserve();
-				// 	} else {
-				// 		setOpenDatePicker(!openDatePicker);
-				// 	}
-				// }}
-				onClick={() => api()}
-				ref={button}>
-				<h4 className={Style.Check}>
-					Check <br />
-					Availability
-				</h4>
-				<h4 className={Style.Reserve}>Reserve</h4>
+			<div className={reserveActive ? Style.ButtonReserve : Style.Button} ref={button}>
+				{reserveActive ? (
+					<Link to='/book'>
+						<div className={Style.ButtonText}>
+							<h4>Reserve</h4>
+							<TfiArrowCircleRight />
+						</div>
+					</Link>
+				) : (
+					<div className={Style.ButtonText}>
+						<h4>Check Availability</h4>
+					</div>
+				)}
+				{/* <h4 className={Style.Reserve}>Reserve</h4>
 				<div className={Style.Icon}>
-					<TfiArrowCircleRight />
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

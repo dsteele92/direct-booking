@@ -21,6 +21,16 @@
 		margin-bottom: 25px;
 		font-family: 'Marcellus', serif;
 	}
+	h4 {
+		font-family: 'Marcellus', serif;
+		// font-weight: 100;
+		font-size: 18px;
+		letter-spacing: 1pt;
+		@media screen and (max-width: $breakpoint-small) {
+			font-size: 16px;
+		}
+		text-transform: uppercase;
+	}
 
 	.Booker {
 		// max-width: 700px;
@@ -40,7 +50,6 @@
 		}
 
 		.DatePickerContainer {
-			margin-left: 20px;
 			flex-shrink: 0;
 			position: relative;
 			width: 332px;
@@ -61,21 +70,52 @@
 				@include flex-center;
 				// padding: 10px;
 				overflow: hidden;
-				.DatesOverlay {
+				.Dates {
+					cursor: pointer;
 					position: absolute;
 					z-index: 3;
 					top: 0;
 					left: 0;
 					height: 57px;
+					padding: 0 2%;
 					width: 100%;
 					background-color: $color-light-two;
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+
+					.Overlay {
+						position: absolute;
+						z-index: 0;
+						height: 100%;
+						width: 96%;
+						top: 0;
+						left: 50%;
+						transform: translateX(-50%);
+						border-radius: 10px;
+						background-color: rgba($color: $color-light, $alpha: 0.5);
+						opacity: 0;
+						transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
+					}
+					.Start {
+						z-index: 1;
+						@include flex-center;
+						border-right: 1px solid black;
+					}
+					.End {
+						z-index: 1;
+						@include flex-center;
+					}
+					&:hover {
+						.Overlay {
+							opacity: 1;
+						}
+					}
 				}
 				.DateRange {
 					position: absolute;
 					left: 0;
 					top: 0;
 					overflow: hidden;
-					// border-radius: 10px;
 					transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
 				}
 
@@ -88,6 +128,7 @@
 		}
 
 		.Guests {
+			margin-left: 5vw;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -95,53 +136,87 @@
 				font-size: 25px;
 				color: grey;
 				@include flex-center;
+				margin-right: 5px;
 			}
 			.Select {
 				position: relative;
-				margin-left: 20px;
 				height: 52px;
 				width: 130px;
-				// border: 1px solid rgba(0, 0, 0, 0.5);
-				border-radius: 10px;
-				// box-shadow: 0 2px 5px rgba($color: gray, $alpha: 0.3);
-				padding: 10px;
-				padding-right: 40px;
-				// background: rgba($color: whitesmoke, $alpha: 0.5);
+				padding: 0 2%;
 				@include flex-center;
 				overflow: hidden;
 
-				font-size: 16px;
+				font-size: 18px;
 				font-weight: 300;
 
+				.Overlay {
+					position: absolute;
+					z-index: 0;
+					height: 100%;
+					width: 96%;
+					top: 0;
+					left: 50%;
+					transform: translateX(-50%);
+					border-radius: 10px;
+					background-color: rgba($color: $color-light, $alpha: 0.5);
+					opacity: 0;
+					transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
+				}
+
+				.Count {
+					position: absolute;
+					width: 100px;
+					height: 100%;
+					left: 0;
+					top: 0;
+					@include flex-center;
+					cursor: default;
+				}
+
 				.Arrows {
+					padding: 2%;
 					position: absolute;
 					height: 100%;
 					width: 30px;
 					top: 0;
 					right: 0;
-					display: grid;
-					grid-template-rows: 1fr 1fr;
-					// background-color: $color-aqua;
+					display: flex;
+					flex-direction: column;
+					justify-content: space-between;
+					align-items: center;
+
+					opacity: 0;
+					transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
 
 					.Arrow {
-						height: 100%;
-						width: 100%;
+						border: 1px solid black;
+						border-radius: 50%;
+						height: 22px;
+						width: 22px;
 						@include flex-center;
-						border-left: 1px solid $color-aqua;
 						cursor: pointer;
+						font-size: 14px;
 
 						&:active {
 							background-color: rgba($color: gray, $alpha: 0.1);
 						}
 
 						&:first-of-type {
-							border-bottom: 1px solid $color-aqua;
+							border-bottom: 1px solid gray;
 						}
 					}
 
 					.Disable {
 						color: rgba($color: black, $alpha: 0.5);
 						cursor: default;
+					}
+				}
+				&:hover {
+					.Arrows {
+						opacity: 1;
+					}
+					.Overlay {
+						opacity: 1;
 					}
 				}
 			}
@@ -154,63 +229,42 @@
 		width: 18%;
 		right: 0;
 		border-radius: 0 10px 10px 0;
-		// border-radius: 0 10px 10px 0;
-		// background-color: $color-aqua;
-		// background: rgba($color: white, $alpha: 0.3);
-		background: rgba($color: black, $alpha: 0.1);
+		background: rgba($color: black, $alpha: 0.05);
 		@include flex-center;
-		cursor: pointer;
 		transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 
-		h4 {
-			transform: translateY(-50%);
-			font-size: 16px;
-			@media screen and (max-width: $breakpoint-large) {
-				font-size: 14px;
-			}
-			font-family: 'Marcellus', serif;
-			letter-spacing: 1pt;
-			// margin-right: 25px;
-			text-transform: uppercase;
-		}
-		.Check {
-			position: absolute;
-			left: 15%;
-			top: 50%;
-			opacity: 1;
-			transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
-		}
-		.Reserve {
-			position: absolute;
-			left: 15%;
-			top: 50%;
-			opacity: 0;
-			transition: all 0.1s cubic-bezier(0.215, 0.61, 0.355, 1);
+		cursor: default;
+		a {
+			height: 100%;
+			width: 100%;
+			text-decoration: none;
+			color: black;
 		}
 
-		.Icon {
-			font-size: 24px;
-			@media screen and (max-width: $breakpoint-large) {
-				font-size: 20px;
+		.ButtonText {
+			height: 100%;
+			width: 100%;
+			@include flex-center;
+			h4 {
+				font-size: 16px;
+				@media screen and (max-width: $breakpoint-large) {
+					font-size: 14px;
+				}
+				font-family: 'Marcellus', serif;
+				letter-spacing: 1pt;
+				text-transform: uppercase;
+				margin: 0 25px;
+				text-align: center;
 			}
-			position: absolute;
-			right: 15%;
-			top: 50%;
-			transform: translateY(-50%);
 		}
 
 		&Reserve {
 			@extend .Button;
-			.Check {
-				opacity: 0;
+			background: rgba($color: $color-dark, $alpha: 0.5);
+			cursor: pointer;
+			&:hover {
+				box-shadow: inset 0 0 10px rgba($color: gray, $alpha: 0.2);
 			}
-			.Reserve {
-				opacity: 1;
-			}
-		}
-
-		&:hover {
-			background-color: #90dbdb;
 		}
 	}
 

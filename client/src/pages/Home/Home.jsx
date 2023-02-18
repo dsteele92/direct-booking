@@ -39,8 +39,6 @@ function Home() {
 	const host = useRef();
 	const [intro, introIntersected] = useHasIntersected({ threshold: 1 });
 	const [info, infoIntersected] = useHasIntersected({ threshold: 0.25 });
-	// for booking ----->
-	const [openBook, setOpenBook] = useState(false);
 	// for full screen gallery ----->
 	const [fullScreenMobile, setFullScreenMobile] = useState(-1);
 	const [fullScreenWeb, setFullScreenWeb] = useState(-1);
