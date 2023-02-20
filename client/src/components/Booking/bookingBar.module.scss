@@ -87,7 +87,7 @@
 						position: absolute;
 						z-index: 0;
 						height: 100%;
-						width: 96%;
+						width: 95%;
 						top: 0;
 						left: 50%;
 						transform: translateX(-50%);
@@ -136,7 +136,7 @@
 				font-size: 25px;
 				color: grey;
 				@include flex-center;
-				margin-right: 5px;
+				margin-right: 10px;
 			}
 			.Select {
 				position: relative;
@@ -153,7 +153,7 @@
 					position: absolute;
 					z-index: 0;
 					height: 100%;
-					width: 96%;
+					width: 100%;
 					top: 0;
 					left: 50%;
 					transform: translateX(-50%);

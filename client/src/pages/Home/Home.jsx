@@ -17,7 +17,7 @@ import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } fr
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 
-function Home() {
+function Home(props) {
 	const [top, setTop] = useState(true);
 	// for background color -->
 	const [scroll, setScroll] = useState(0);
@@ -99,7 +99,15 @@ function Home() {
 	return (
 		<div className={Style.Home}>
 			<div className={Style.Nav}>
-				<BookingBar />
+				<BookingBar
+					startDate={props.startDate}
+					setStartDate={props.setStartDate}
+					endDate={props.endDate}
+					setEndDate={props.setEndDate}
+					guests={props.guests}
+					setGuests={props.setGuests}
+					disabledDates={props.disabledDates}
+				/>
 				{/* <div className={Style.NavInner}>
 					<nav>
 						<ul>

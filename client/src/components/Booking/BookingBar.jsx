@@ -13,10 +13,10 @@ import { add, format } from 'date-fns';
 
 import { keys } from '../../api_keys.js';
 
-export default function BookingWeb() {
-	const [startDate, setStartDate] = useState(null);
-	const [endDate, setEndDate] = useState(null);
-	const [guests, setGuests] = useState(1);
+export default function BookingWeb(props) {
+	// const [startDate, setStartDate] = useState(null);
+	// const [endDate, setEndDate] = useState(null);
+	// const [guests, setGuests] = useState(1);
 	const [reserveActive, setReserveActive] = useState(false);
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 
@@ -47,12 +47,12 @@ export default function BookingWeb() {
 	};
 
 	useEffect(() => {
-		if (JSON.stringify(startDate) !== JSON.stringify(endDate)) {
+		if (JSON.stringify(props.startDate) !== JSON.stringify(props.endDate)) {
 			setReserveActive(true);
 		} else {
 			setReserveActive(false);
 		}
-	}, [startDate, endDate]);
+	}, [props.startDate, props.endDate]);
 
 	useEffect(() => {
 		const handleKeydown = (e) => {
@@ -83,13 +83,13 @@ export default function BookingWeb() {
 	const handleSelect = (ranges) => {
 		console.log(ranges);
 
-		setStartDate(ranges.selection.startDate);
-		setEndDate(ranges.selection.endDate);
+		props.setStartDate(ranges.selection.startDate);
+		props.setEndDate(ranges.selection.endDate);
 	};
 
 	const selectionRange = {
-		startDate: startDate,
-		endDate: endDate,
+		startDate: props.startDate,
+		endDate: props.endDate,
 		key: 'selection',
 	};
 
@@ -107,10 +107,10 @@ export default function BookingWeb() {
 						<div className={Style.Dates}>
 							<div className={Style.Overlay}></div>
 							<div className={Style.Start}>
-								<h4>{startDate ? format(startDate, 'MMM dd') : 'Check-In'}</h4>
+								<h4>{props.startDate ? format(props.startDate, 'MMM dd') : 'Check-In'}</h4>
 							</div>
 							<div className={Style.End}>
-								<h4>{startDate !== endDate ? format(endDate, 'MMM dd') : 'Check-Out'}</h4>
+								<h4>{props.endDate ? format(props.endDate, 'MMM dd') : 'Check-Out'}</h4>
 							</div>
 						</div>
 						<DateRange
@@ -124,6 +124,8 @@ export default function BookingWeb() {
 							monthHeight={6}
 							startDatePlaceholder={'Check-in'}
 							endDatePlaceholder={'Checkout'}
+							// retainEndDateOnFirstSelection={true}
+							// moveRangeOnFirstSelection={true}
 							// months={2}
 							// direction={'horizontal'}
 						/>
@@ -136,20 +138,20 @@ export default function BookingWeb() {
 					<div className={Style.Select}>
 						<div className={Style.Overlay}></div>
 						<div className={Style.Count}>
-							<h4>{`${guests} Guest${guests > 1 ? 's' : ''}`}</h4>
+							<h4>{`${props.guests} Guest${props.guests > 1 ? 's' : ''}`}</h4>
 						</div>
 						<div className={Style.Arrows}>
 							<div
-								className={`${Style.Arrow} ${guests === 10 ? Style.Disable : ''}`}
+								className={`${Style.Arrow} ${props.guests === 10 ? Style.Disable : ''}`}
 								onClick={() => {
-									if (guests < 10) setGuests(guests + 1);
+									if (props.guests < 10) props.setGuests(props.guests + 1);
 								}}>
 								<AiOutlinePlus />
 							</div>
 							<div
-								className={`${Style.Arrow} ${guests === 1 ? Style.Disable : ''}`}
+								className={`${Style.Arrow} ${props.guests === 1 ? Style.Disable : ''}`}
 								onClick={() => {
-									if (guests > 1) setGuests(guests - 1);
+									if (props.guests > 1) props.setGuests(props.guests - 1);
 								}}>
 								<AiOutlineMinus />
 							</div>

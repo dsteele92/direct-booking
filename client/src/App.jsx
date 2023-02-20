@@ -1,17 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { add, format } from 'date-fns';
 import { Home, Book } from 'pages';
+import { keys } from './api_keys.js';
 
 const App = () => {
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
-	const [guests, setGuests] = useState(1);
+	const [guests, setGuests] = useState(3);
 	const [disabledDates, setDisabledDates] = useState([add(new Date(), { days: 1 }), add(new Date(), { days: 3 })]);
 
-	useEffect(() => {
-		console.log('Page loaded');
-	}, []);
+	const options = {
+		method: 'GET',
+		url: `https://api.hospitable.com/calendar/${keys.HOSPITABLE_PROPERTY_ID}`,
+		params: {
+			start_date: format(new Date(), 'yyyy-MM-dd'),
+			end_date: format(add(new Date(), { months: 6 }), 'yyyy-MM-dd'),
+		},
+		headers: {
+			accept: 'application/json',
+			Authorization: `Bearer ${keys.HOSPITABLE_CURRENT_TOKEN}`,
+			'Content-Type': 'application/vnd.hospitable.20190904+json',
+		},
+	};
+
+	axios
+		.request(options)
+		.then(function (response) {
+			console.log(response);
+			const data = response.data.data.days;
+			for (const day in data) {
+				console.log(`date: ${data[day].date}`);
+				console.log(`status: ${data[day].status.available}`);
+				console.log(`price: ${data[day].price.amount}`);
+			}
+		})
+		.catch(function (error) {
+			console.error(error);
+		});
+
+	useEffect(() => {}, []);
 
 	return (
 		<div className='App'>

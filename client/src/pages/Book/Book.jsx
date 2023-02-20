@@ -10,7 +10,7 @@ import { keys } from '../../api_keys.js';
 import { BsArrowLeft } from 'react-icons/bs';
 import { LR3sm } from 'images';
 
-function Book(startDate, endDate, guests, disabledDates, setStartDate, setEndDate, setGuests) {
+function Book(props) {
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 
 	return (
@@ -29,7 +29,10 @@ function Book(startDate, endDate, guests, disabledDates, setStartDate, setEndDat
 					<div className={Style.SubSection}>
 						<div className={Style.Info}>
 							<div className={Style.Info1}>Dates</div>
-							<div className={Style.Info2}>---DATES---</div>
+							<div className={Style.Info2}>{`${format(props.startDate, 'MMM dd')} - ${format(
+								props.endDate,
+								'MMM dd'
+							)}`}</div>
 						</div>
 						<div className={Style.Edit}>Edit</div>
 					</div>
@@ -43,7 +46,7 @@ function Book(startDate, endDate, guests, disabledDates, setStartDate, setEndDat
 					<div className={Style.SubSection}>
 						<div className={Style.Info}>
 							<div className={Style.Info1}>Guests</div>
-							<div className={Style.Info2}>---GUESTS---</div>
+							<div className={Style.Info2}>{`${props.guests} guest${props.guests > 1 ? 's' : ''}`}</div>
 						</div>
 						<div className={Style.Edit}>Edit</div>
 					</div>

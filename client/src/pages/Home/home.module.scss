@@ -17,6 +17,7 @@
 		left: 0;
 		z-index: 10;
 		height: 8%;
+		min-height: 70px;
 		width: 100%;
 		padding: 10px 10px 0;
 		@media screen and (max-height: $breakpoint-mobile) {
@@ -25,141 +26,141 @@
 		overflow: visible;
 		@include flex-center;
 
-		.NavInner {
-			position: relative;
-			height: 100%;
-			width: 100%;
-			border-radius: 10px;
-			overflow: hidden;
-			background: $color-light-two;
-			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+		// .NavInner {
+		// 	position: relative;
+		// 	height: 100%;
+		// 	width: 100%;
+		// 	border-radius: 10px;
+		// 	overflow: hidden;
+		// 	background: $color-light-two;
+		// 	transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 
-			display: grid;
-			grid-template-columns: 4fr 1fr;
-			@media screen and (max-width: $breakpoint-tablet) {
-				grid-template-columns: 3fr 1fr;
-			}
-			@media screen and (max-width: $breakpoint-small) {
-				grid-template-columns: 1fr;
-			}
+		// 	display: grid;
+		// 	grid-template-columns: 4fr 1fr;
+		// 	@media screen and (max-width: $breakpoint-tablet) {
+		// 		grid-template-columns: 3fr 1fr;
+		// 	}
+		// 	@media screen and (max-width: $breakpoint-small) {
+		// 		grid-template-columns: 1fr;
+		// 	}
 
-			nav {
-				display: flex;
-				@media screen and (max-width: $breakpoint-small) {
-					display: none;
-				}
-				position: relative;
-				align-items: center;
-				justify-content: flex-start;
-				height: 100%;
-				width: 100%;
-				padding: 0 5%;
-				ul {
-					display: flex;
-					align-items: center;
-					justify-content: flex-start;
-					li {
-						cursor: pointer;
-						color: #545454;
-						margin-right: 5vw;
-						list-style: none;
-						font-family: 'Marcellus', serif;
-						letter-spacing: 1pt;
-						text-transform: uppercase;
-						font-size: 18px;
-						@media screen and (max-width: $breakpoint-tablet) {
-							font-size: 16px;
-						}
-						@media screen and (max-width: $breakpoint-small) {
-							font-size: 14px;
-						}
-						@media screen and (max-height: $breakpoint-mobile) {
-							font-size: 12px;
-						}
-					}
-				}
-			}
+		// 	nav {
+		// 		display: flex;
+		// 		@media screen and (max-width: $breakpoint-small) {
+		// 			display: none;
+		// 		}
+		// 		position: relative;
+		// 		align-items: center;
+		// 		justify-content: flex-start;
+		// 		height: 100%;
+		// 		width: 100%;
+		// 		padding: 0 5%;
+		// 		ul {
+		// 			display: flex;
+		// 			align-items: center;
+		// 			justify-content: flex-start;
+		// 			li {
+		// 				cursor: pointer;
+		// 				color: #545454;
+		// 				margin-right: 5vw;
+		// 				list-style: none;
+		// 				font-family: 'Marcellus', serif;
+		// 				letter-spacing: 1pt;
+		// 				text-transform: uppercase;
+		// 				font-size: 18px;
+		// 				@media screen and (max-width: $breakpoint-tablet) {
+		// 					font-size: 16px;
+		// 				}
+		// 				@media screen and (max-width: $breakpoint-small) {
+		// 					font-size: 14px;
+		// 				}
+		// 				@media screen and (max-height: $breakpoint-mobile) {
+		// 					font-size: 12px;
+		// 				}
+		// 			}
+		// 		}
+		// 	}
 
-			.Book {
-				height: 100%;
-				width: 100%;
-				background: rgba($color: black, $alpha: 0.1);
-				transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
-				@media screen and (max-width: $breakpoint-small) {
-					background: none;
-				}
-				@include flex-center;
-				cursor: pointer;
-				font-size: 22px;
-				@media screen and (max-width: $breakpoint-large) {
-					font-size: 20px;
-				}
-				@media screen and (max-width: $breakpoint-tablet) {
-					font-size: 18px;
-				}
-				@media screen and (max-width: $breakpoint-small) {
-					font-size: 20px;
-				}
-				@media screen and (max-height: $breakpoint-mobile) {
-					font-size: 14px;
-				}
-				h4 {
-					font-family: 'Marcellus', serif;
-					letter-spacing: 1pt;
-					margin-right: 10px;
-				}
-				.Icon {
-					@include flex-center;
-					transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+		// 	.Book {
+		// 		height: 100%;
+		// 		width: 100%;
+		// 		background: rgba($color: black, $alpha: 0.1);
+		// 		transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+		// 		@media screen and (max-width: $breakpoint-small) {
+		// 			background: none;
+		// 		}
+		// 		@include flex-center;
+		// 		cursor: pointer;
+		// 		font-size: 22px;
+		// 		@media screen and (max-width: $breakpoint-large) {
+		// 			font-size: 20px;
+		// 		}
+		// 		@media screen and (max-width: $breakpoint-tablet) {
+		// 			font-size: 18px;
+		// 		}
+		// 		@media screen and (max-width: $breakpoint-small) {
+		// 			font-size: 20px;
+		// 		}
+		// 		@media screen and (max-height: $breakpoint-mobile) {
+		// 			font-size: 14px;
+		// 		}
+		// 		h4 {
+		// 			font-family: 'Marcellus', serif;
+		// 			letter-spacing: 1pt;
+		// 			margin-right: 10px;
+		// 		}
+		// 		.Icon {
+		// 			@include flex-center;
+		// 			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 
-					&Rotate {
-						@extend .Icon;
-						transform: rotateZ(-90deg);
-					}
-				}
+		// 			&Rotate {
+		// 				@extend .Icon;
+		// 				transform: rotateZ(-90deg);
+		// 			}
+		// 		}
 
-				&:hover {
-					// background: rgba($color: black, $alpha: 0.15);
-					background: rgba($color: white, $alpha: 0.2);
-					box-shadow: inset 0 0 10px rgba($color: gray, $alpha: 0.2);
-				}
-			}
-		}
+		// 		&:hover {
+		// 			// background: rgba($color: black, $alpha: 0.15);
+		// 			background: rgba($color: white, $alpha: 0.2);
+		// 			box-shadow: inset 0 0 10px rgba($color: gray, $alpha: 0.2);
+		// 		}
+		// 	}
+		// }
 	}
 
 	// -------------------------------------- BOOKING ---------------------------------------------->
 
-	.BookingContainer {
-		z-index: 10;
-		position: fixed;
-		top: 8%;
-		left: 0;
-		height: 0;
-		width: 100%;
-		padding: 10px;
-		overflow: hidden;
-		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+	// .BookingContainer {
+	// 	z-index: 10;
+	// 	position: fixed;
+	// 	top: 8%;
+	// 	left: 0;
+	// 	height: 0;
+	// 	width: 100%;
+	// 	padding: 10px;
+	// 	overflow: hidden;
+	// 	transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 
-		.Booking {
-			z-index: 10;
-			height: 100%;
-			width: 100%;
-			position: relative;
-			border-radius: 10px;
-			overflow: hidden;
-			// top: -101%;
-			// top: 0;
-			// left: 0;
-			background-color: $color-light-two;
-			@include flex-center;
-			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-		}
+	// 	.Booking {
+	// 		z-index: 10;
+	// 		height: 100%;
+	// 		width: 100%;
+	// 		position: relative;
+	// 		border-radius: 10px;
+	// 		overflow: hidden;
+	// 		// top: -101%;
+	// 		// top: 0;
+	// 		// left: 0;
+	// 		background-color: $color-light-two;
+	// 		@include flex-center;
+	// 		transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
+	// 	}
 
-		&Open {
-			@extend .BookingContainer;
-			height: 92%;
-		}
-	}
+	// 	&Open {
+	// 		@extend .BookingContainer;
+	// 		height: 92%;
+	// 	}
+	// }
 
 	.Window {
 		position: absolute;
