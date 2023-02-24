@@ -9,7 +9,7 @@ import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { BsCalendarRange, BsPeopleFill } from 'react-icons/bs';
 import { RxPerson } from 'react-icons/rx';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import { add, format } from 'date-fns';
+import { add, format, parseISO } from 'date-fns';
 
 import { keys } from '../../api_keys.js';
 
@@ -19,11 +19,10 @@ export default function BookingWeb(props) {
 	// const [guests, setGuests] = useState(1);
 	const [reserveActive, setReserveActive] = useState(false);
 	const [openDatePicker, setOpenDatePicker] = useState(false);
+	const [checkout, setCheckout] = useState(false);
 
 	const datePicker = useRef();
 	const button = useRef();
-
-	const disabledDates = [add(new Date(), { days: 1 }), add(new Date(), { days: 3 })];
 
 	const options = {
 		method: 'GET',
@@ -83,6 +82,12 @@ export default function BookingWeb(props) {
 	const handleSelect = (ranges) => {
 		console.log(ranges);
 
+		if (ranges.selection.startDate === ranges.selection.endDate) {
+			setCheckout(true);
+		} else {
+			setCheckout(false);
+		}
+
 		props.setStartDate(ranges.selection.startDate);
 		props.setEndDate(ranges.selection.endDate);
 	};
@@ -104,15 +109,17 @@ export default function BookingWeb(props) {
 						className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}
 						onClick={() => setOpenDatePicker(true)}
 						ref={datePicker}>
-						<div className={Style.Dates}>
+						{/* <div className={Style.Dates}>
 							<div className={Style.Overlay}></div>
 							<div className={Style.Start}>
 								<h4>{props.startDate ? format(props.startDate, 'MMM dd') : 'Check-In'}</h4>
 							</div>
 							<div className={Style.End}>
-								<h4>{props.endDate ? format(props.endDate, 'MMM dd') : 'Check-Out'}</h4>
+								<h4>
+									{props.endDate !== props.startDate ? format(props.endDate, 'MMM dd') : 'Check-Out'}
+								</h4>
 							</div>
-						</div>
+						</div> */}
 						<DateRange
 							className={Style.DateRange}
 							ranges={[selectionRange]}
@@ -120,7 +127,7 @@ export default function BookingWeb(props) {
 							minDate={new Date()}
 							rangeColors={['#52758a']}
 							color={'#000000'}
-							disabledDates={disabledDates}
+							disabledDates={props.disabledDates}
 							monthHeight={6}
 							startDatePlaceholder={'Check-in'}
 							endDatePlaceholder={'Checkout'}
