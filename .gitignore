@@ -4,7 +4,9 @@
 /functions/.env
 
 /client/src/images/
+/client/src/firebase.js
 /client/src/api_keys.js
+/functions/api_keys.js
 
 # dependencies
 /client/node_modules

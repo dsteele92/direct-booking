@@ -107,6 +107,8 @@ function Home(props) {
 					guests={props.guests}
 					setGuests={props.setGuests}
 					disabledDates={props.disabledDates}
+					disabledCheckoutDates={props.disabledCheckoutDates}
+					availableData={props.availableData}
 				/>
 				{/* <div className={Style.NavInner}>
 					<nav>

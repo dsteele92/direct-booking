@@ -80,13 +80,29 @@ export default function BookingWeb(props) {
 	}, []);
 
 	const handleSelect = (ranges) => {
-		console.log(ranges);
-
+		// console.log(props.availableData);
+		const availableDate = format(ranges.selection.startDate, 'yyyy-MM-dd');
+		const min_stay = props.availableData[availableDate].min_stay;
+		console.log(availableDate);
+		console.log(min_stay);
 		if (ranges.selection.startDate === ranges.selection.endDate) {
+			// this works because when you select the check in date, it sets that exact object as the checkout date as well, until a checkout date is selected
 			setCheckout(true);
 		} else {
 			setCheckout(false);
+			// if (min_stay === 1) {
+			// 	setDisabledDates(props.disabledDates);
+			// } else {
+			// let nextDays = [];
+			// for (let stay = min_stay; stay > 1; stay--) {
+			// 	const next = add(new Date(availableDate), { days: stay - 1 });
+			// 	nextDays.push(next);
+			// }
+			// console.log(nextDays);
+			// }
 		}
+
+		// console.log(availableDate);
 
 		props.setStartDate(ranges.selection.startDate);
 		props.setEndDate(ranges.selection.endDate);
@@ -109,7 +125,7 @@ export default function BookingWeb(props) {
 						className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}
 						onClick={() => setOpenDatePicker(true)}
 						ref={datePicker}>
-						{/* <div className={Style.Dates}>
+						<div className={Style.Dates}>
 							<div className={Style.Overlay}></div>
 							<div className={Style.Start}>
 								<h4>{props.startDate ? format(props.startDate, 'MMM dd') : 'Check-In'}</h4>
@@ -119,7 +135,7 @@ export default function BookingWeb(props) {
 									{props.endDate !== props.startDate ? format(props.endDate, 'MMM dd') : 'Check-Out'}
 								</h4>
 							</div>
-						</div> */}
+						</div>
 						<DateRange
 							className={Style.DateRange}
 							ranges={[selectionRange]}
@@ -127,7 +143,7 @@ export default function BookingWeb(props) {
 							minDate={new Date()}
 							rangeColors={['#52758a']}
 							color={'#000000'}
-							disabledDates={props.disabledDates}
+							disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
 							monthHeight={6}
 							startDatePlaceholder={'Check-in'}
 							endDatePlaceholder={'Checkout'}

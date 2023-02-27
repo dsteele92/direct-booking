@@ -5,12 +5,13 @@ import { add, format, parseISO } from 'date-fns';
 import { Home, Book } from 'pages';
 import { keys } from './api_keys.js';
 
-const App = () => {
+const App = (props) => {
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const [guests, setGuests] = useState(1);
 	const [disabledDates, setDisabledDates] = useState([]);
-	const [data, setData] = useState({});
+	const [disabledCheckoutDates, setDisabledCheckoutDates] = useState([]);
+	const [availableData, setAvailableData] = useState({});
 
 	useEffect(() => {
 		const options = {
@@ -22,7 +23,7 @@ const App = () => {
 			},
 			headers: {
 				accept: 'application/json',
-				Authorization: `Bearer ${keys.HOSPITABLE_CURRENT_TOKEN}`,
+				Authorization: `Bearer ${props.token}`,
 				'Content-Type': 'application/vnd.hospitable.20190904+json',
 			},
 		};
@@ -30,27 +31,40 @@ const App = () => {
 		axios
 			.request(options)
 			.then(function (response) {
-				console.log(response);
+				// console.log(response);
 				const data = response.data.data.days;
 				console.log(data);
 				let unavailable = [];
+				let unavailableCheckout = [];
+				let checkoutPossible = false;
+				let available = {};
 				for (const day in data) {
-					if (!data[day].status.available) {
-						const parsed = parseISO(data[day].date);
-						console.log(parsed);
+					const parsed = parseISO(data[day].date);
+					if (data[day].status.available) {
+						if (!checkoutPossible) {
+							checkoutPossible = true;
+						}
+						available[data[day].date] = {
+							price: data[day].price.amount,
+							min_stay: data[day].min_stay,
+						};
+					} else if (!data[day].status.available) {
 						unavailable.push(parsed);
+						if (checkoutPossible) {
+							checkoutPossible = false;
+						} else {
+							unavailableCheckout.push(parsed);
+						}
 					}
-					// console.log(`date: ${data[day].date}`);
-					// console.log(`status: ${data[day].status.available}`);
-					// console.log(`price: ${data[day].price.amount}`);
 				}
-				console.log(unavailable);
 				setDisabledDates(unavailable);
+				setDisabledCheckoutDates(unavailableCheckout);
+				setAvailableData(available);
 			})
 			.catch(function (error) {
 				console.error(error);
 			});
-	}, []);
+	}, [props.token]);
 
 	return (
 		<div className='App'>
@@ -67,6 +81,8 @@ const App = () => {
 								guests={guests}
 								setGuests={(i) => setGuests(i)}
 								disabledDates={disabledDates}
+								disabledCheckoutDates={disabledCheckoutDates}
+								availableData={availableData}
 							/>
 						}
 					/>
@@ -81,6 +97,8 @@ const App = () => {
 								guests={guests}
 								setGuests={(i) => setGuests(i)}
 								disabledDates={disabledDates}
+								disabledCheckoutDates={disabledCheckoutDates}
+								availableData={availableData}
 							/>
 						}
 					/>
