@@ -18,8 +18,8 @@ exports.getToken = functions.https.onRequest((req, res) => {
 			.post(
 				'https://auth.hospitable.com/oauth/token',
 				{
-					client_id: '3beedfc3-de02-4844-a4b9-c80906905b04',
-					client_secret: 'b7f7c110a8455de2fb955af4882daec1199d0513857830a4132a6acdc39a5a420',
+					client_id: '',
+					client_secret: '',
 					audience: 'api.hospitable.com',
 					grant_type: 'client_credentials',
 				},
