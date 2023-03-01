@@ -104,6 +104,8 @@ function Home(props) {
 					setStartDate={props.setStartDate}
 					endDate={props.endDate}
 					setEndDate={props.setEndDate}
+					dates={props.dates}
+					setDates={props.setDates}
 					guests={props.guests}
 					setGuests={props.setGuests}
 					disabledDates={props.disabledDates}
@@ -183,12 +185,12 @@ function Home(props) {
 					<section className={Style.AmenitiesWeb} ref={amenities}>
 						<div className={Style.Header}>
 							<h2>Our Amenities:</h2>
-							<h4
+							{/* <h4
 								className={Style.ShowAll}
 								onMouseEnter={() => setShowAll(true)}
 								onMouseLeave={() => setShowAll(false)}>
 								Show All
-							</h4>
+							</h4> */}
 						</div>
 						<div className={Style.MatrixContainer}>
 							<div className={Style.Matrix} ref={matrixEven}>
@@ -214,8 +216,14 @@ function Home(props) {
 									<div className={Style.GridSlot} key={index}>
 										<div
 											className={Style.HoverDiv}
-											onMouseEnter={() => setShow(index)}
-											onMouseLeave={() => setShow(-1)}></div>
+											onMouseEnter={() => {
+												setShow(index);
+												setShowAll(true);
+											}}
+											onMouseLeave={() => {
+												setShow(-1);
+												setShowAll(false);
+											}}></div>
 									</div>
 								))}
 							</div>

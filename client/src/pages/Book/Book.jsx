@@ -12,6 +12,23 @@ import { LR3sm } from 'images';
 
 function Book(props) {
 	const [openDatePicker, setOpenDatePicker] = useState(false);
+	const [avgPrice, setAvgPrice] = useState('');
+	const [price, setPrice] = useState('');
+	const [totalPrice, setTotalPrice] = useState('');
+
+	useEffect(() => {
+		let total = 0;
+		for (const day in props.dates) {
+			const amt = props.availableData[props.dates[day]].price;
+			total += amt;
+		}
+		const totalStr = total.toString().slice(0, -2);
+		total = Number(totalStr);
+		const withFees = total + 185;
+		setPrice(total.toLocaleString());
+		setTotalPrice(withFees.toLocaleString());
+		setAvgPrice((total / props.dates.length).toLocaleString());
+	}, [props.availableData, props.dates]);
 
 	return (
 		<div className={Style.Book}>
@@ -38,13 +55,6 @@ function Book(props) {
 					</div>
 					<div className={Style.SubSection}>
 						<div className={Style.Info}>
-							<div className={Style.Info1}>Time</div>
-							<div className={Style.Info2}>---CHECKIN TIME---</div>
-						</div>
-						<div className={Style.Edit}>Edit</div>
-					</div>
-					<div className={Style.SubSection}>
-						<div className={Style.Info}>
 							<div className={Style.Info1}>Guests</div>
 							<div className={Style.Info2}>{`${props.guests} guest${props.guests > 1 ? 's' : ''}`}</div>
 						</div>
@@ -55,7 +65,7 @@ function Book(props) {
 					<h2>Cancellation Policy</h2>
 					<div className={Style.SubSection}>
 						<p>
-							Cancel before check-in on ---DATE + 48hours--- for a partial refund. After that, this
+							Cancel before check-in on ---DATE - 48hours--- for a partial refund. After that, this
 							reservation is non-refundable
 						</p>
 					</div>
@@ -76,20 +86,16 @@ function Book(props) {
 						<h2>Price Details</h2>
 						<div className={Style.PriceDetails}>
 							<div className={Style.Detail}>
-								<div>Item</div>
-								<div>$</div>
+								<div>{`$${avgPrice} x ${props.dates.length} nights`}</div>
+								<div>{`$${price}`}</div>
 							</div>
 							<div className={Style.Detail}>
-								<div>Item</div>
-								<div>$</div>
-							</div>
-							<div className={Style.Detail}>
-								<div>Item</div>
-								<div>$</div>
+								<div>Cleaning Fee</div>
+								<div>$185</div>
 							</div>
 							<div className={Style.Total}>
-								<div>Total(USD)</div>
-								<div>$</div>
+								<div>Total before taxes (USD)</div>
+								<div>{`$${totalPrice}`}</div>
 							</div>
 						</div>
 					</div>

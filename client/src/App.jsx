@@ -12,6 +12,7 @@ const App = (props) => {
 	const [disabledDates, setDisabledDates] = useState([]);
 	const [disabledCheckoutDates, setDisabledCheckoutDates] = useState([]);
 	const [availableData, setAvailableData] = useState({});
+	const [dates, setDates] = useState([]);
 
 	useEffect(() => {
 		const options = {
@@ -78,6 +79,8 @@ const App = (props) => {
 								setStartDate={(i) => setStartDate(i)}
 								endDate={endDate}
 								setEndDate={(i) => setEndDate(i)}
+								dates={dates}
+								setDates={(i) => setDates(i)}
 								guests={guests}
 								setGuests={(i) => setGuests(i)}
 								disabledDates={disabledDates}
@@ -94,6 +97,8 @@ const App = (props) => {
 								setStartDate={(i) => setStartDate(i)}
 								endDate={endDate}
 								setEndDate={(i) => setEndDate(i)}
+								dates={dates}
+								setDates={(i) => setDates(i)}
 								guests={guests}
 								setGuests={(i) => setGuests(i)}
 								disabledDates={disabledDates}

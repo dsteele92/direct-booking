@@ -14,36 +14,14 @@ import { add, format, parseISO } from 'date-fns';
 import { keys } from '../../api_keys.js';
 
 export default function BookingWeb(props) {
-	// const [startDate, setStartDate] = useState(null);
-	// const [endDate, setEndDate] = useState(null);
-	// const [guests, setGuests] = useState(1);
 	const [reserveActive, setReserveActive] = useState(false);
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 	const [checkout, setCheckout] = useState(false);
+	const [minStay, setMinStay] = useState(1);
+	const [minStayNotMet, setMinStayNotMet] = useState(false);
 
 	const datePicker = useRef();
 	const button = useRef();
-
-	const options = {
-		method: 'GET',
-		url: 'https://api.hospitable.com/calendar/964610',
-		headers: {
-			accept: 'application/json',
-			'Content-Type': 'application/vnd.hospitable.20190904+json',
-			authorization: 'Bearer',
-		},
-	};
-
-	const api = async () => {
-		await axios
-			.request(options)
-			.then(function (response) {
-				console.log(response.data);
-			})
-			.catch(function (error) {
-				console.error(error);
-			});
-	};
 
 	useEffect(() => {
 		if (JSON.stringify(props.startDate) !== JSON.stringify(props.endDate)) {
@@ -80,29 +58,38 @@ export default function BookingWeb(props) {
 	}, []);
 
 	const handleSelect = (ranges) => {
-		// console.log(props.availableData);
-		const availableDate = format(ranges.selection.startDate, 'yyyy-MM-dd');
-		const min_stay = props.availableData[availableDate].min_stay;
-		console.log(availableDate);
-		console.log(min_stay);
 		if (ranges.selection.startDate === ranges.selection.endDate) {
 			// this works because when you select the check in date, it sets that exact object as the checkout date as well, until a checkout date is selected
 			setCheckout(true);
 		} else {
 			setCheckout(false);
-			// if (min_stay === 1) {
-			// 	setDisabledDates(props.disabledDates);
-			// } else {
-			// let nextDays = [];
-			// for (let stay = min_stay; stay > 1; stay--) {
-			// 	const next = add(new Date(availableDate), { days: stay - 1 });
-			// 	nextDays.push(next);
-			// }
-			// console.log(nextDays);
-			// }
+			let start = format(ranges.selection.startDate, 'yyyy-MM-dd');
+			const min_stay = props.availableData[start].min_stay;
+			setMinStay(min_stay);
+			if (format(ranges.selection.startDate, 'yyyy-MM-dd') === format(ranges.selection.endDate, 'yyyy-MM-dd')) {
+				setMinStayNotMet(true);
+				return;
+			}
+			let dates = [start];
+			let current = ranges.selection.startDate;
+			let end = false;
+			while (!end) {
+				current = add(current, { days: 1 });
+				const formatted = format(current, 'yyyy-MM-dd');
+				if (formatted === format(ranges.selection.endDate, 'yyyy-MM-dd')) {
+					end = true;
+					break;
+				}
+				dates.push(formatted);
+			}
+			if (dates.length < min_stay) {
+				setMinStayNotMet(true);
+			} else {
+				setMinStayNotMet(false);
+			}
+			// console.log(dates);
+			props.setDates(dates);
 		}
-
-		// console.log(availableDate);
 
 		props.setStartDate(ranges.selection.startDate);
 		props.setEndDate(ranges.selection.endDate);
@@ -147,8 +134,6 @@ export default function BookingWeb(props) {
 							monthHeight={6}
 							startDatePlaceholder={'Check-in'}
 							endDatePlaceholder={'Checkout'}
-							// retainEndDateOnFirstSelection={true}
-							// moveRangeOnFirstSelection={true}
 							// months={2}
 							// direction={'horizontal'}
 						/>
@@ -182,8 +167,8 @@ export default function BookingWeb(props) {
 					</div>
 				</div>
 			</div>
-			<div className={reserveActive ? Style.ButtonReserve : Style.Button} ref={button}>
-				{reserveActive ? (
+			<div className={reserveActive && !minStayNotMet ? Style.ButtonReserve : Style.Button} ref={button}>
+				{reserveActive && !minStayNotMet ? (
 					<Link to='/book'>
 						<div className={Style.ButtonText}>
 							<h4>Reserve</h4>
@@ -192,12 +177,15 @@ export default function BookingWeb(props) {
 					</Link>
 				) : (
 					<div className={Style.ButtonText}>
-						<h4>Check Availability</h4>
+						{minStayNotMet ? (
+							<h4 className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
+								minStay > 1 ? 's' : ''
+							}`}</h4>
+						) : (
+							<h4>Check Availability</h4>
+						)}
 					</div>
 				)}
-				{/* <h4 className={Style.Reserve}>Reserve</h4>
-				<div className={Style.Icon}>
-				</div> */}
 			</div>
 		</div>
 	);

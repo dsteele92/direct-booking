@@ -247,7 +247,7 @@
 			@include flex-center;
 			h4 {
 				font-size: 16px;
-				@media screen and (max-width: $breakpoint-large) {
+				@media screen and (max-width: $breakpoint-tablet) {
 					font-size: 14px;
 				}
 				font-family: 'Marcellus', serif;
@@ -255,6 +255,9 @@
 				text-transform: uppercase;
 				margin: 0 25px;
 				text-align: center;
+			}
+			.MinStayNotMet {
+				color: $color-red;
 			}
 		}
 
