@@ -1,169 +1,201 @@
 @import 'sass';
 
-.Book {
-	position: absolute;
+.Page {
+	position: relative;
+	height: 100%;
 	width: 100%;
-	max-width: 1100px;
-	padding: 0 50px;
-	height: fit-content;
-	top: 0;
-	left: 50%;
-	transform: translateX(-50%);
-	display: grid;
-	grid-template-columns: 1.5fr 1fr;
-	grid-template-rows: min-content min-content;
-	@media screen and (max-width: $breakpoint-tablet) {
-		grid-template-columns: 1fr;
-		grid-template-rows: repeat(3, min-content);
-		row-gap: 20px;
-	}
 
-	padding-top: 25px;
-
-	div {
-		font-size: 18px;
+	.Book {
+		position: absolute;
+		width: 100%;
+		max-width: 1100px;
+		padding: 0 50px;
+		@media screen and (max-width: $breakpoint-mobile) {
+			padding: 0 30px;
+		}
+		height: fit-content;
+		top: 0;
+		left: 50%;
+		transform: translateX(-50%);
+		display: grid;
+		grid-template-columns: 1.5fr 1fr;
+		grid-template-rows: min-content min-content;
 		@media screen and (max-width: $breakpoint-tablet) {
+			grid-template-columns: 1fr;
+			grid-template-rows: repeat(3, min-content);
+			row-gap: 20px;
+		}
+
+		padding-top: 25px;
+
+		div {
+			font-size: 18px;
+			@media screen and (max-width: $breakpoint-tablet) {
+				font-size: 16px;
+			}
+		}
+		h1 {
+			font-family: 'Marcellus', serif;
+			letter-spacing: 1pt;
+			font-size: 30px;
+		}
+		h2 {
+			// font-family: 'Marcellus', serif;
+			font-weight: 500;
+			letter-spacing: 0.5pt;
+			font-size: 22px;
+			margin: 15px 0 10px;
+		}
+		h4 {
+			// font-family: 'Marcellus', serif;
+			font-weight: 100;
+			letter-spacing: 0.5pt;
 			font-size: 16px;
+			// margin: 15px 0 10px;
 		}
-	}
-	h1 {
-		font-family: 'Marcellus', serif;
-		letter-spacing: 1pt;
-		font-size: 30px;
-	}
-	h2 {
-		// font-family: 'Marcellus', serif;
-		font-weight: 500;
-		letter-spacing: 0.5pt;
-		font-size: 22px;
-		margin: 15px 0 10px;
-	}
-	h4 {
-		// font-family: 'Marcellus', serif;
-		font-weight: 100;
-		letter-spacing: 0.5pt;
-		font-size: 16px;
-		// margin: 15px 0 10px;
-	}
 
-	* {
-		letter-spacing: 0.3pt;
-	}
-
-	.Header {
-		grid-column: 1 / span 2;
-		@media screen and (max-width: $breakpoint-tablet) {
-			grid-column: 1;
-			grid-row: 1;
+		* {
+			letter-spacing: 0.3pt;
 		}
-		padding: 25px 0 10px;
-		display: flex;
-		justify-content: flex-start;
-		align-items: center;
 
-		.Arrow {
-			height: 40px;
-			width: 40px;
-			border-radius: 50%;
-			@include flex-center;
-			margin-right: 25px;
-			cursor: pointer;
-
-			transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
-
-			&:hover {
-				background-color: rgba($color: $color-light, $alpha: 0.5);
+		.Header {
+			grid-column: 1 / span 2;
+			@media screen and (max-width: $breakpoint-tablet) {
+				grid-column: 1;
+				grid-row: 1;
 			}
-		}
-	}
-	.Left {
-		padding-right: 75px;
-		@media screen and (max-width: $breakpoint-tablet) {
-			padding-right: 0;
-			grid-row: 3;
-			max-width: 650px;
-			margin: auto;
-		}
-		section {
-			height: fit-content;
+			padding: 25px 0 10px;
 			display: flex;
-			flex-direction: column;
-			padding: 20px 0;
-			border-bottom: 1px solid $color-light-two;
+			justify-content: flex-start;
+			align-items: center;
 
-			.SubSection {
-				margin: 15px 0;
-				height: 50px;
-				width: 100%;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
+			.Arrow {
+				height: 40px;
+				width: 40px;
+				border-radius: 50%;
+				@include flex-center;
+				margin-right: 25px;
+				cursor: pointer;
 
-				.Info {
-					display: flex;
-					flex-direction: column;
-					align-items: flex-start;
-					justify-content: space-between;
+				transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
 
-					.Info1 {
-						font-weight: 500;
-					}
-					.Info2 {
-						font-weight: 300;
-					}
-				}
-				.Edit {
-					font-weight: 500;
-					text-decoration: underline;
-					cursor: pointer;
+				&:hover {
+					background-color: rgba($color: $color-light, $alpha: 0.5);
 				}
 			}
 		}
-	}
-	.Right {
-		@media screen and (max-width: $breakpoint-tablet) {
-			grid-row: 2;
-			max-width: 550px;
-			margin: auto;
-		}
-		.Price {
-			border: 1px solid $color-light-two;
-			border-radius: 10px;
-			padding: 25px;
-
-			.Overview {
-				display: flex;
-				.Image {
-					flex-shrink: 0;
-					height: 100px;
-					width: 150px;
-					background-size: contain;
-					background-position: center;
-					border-radius: 10px;
-					margin-right: 25px;
-				}
+		.Left {
+			padding-right: 75px;
+			@media screen and (max-width: $breakpoint-tablet) {
+				padding-right: 0;
+				grid-row: 3;
+				max-width: 650px;
+				margin: auto;
 			}
-		}
-		.SubSection {
-			display: flex;
-			flex-direction: column;
-
-			.PriceDetails {
+			section {
+				height: fit-content;
 				display: flex;
 				flex-direction: column;
-				.Detail {
-					margin: 10px 0;
-					display: flex;
-					justify-content: space-between;
-				}
-				.Total {
-					display: flex;
-					justify-content: space-between;
-					border-top: 1px solid $color-light-two;
-					padding-top: 25px;
+				padding: 20px 0;
+				border-bottom: 1px solid $color-light-two;
+
+				.SubSection {
 					margin: 15px 0;
+					height: 50px;
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+
+					.Info {
+						display: flex;
+						flex-direction: column;
+						align-items: flex-start;
+						justify-content: space-between;
+
+						.Info1 {
+							font-weight: 500;
+						}
+						.Info2 {
+							font-weight: 300;
+						}
+					}
+					.Edit {
+						font-weight: 500;
+						text-decoration: underline;
+						cursor: pointer;
+					}
+				}
+
+				.Names {
+					width: 100%;
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					align-items: center;
+					@media screen and (max-width: $breakpoint-mobile) {
+						flex-direction: column;
+					}
+					.Name {
+						width: 48%;
+						@media screen and (max-width: $breakpoint-mobile) {
+							width: 100%;
+						}
+					}
+				}
+			}
+			.Button {
+				margin: 20px 0 50px;
+			}
+		}
+		.Right {
+			@media screen and (max-width: $breakpoint-tablet) {
+				grid-row: 2;
+				max-width: 550px;
+				margin: auto;
+			}
+			.Price {
+				border: 1px solid $color-light-two;
+				border-radius: 10px;
+				padding: 25px;
+
+				.Overview {
+					display: flex;
+					.Image {
+						flex-shrink: 0;
+						height: 100px;
+						width: 150px;
+						background-size: contain;
+						background-position: center;
+						border-radius: 10px;
+						margin-right: 25px;
+					}
+				}
+			}
+			.SubSection {
+				display: flex;
+				flex-direction: column;
+
+				.PriceDetails {
+					display: flex;
+					flex-direction: column;
+					.Detail {
+						margin: 10px 0;
+						display: flex;
+						justify-content: space-between;
+					}
+					.Total {
+						display: flex;
+						justify-content: space-between;
+						border-top: 1px solid $color-light-two;
+						padding-top: 25px;
+						margin: 15px 0;
+					}
 				}
 			}
 		}
+	}
+	.Modal {
+		@include modal;
 	}
 }

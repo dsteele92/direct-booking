@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import Style from './bookingBar.module.scss';
 import { Link } from 'react-router-dom';
-import { DateRange, DateRangePicker } from 'react-date-range';
+import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { TfiArrowCircleRight } from 'react-icons/tfi';
