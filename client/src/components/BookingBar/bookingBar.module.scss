@@ -23,7 +23,6 @@
 	}
 	h4 {
 		font-family: 'Marcellus', serif;
-		// font-weight: 100;
 		font-size: 18px;
 		letter-spacing: 1pt;
 		@media screen and (max-width: $breakpoint-small) {
@@ -197,8 +196,8 @@
 					transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
 
 					.Arrow {
-						border: 1px solid black;
-						border-radius: 50%;
+						// border: 1px solid black;
+						// border-radius: 50%;
 						height: 22px;
 						width: 22px;
 						@include flex-center;
@@ -210,7 +209,7 @@
 						}
 
 						&:first-of-type {
-							border-bottom: 1px solid gray;
+							// border-bottom: 1px solid gray;
 						}
 					}
 
@@ -261,11 +260,8 @@
 				@media screen and (max-width: $breakpoint-tablet) {
 					font-size: 14px;
 				}
-				font-family: 'Marcellus', serif;
-				letter-spacing: 1pt;
-				text-transform: uppercase;
-				margin: 0 25px;
 				text-align: center;
+				margin: 0 25px;
 			}
 			.MinStayNotMet {
 				color: $color-red;

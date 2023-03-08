@@ -76,8 +76,8 @@
 				@include flex-center;
 				margin-right: 25px;
 				cursor: pointer;
-
 				transition: all 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+				color: grey;
 
 				&:hover {
 					background-color: rgba($color: $color-light, $alpha: 0.5);
@@ -195,8 +195,12 @@
 			}
 		}
 	}
-	.Modal {
+	.DatesModal {
 		@include modal;
 		@include bookingModal;
+	}
+	.GuestsModal {
+		@include modal;
+		@include guestsModal;
 	}
 }

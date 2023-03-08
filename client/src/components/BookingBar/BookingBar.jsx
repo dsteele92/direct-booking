@@ -13,7 +13,7 @@ import { add, format, parseISO } from 'date-fns';
 
 import { keys } from '../../api_keys.js';
 
-export default function BookingWeb(props) {
+export default function BookingBar(props) {
 	const [reserveActive, setReserveActive] = useState(false);
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 	const [checkout, setCheckout] = useState(false);
@@ -134,8 +134,6 @@ export default function BookingWeb(props) {
 							monthHeight={6}
 							startDatePlaceholder={'Check-in'}
 							endDatePlaceholder={'Checkout'}
-							// months={2}
-							// direction={'horizontal'}
 						/>
 					</div>
 				</div>

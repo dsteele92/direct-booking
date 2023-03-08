@@ -1,22 +1,19 @@
 import Style from './book.module.scss';
-import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { add, format } from 'date-fns';
-import { keys } from '../../api_keys.js';
-import { BsArrowLeft } from 'react-icons/bs';
-import { AiFillCloseCircle } from 'react-icons/ai';
+import { BsArrowLeft, BsPeopleFill } from 'react-icons/bs';
+import { AiFillCloseCircle, AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { LR3sm } from 'images';
-import { FormControl, TextField, Select, InputLabel, MenuItem, Button, Checkbox } from '@mui/material';
+import { FormControl, TextField, Button } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme.js';
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input';
 
 function Book(props) {
-	const [openDatePicker, setOpenDatePicker] = useState(false);
 	const [avgPrice, setAvgPrice] = useState('');
 	const [price, setPrice] = useState('');
 	const [totalPrice, setTotalPrice] = useState('');
@@ -26,11 +23,13 @@ function Book(props) {
 	const [phone, setPhone] = useState('+1');
 	const [continueToPayment, setContinueToPayment] = useState(false);
 	const [editDates, setEditDates] = useState(false);
+	const [editGuests, setEditGuests] = useState(false);
 	const [checkout, setCheckout] = useState(false);
 	const [minStay, setMinStay] = useState(1);
 	const [minStayNotMet, setMinStayNotMet] = useState(false);
 	const [startDateUpdate, setStartDateUpdate] = useState(props.startDate);
 	const [endDateUpdate, setEndDateUpdate] = useState(props.endDate);
+	const [guestsUpdate, setGuestsUpdate] = useState(props.guests);
 
 	useEffect(() => {
 		let total = 0;
@@ -43,7 +42,7 @@ function Book(props) {
 		const withFees = total + 185;
 		setPrice(total.toLocaleString());
 		setTotalPrice(withFees.toLocaleString());
-		setAvgPrice((total / props.dates.length).toLocaleString());
+		setAvgPrice((total / props.dates.length).toFixed().toLocaleString());
 	}, [props.availableData, props.dates]);
 
 	useEffect(() => {
@@ -97,16 +96,24 @@ function Book(props) {
 		key: 'selection',
 	};
 
-	const save = () => {
+	const saveDates = () => {
 		props.setStartDate(startDateUpdate);
 		props.setEndDate(endDateUpdate);
 		setEditDates(false);
 	};
+	const saveGuests = () => {
+		props.setGuests(guestsUpdate);
+		setEditGuests(false);
+	};
 
-	const close = () => {
+	const closeDates = () => {
 		setEditDates(false);
 		setStartDateUpdate(props.startDate);
 		setEndDateUpdate(props.endDate);
+	};
+	const closeGuests = () => {
+		setEditGuests(false);
+		setGuestsUpdate(props.guests);
 	};
 
 	return (
@@ -142,7 +149,9 @@ function Book(props) {
 									props.guests > 1 ? 's' : ''
 								}`}</div>
 							</div>
-							<div className={Style.Edit}>Edit</div>
+							<div className={Style.Edit} onClick={() => setEditGuests(true)}>
+								Edit
+							</div>
 						</div>
 					</section>
 					<section>
@@ -246,54 +255,104 @@ function Book(props) {
 				</div>
 			</div>
 			{editDates && (
-				<div className={Style.Modal}>
-					<div className={Style.ModalBackground} onClick={close}></div>
+				<div className={Style.DatesModal}>
+					<div className={Style.ModalBackground} onClick={closeDates}></div>
 					<div className={Style.Inner}>
-						<div className={Style.Close} onClick={close}>
+						<div className={Style.Close} onClick={closeDates}>
 							<AiFillCloseCircle />
 						</div>
 						<div className={Style.Content}>
-							<h1>Select Dates</h1>
-							<DateRange
-								className={Style.DateRange}
-								ranges={[selectionRange]}
-								onChange={handleSelect}
-								minDate={new Date()}
-								rangeColors={['#52758a']}
-								color={'#000000'}
-								disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
-								monthHeight={6}
-								startDatePlaceholder={'Check-in'}
-								endDatePlaceholder={'Checkout'}
-								months={window.innerWidth > 1000 ? 2 : 1}
-								direction={'horizontal'}
-							/>
-							<ThemeProvider theme={theme}>
-								{!minStayNotMet && !checkout ? (
-									<Button
-										variant='outlined'
-										className={Style.EditRangeButton}
-										color='primary'
-										onClick={save}>
+							<div className={Style.SelectDates}>
+								<h1>Select Dates</h1>
+								<DateRange
+									className={Style.DateRange}
+									ranges={[selectionRange]}
+									onChange={handleSelect}
+									minDate={new Date()}
+									rangeColors={['#52758a']}
+									color={'#000000'}
+									disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
+									monthHeight={6}
+									startDatePlaceholder={'Check-in'}
+									endDatePlaceholder={'Checkout'}
+									months={2}
+									direction={window.innerWidth > 750 ? 'horizontal' : 'vertical'}
+								/>
+							</div>
+							<div className={Style.Save}>
+								<ThemeProvider theme={theme}>
+									{!minStayNotMet && !checkout ? (
+										<Button variant='outlined' color='primary' onClick={saveDates}>
+											Save
+										</Button>
+									) : (
+										<Button variant='outlined' color='primary' disabled>
+											Save
+										</Button>
+									)}
+								</ThemeProvider>
+								<div className={Style.MinStay}>
+									{minStayNotMet && (
+										<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
+											minStay > 1 ? 's' : ''
+										}`}</p>
+									)}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+			{editGuests && (
+				<div className={Style.GuestsModal}>
+					<div className={Style.ModalBackground} onClick={closeGuests}></div>
+					<div className={Style.Inner}>
+						<div className={Style.Close} onClick={closeGuests}>
+							<AiFillCloseCircle />
+						</div>
+						<div className={Style.Content}>
+							<div className={Style.SelectGuests}>
+								<h1>Select Guests</h1>
+								<div className={Style.Guests}>
+									<div className={Style.Icon}>
+										<BsPeopleFill />
+									</div>
+									<div className={Style.Select}>
+										<div className={Style.Count}>
+											<h4>{`${guestsUpdate} Guest${guestsUpdate > 1 ? 's' : ''}`}</h4>
+										</div>
+										<div className={Style.Arrows}>
+											<div
+												className={`${Style.Arrow} ${guestsUpdate === 10 ? Style.Disable : ''}`}
+												onClick={() => {
+													if (guestsUpdate < 10) setGuestsUpdate(guestsUpdate + 1);
+												}}>
+												<AiOutlinePlus />
+											</div>
+											<div
+												className={`${Style.Arrow} ${guestsUpdate === 1 ? Style.Disable : ''}`}
+												onClick={() => {
+													if (guestsUpdate > 1) setGuestsUpdate(guestsUpdate - 1);
+												}}>
+												<AiOutlineMinus />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className={Style.Save}>
+								<ThemeProvider theme={theme}>
+									<Button variant='outlined' color='primary' onClick={saveGuests}>
 										Save
 									</Button>
-								) : (
-									<Button
-										variant='outlined'
-										className={Style.EditRangeButton}
-										color='primary'
-										onClick={save}
-										disabled>
-										Save
-									</Button>
-								)}
-							</ThemeProvider>
-							<div className={Style.MinStay}>
-								{minStayNotMet && (
-									<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
-										minStay > 1 ? 's' : ''
-									}`}</p>
-								)}
+								</ThemeProvider>
+								<div className={Style.MinStay}>
+									{minStayNotMet && (
+										<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
+											minStay > 1 ? 's' : ''
+										}`}</p>
+									)}
+								</div>
 							</div>
 						</div>
 					</div>

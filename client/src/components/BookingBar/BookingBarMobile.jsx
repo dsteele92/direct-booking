@@ -1,26 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import Style from './bookingBarMobile.module.scss';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { TfiArrowCircleRight } from 'react-icons/tfi';
-import { BsCalendarRange, BsPeopleFill } from 'react-icons/bs';
-import { RxPerson } from 'react-icons/rx';
-import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import { add, format, parseISO } from 'date-fns';
+import { BsCalendarRange } from 'react-icons/bs';
+import { AiFillCloseCircle } from 'react-icons/ai';
+import { add, format } from 'date-fns';
+import { Button } from '@mui/material';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../../theme.js';
 
 import { keys } from '../../api_keys.js';
 
-export default function BookingWeb(props) {
+export default function BookingBarMobile(props) {
 	const [reserveActive, setReserveActive] = useState(false);
-	const [openDatePicker, setOpenDatePicker] = useState(false);
 	const [checkout, setCheckout] = useState(false);
 	const [minStay, setMinStay] = useState(1);
 	const [minStayNotMet, setMinStayNotMet] = useState(false);
+	const [editDates, setEditDates] = useState(false);
 
-	const datePicker = useRef();
 	const button = useRef();
 
 	useEffect(() => {
@@ -30,32 +29,6 @@ export default function BookingWeb(props) {
 			setReserveActive(false);
 		}
 	}, [props.startDate, props.endDate]);
-
-	useEffect(() => {
-		const handleKeydown = (e) => {
-			if (e.code === 'Escape') {
-				setOpenDatePicker(false);
-			}
-		};
-		const handleClick = (e) => {
-			if (
-				datePicker.current &&
-				!datePicker.current.contains(e.target) &&
-				button.current &&
-				!button.current.contains(e.target)
-			) {
-				setOpenDatePicker(false);
-			}
-		};
-
-		document.addEventListener('keydown', handleKeydown);
-		document.addEventListener('click', handleClick);
-
-		return () => {
-			document.removeEventListener('keydown', handleKeydown);
-			document.removeEventListener('click', handleClick);
-		};
-	}, []);
 
 	const handleSelect = (ranges) => {
 		if (ranges.selection.startDate === ranges.selection.endDate) {
@@ -87,7 +60,6 @@ export default function BookingWeb(props) {
 			} else {
 				setMinStayNotMet(false);
 			}
-			// console.log(dates);
 			props.setDates(dates);
 		}
 
@@ -101,80 +73,32 @@ export default function BookingWeb(props) {
 		key: 'selection',
 	};
 
+	const close = () => {
+		setEditDates(false);
+	};
+
 	return (
 		<div className={Style.Book}>
-			<div className={Style.Booker}>
+			<div className={Style.Booker} onClick={() => setEditDates(true)}>
 				<div className={Style.Icon}>
 					<BsCalendarRange />
 				</div>
-				<div className={Style.DatePickerContainer}>
-					<div
-						className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}
-						onClick={() => setOpenDatePicker(true)}
-						ref={datePicker}>
-						<div className={Style.Dates}>
-							<div className={Style.Overlay}></div>
-							<div className={Style.Start}>
-								<h4>{props.startDate ? format(props.startDate, 'MMM dd') : 'Check-In'}</h4>
-							</div>
-							<div className={Style.End}>
-								<h4>
-									{props.endDate !== props.startDate ? format(props.endDate, 'MMM dd') : 'Check-Out'}
-								</h4>
-							</div>
-						</div>
-						<DateRange
-							className={Style.DateRange}
-							ranges={[selectionRange]}
-							onChange={handleSelect}
-							minDate={new Date()}
-							rangeColors={['#52758a']}
-							color={'#000000'}
-							disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
-							monthHeight={6}
-							startDatePlaceholder={'Check-in'}
-							endDatePlaceholder={'Checkout'}
-							// months={2}
-							// direction={'horizontal'}
-						/>
+				<div className={Style.Dates}>
+					<div className={Style.Start}>
+						<h4>{props.startDate ? format(props.startDate, 'MMM dd') : 'Check-In'}</h4>
 					</div>
-				</div>
-				<div className={Style.Guests}>
-					<div className={Style.Icon}>
-						<BsPeopleFill />
-					</div>
-					<div className={Style.Select}>
-						<div className={Style.Overlay}></div>
-						<div className={Style.Count}>
-							<h4>{`${props.guests} Guest${props.guests > 1 ? 's' : ''}`}</h4>
-						</div>
-						<div className={Style.Arrows}>
-							<div
-								className={`${Style.Arrow} ${props.guests === 10 ? Style.Disable : ''}`}
-								onClick={() => {
-									if (props.guests < 10) props.setGuests(props.guests + 1);
-								}}>
-								<AiOutlinePlus />
-							</div>
-							<div
-								className={`${Style.Arrow} ${props.guests === 1 ? Style.Disable : ''}`}
-								onClick={() => {
-									if (props.guests > 1) props.setGuests(props.guests - 1);
-								}}>
-								<AiOutlineMinus />
-							</div>
-						</div>
+					<div className={Style.End}>
+						<h4>{props.endDate !== props.startDate ? format(props.endDate, 'MMM dd') : 'Check-Out'}</h4>
 					</div>
 				</div>
 			</div>
-			<div className={reserveActive && !minStayNotMet ? Style.ButtonReserve : Style.Button} ref={button}>
+			<div
+				className={reserveActive && !minStayNotMet ? Style.ButtonReserve : Style.Button}
+				onClick={() => setEditDates(true)}>
 				{reserveActive && !minStayNotMet ? (
 					<Link to='/book'>
 						<div className={Style.ButtonText}>
 							<h4>Reserve</h4>
-							<span>
-								<TfiArrowCircleRight />
-							</span>
 						</div>
 					</Link>
 				) : (
@@ -184,11 +108,66 @@ export default function BookingWeb(props) {
 								minStay > 1 ? 's' : ''
 							}`}</h4>
 						) : (
-							<h4>Check Availability</h4>
+							<h4>Select Dates</h4>
 						)}
 					</div>
 				)}
 			</div>
+			{editDates && (
+				<div className={Style.Modal}>
+					<div className={Style.ModalBackground} onClick={close}></div>
+					<div className={Style.Inner}>
+						<div className={Style.Close} onClick={close}>
+							<AiFillCloseCircle />
+						</div>
+						<div className={Style.Content}>
+							<div className={Style.SelectDates}>
+								<h1>Select Dates</h1>
+								<DateRange
+									className={Style.DateRange}
+									ranges={[selectionRange]}
+									onChange={handleSelect}
+									minDate={new Date()}
+									rangeColors={['#52758a']}
+									color={'#000000'}
+									disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
+									monthHeight={6}
+									startDatePlaceholder={'Check-in'}
+									endDatePlaceholder={'Checkout'}
+									months={2}
+									direction={window.innerWidth > 750 ? 'horizontal' : 'vertical'}
+								/>
+							</div>
+							<div className={Style.Save}>
+								<ThemeProvider theme={theme}>
+									{!minStayNotMet && !checkout ? (
+										<Link to='/book' className={Style.EditRangeButton}>
+											<Button variant='outlined' color='primary'>
+												Reserve
+											</Button>
+										</Link>
+									) : (
+										<Button
+											variant='outlined'
+											className={Style.EditRangeButton}
+											color='primary'
+											disabled>
+											Reserve
+										</Button>
+									)}
+								</ThemeProvider>
+								<div className={Style.MinStay}>
+									{minStayNotMet && (
+										<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
+											minStay > 1 ? 's' : ''
+										}`}</p>
+									)}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }

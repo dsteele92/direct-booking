@@ -14,14 +14,13 @@
 	.Booking {
 		position: fixed;
 		@include flex-center;
-		@media screen and (max-width: $breakpoint-mobile) {
+		@media screen and (max-width: $breakpoint-mobile), (max-height: 850px) {
 			display: none;
 		}
 		top: 0;
 		left: 0;
 		z-index: 10;
 		height: 8%;
-		min-height: 70px;
 		width: 100%;
 		padding: 10px 10px 0;
 		@media screen and (max-height: $breakpoint-mobile) {
@@ -31,22 +30,20 @@
 	}
 	.BookingMobile {
 		display: none;
-		@media screen and (max-width: $breakpoint-mobile) {
-			display: flex;
+		@media screen and (max-width: $breakpoint-mobile), (max-height: 850px) {
+			@include flex-center;
 		}
 		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 10;
 		height: 8%;
-		min-height: 70px;
 		width: 100%;
 		padding: 10px 10px 0;
 		@media screen and (max-height: $breakpoint-mobile) {
 			padding: 5px 5px 0;
 		}
 		overflow: visible;
-		@include flex-center;
 	}
 
 	// -------------------------------------- MAIN ---------------------------------------------->
@@ -443,7 +440,7 @@
 			// -------------------------------------- AMENITIES ---------------------------------------------->
 
 			.AmenitiesWeb {
-				@media screen and (max-width: $breakpoint-small) {
+				@media screen and (max-width: $breakpoint-small), (max-height: 650px) {
 					display: none;
 				}
 
@@ -514,7 +511,7 @@
 
 			.AmenitiesMobile {
 				display: none;
-				@media screen and (max-width: $breakpoint-small) {
+				@media screen and (max-width: $breakpoint-small), (max-height: 650px) {
 					display: block;
 					position: relative;
 					height: 50%;
@@ -609,8 +606,8 @@
 						@media screen and (max-width: $breakpoint-tablet) {
 							font-size: 16px;
 						}
-						@media screen and (max-width: $breakpoint-small) {
-							// font-size: 14px;
+						@media screen and (max-height: $breakpoint-mobile) {
+							font-size: 14px;
 						}
 					}
 				}

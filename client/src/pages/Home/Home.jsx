@@ -180,12 +180,6 @@ function Home(props) {
 					<section className={Style.AmenitiesWeb} ref={amenities}>
 						<div className={Style.Header}>
 							<h2>Our Amenities:</h2>
-							{/* <h4
-								className={Style.ShowAll}
-								onMouseEnter={() => setShowAll(true)}
-								onMouseLeave={() => setShowAll(false)}>
-								Show All
-							</h4> */}
 						</div>
 						<div className={Style.MatrixContainer}>
 							<div className={Style.Matrix} ref={matrixEven}>
