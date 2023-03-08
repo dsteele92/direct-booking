@@ -57,10 +57,18 @@
 		@media screen and (max-width: $breakpoint-tablet) {
 			width: 80%;
 		}
+		@media screen and (max-width: $breakpoint-mobile) {
+			width: 100%;
+			height: 100%;
+		}
 		overflow: hidden;
 		background-color: $color-light;
 		border: 2px solid $color-dark;
 		border-radius: 10px;
+		@media screen and (max-width: $breakpoint-mobile) {
+			border: none;
+			border-radius: 0;
+		}
 		animation: fadeInLift 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 
 		.Close {
@@ -133,6 +141,48 @@
 					font-family: 'Roboto', serif;
 					font-weight: 100;
 					font-size: 20px;
+				}
+			}
+		}
+	}
+}
+
+@mixin bookingModal {
+	.Inner {
+		width: 850px;
+		height: fit-content;
+		@media screen and (max-width: $breakpoint-tablet) {
+			width: 500px;
+		}
+		@media screen and (max-width: $breakpoint-mobile) {
+			width: 100%;
+			height: 100%;
+		}
+		background-color: white;
+		.Content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			h1 {
+				align-self: flex-start;
+			}
+			.DateRange {
+				border: 1px solid $color-dark;
+				border-radius: 0 0 10px 10px;
+			}
+			.EditRangeButton {
+				align-self: flex-end;
+				margin: 20px 20px 0px;
+			}
+			.MinStay {
+				width: 100%;
+				height: 25px;
+				.MinStayNotMet {
+					width: fit-content;
+					margin: 10px 20px 0 auto;
+					color: $color-red;
+					font-style: italic;
+					animation: fadeInLift 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
 				}
 			}
 		}

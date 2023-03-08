@@ -197,5 +197,6 @@
 	}
 	.Modal {
 		@include modal;
+		@include bookingModal;
 	}
 }

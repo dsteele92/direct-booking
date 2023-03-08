@@ -29,6 +29,8 @@ function Book(props) {
 	const [checkout, setCheckout] = useState(false);
 	const [minStay, setMinStay] = useState(1);
 	const [minStayNotMet, setMinStayNotMet] = useState(false);
+	const [startDateUpdate, setStartDateUpdate] = useState(props.startDate);
+	const [endDateUpdate, setEndDateUpdate] = useState(props.endDate);
 
 	useEffect(() => {
 		let total = 0;
@@ -82,18 +84,29 @@ function Book(props) {
 			} else {
 				setMinStayNotMet(false);
 			}
-			// console.log(dates);
 			props.setDates(dates);
 		}
 
-		props.setStartDate(ranges.selection.startDate);
-		props.setEndDate(ranges.selection.endDate);
+		setStartDateUpdate(ranges.selection.startDate);
+		setEndDateUpdate(ranges.selection.endDate);
 	};
 
 	const selectionRange = {
-		startDate: props.startDate,
-		endDate: props.endDate,
+		startDate: startDateUpdate,
+		endDate: endDateUpdate,
 		key: 'selection',
+	};
+
+	const save = () => {
+		props.setStartDate(startDateUpdate);
+		props.setEndDate(endDateUpdate);
+		setEditDates(false);
+	};
+
+	const close = () => {
+		setEditDates(false);
+		setStartDateUpdate(props.startDate);
+		setEndDateUpdate(props.endDate);
 	};
 
 	return (
@@ -234,9 +247,9 @@ function Book(props) {
 			</div>
 			{editDates && (
 				<div className={Style.Modal}>
-					<div className={Style.ModalBackground} onClick={() => setEditDates(false)}></div>
+					<div className={Style.ModalBackground} onClick={close}></div>
 					<div className={Style.Inner}>
-						<div className={Style.Close} onClick={() => setEditDates(false)}>
+						<div className={Style.Close} onClick={close}>
 							<AiFillCloseCircle />
 						</div>
 						<div className={Style.Content}>
@@ -252,9 +265,36 @@ function Book(props) {
 								monthHeight={6}
 								startDatePlaceholder={'Check-in'}
 								endDatePlaceholder={'Checkout'}
-								months={2}
+								months={window.innerWidth > 1000 ? 2 : 1}
 								direction={'horizontal'}
 							/>
+							<ThemeProvider theme={theme}>
+								{!minStayNotMet && !checkout ? (
+									<Button
+										variant='outlined'
+										className={Style.EditRangeButton}
+										color='primary'
+										onClick={save}>
+										Save
+									</Button>
+								) : (
+									<Button
+										variant='outlined'
+										className={Style.EditRangeButton}
+										color='primary'
+										onClick={save}
+										disabled>
+										Save
+									</Button>
+								)}
+							</ThemeProvider>
+							<div className={Style.MinStay}>
+								{minStayNotMet && (
+									<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
+										minStay > 1 ? 's' : ''
+									}`}</p>
+								)}
+							</div>
 						</div>
 					</div>
 				</div>

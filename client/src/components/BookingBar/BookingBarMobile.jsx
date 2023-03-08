@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import Style from './bookingBar.module.scss';
+import Style from './bookingBarMobile.module.scss';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -172,7 +172,9 @@ export default function BookingWeb(props) {
 					<Link to='/book'>
 						<div className={Style.ButtonText}>
 							<h4>Reserve</h4>
-							<TfiArrowCircleRight />
+							<span>
+								<TfiArrowCircleRight />
+							</span>
 						</div>
 					</Link>
 				) : (

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './home.module.scss';
 import {
-	Booking,
 	GalleryWeb,
 	GalleryMobile,
 	AmenitiesMatrix,
@@ -11,6 +10,7 @@ import {
 	GalleryFullScreenMobile,
 	GalleryFullScreenWeb,
 	BookingBar,
+	BookingBarMobile,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
@@ -98,7 +98,7 @@ function Home(props) {
 
 	return (
 		<div className={Style.Home}>
-			<div className={Style.Nav}>
+			<div className={Style.Booking}>
 				<BookingBar
 					startDate={props.startDate}
 					setStartDate={props.setStartDate}
@@ -112,27 +112,22 @@ function Home(props) {
 					disabledCheckoutDates={props.disabledCheckoutDates}
 					availableData={props.availableData}
 				/>
-				{/* <div className={Style.NavInner}>
-					<nav>
-						<ul>
-							<li onClick={() => intro.current.scrollIntoView({ behavior: 'smooth' })}>Gallery</li>
-							<li onClick={() => amenities.current.scrollIntoView({ behavior: 'smooth' })}>Amenities</li>
-							<li onClick={() => host.current.scrollIntoView({ behavior: 'smooth' })}>Host</li>
-						</ul>
-					</nav>
-					<div className={Style.Book} onClick={() => setOpenBook(!openBook)}>
-						<h4>BOOK</h4>
-						<div className={openBook ? Style.IconRotate : Style.Icon}>
-							<TfiArrowCircleRight />
-						</div>
-					</div>
-				</div> */}
 			</div>
-			{/* <div className={openBook ? Style.BookingContainerOpen : Style.BookingContainer}>
-				<div className={Style.Booking}>
-					<Booking />
-				</div>
-			</div> */}
+			<div className={Style.BookingMobile}>
+				<BookingBarMobile
+					startDate={props.startDate}
+					setStartDate={props.setStartDate}
+					endDate={props.endDate}
+					setEndDate={props.setEndDate}
+					dates={props.dates}
+					setDates={props.setDates}
+					guests={props.guests}
+					setGuests={props.setGuests}
+					disabledDates={props.disabledDates}
+					disabledCheckoutDates={props.disabledCheckoutDates}
+					availableData={props.availableData}
+				/>
+			</div>
 			<div className={Style.Window}>
 				<main className={Style[`Main${scroll}`]} ref={main}>
 					<div className={Style.HomeBanner}>

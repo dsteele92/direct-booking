@@ -1,7 +1,5 @@
-export { default as BookingWeb } from './Booking/BookingWeb.jsx';
-export { default as BookingMobile } from './Booking/BookingMobile.jsx';
-export { default as Booking } from './Booking/Booking.jsx';
-export { default as BookingBar } from './Booking/BookingBar.jsx';
+export { default as BookingBar } from './BookingBar/BookingBar.jsx';
+export { default as BookingBarMobile } from './BookingBar/BookingBarMobile.jsx';
 export { default as GalleryWeb } from './Gallery/GalleryWeb.jsx';
 export { default as GalleryMobile } from './Gallery/GalleryMobile.jsx';
 export { default as GalleryFullScreenMobile } from './Gallery/GalleryFullScreenMobile.jsx';
