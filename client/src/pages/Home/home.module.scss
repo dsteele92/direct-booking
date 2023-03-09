@@ -930,6 +930,7 @@
 			list-style: circle;
 		}
 		.Review {
+			position: relative;
 			display: flex;
 			flex-direction: column;
 			align-items: flex-start;
@@ -941,13 +942,20 @@
 			@media screen and (max-width: $breakpoint-small) {
 				font-size: 16px;
 			}
-		}
-		.ReviewName {
-			position: relative;
-			font-size: 16px;
-			font-style: italic;
-			@media screen and (max-width: $breakpoint-small) {
-				font-size: 14px;
+			.ReviewName {
+				width: 100%;
+				text-align: left;
+				position: relative;
+				font-size: 16px;
+				font-style: italic;
+
+				@media screen and (max-width: $breakpoint-small) {
+					font-size: 14px;
+				}
+			}
+			.ReviewText {
+				width: 100%;
+				text-align: justify;
 			}
 		}
 		.Map {

@@ -1,10 +1,6 @@
-// import React from 'react';
-// import { GoogleMap, LoadScript } from '@react-google-maps/api';
-// import Style from './googleMaps.module.scss';
-
 import React, { memo } from 'react';
 import { GoogleMap, useJsApiLoader, Circle } from '@react-google-maps/api';
-import { keys } from '../../api_keys.js';
+import { keys } from '../../keys.js';
 
 const containerStyle = {
 	width: '100%',
@@ -51,5 +47,3 @@ const GoogleMaps = memo(() => {
 });
 
 export default GoogleMaps;
-
-// export default React.memo(MyComponent);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Style from './bookingBarMobile.module.scss';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
@@ -11,16 +11,12 @@ import { Button } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '../../theme.js';
 
-import { keys } from '../../api_keys.js';
-
 export default function BookingBarMobile(props) {
 	const [reserveActive, setReserveActive] = useState(false);
 	const [checkout, setCheckout] = useState(false);
 	const [minStay, setMinStay] = useState(1);
 	const [minStayNotMet, setMinStayNotMet] = useState(false);
 	const [editDates, setEditDates] = useState(false);
-
-	const button = useRef();
 
 	useEffect(() => {
 		if (JSON.stringify(props.startDate) !== JSON.stringify(props.endDate)) {

@@ -13,9 +13,8 @@ import {
 	BookingBarMobile,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
-import { BsDoorClosed, BsDoorOpen, BsStarFill, BsCalendarRange, BsArrowDown } from 'react-icons/bs';
+import { BsDoorClosed, BsDoorOpen, BsStarFill, BsArrowDown } from 'react-icons/bs';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { TfiArrowCircleRight } from 'react-icons/tfi';
 
 function Home(props) {
 	const [top, setTop] = useState(true);
@@ -361,7 +360,7 @@ function Home(props) {
 								{reviews.map((review, index) => [
 									<li key={index} className={Style.Review}>
 										<div className={Style.ReviewName}>{review.name}</div>
-										<div>{review.review}</div>
+										<div className={Style.ReviewText}>{review.review}</div>
 									</li>,
 								])}
 							</ul>

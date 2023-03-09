@@ -1,4 +1,5 @@
 import Style from './book.module.scss';
+import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
@@ -116,6 +117,15 @@ function Book(props) {
 		setGuestsUpdate(props.guests);
 	};
 
+	const pay = async () => {
+		const data = {};
+		await axios({
+			method: 'post',
+			url: 'http://localhost:10000/create-checkout-session',
+			data: data,
+		});
+	};
+
 	return (
 		<div className={Style.Page}>
 			<div className={Style.Book}>
@@ -217,7 +227,7 @@ function Book(props) {
 					</section>
 					<div className={Style.Button}>
 						{continueToPayment ? (
-							<Button variant='contained' size='large'>
+							<Button variant='contained' size='large' onClick={pay}>
 								Continue to Payment
 							</Button>
 						) : (
@@ -225,6 +235,7 @@ function Book(props) {
 								Continue to Payment
 							</Button>
 						)}
+
 						<h4 style={{ margin: '20px 0', fontStyle: 'italic' }}>You will be redirected to Stripe</h4>
 					</div>
 				</div>
@@ -346,13 +357,6 @@ function Book(props) {
 										Save
 									</Button>
 								</ThemeProvider>
-								<div className={Style.MinStay}>
-									{minStayNotMet && (
-										<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
-											minStay > 1 ? 's' : ''
-										}`}</p>
-									)}
-								</div>
 							</div>
 						</div>
 					</div>
@@ -363,71 +367,3 @@ function Book(props) {
 }
 
 export default Book;
-
-// const currentDate = new Date();
-// const currentDateFormatted = format(currentDate, 'yyyy-MM-dd');
-// const maxDate = add(currentDate, { months: 6 });
-// const maxDateFormatted = format(maxDate, 'yyyy-MM-dd');
-
-// const propertyID = '964614';
-// const HOSPITABLE_API_KEY = '';
-
-// const options = {
-// 	method: 'GET',
-// 	url: `https://api.hospitable.com/calendar/${propertyID}`,
-// 	params: { start_date: currentDateFormatted, end_date: maxDateFormatted },
-// 	headers: {
-// 		accept: 'application/json',
-// 		Authorization: `Bearer ${HOSPITABLE_API_KEY}`,
-// 		'Content-Type': 'application/vnd.hospitable.20190904+json',
-// 	},
-// };
-
-// const options = {
-// 	method: 'POST',
-// 	url: 'https://auth.hospitable.com/oauth/token',
-// 	headers: {
-// 		'Content-Type': 'application/json',
-// 	},
-// data: {
-// 	client_id: keys.HOSPITABLE_CLIENT_ID,
-// 	client_secret: keys.HOSPITABLE_TOKEN,
-// 	audience: 'api.hospitable.com',
-// 	grant_type: 'client_credentials',
-// },
-// };
-
-// const getApiKey = async () => {
-// 	await axios
-// 		.request(options)
-// 		.then(function (response) {
-// 			console.log(response.access_token);
-// 		})
-// 		.catch(function (error) {
-// 			console.error(error);
-// 		});
-// };
-
-// const getApiKey = async () => {
-// 	await axios
-// 		.post(
-// 			'https://auth.hospitable.com/oauth/token',
-// 			{
-// 				client_id: keys.HOSPITABLE_CLIENT_ID,
-// 				client_secret: keys.HOSPITABLE_TOKEN,
-// 				audience: 'api.hospitable.com',
-// 				grant_type: 'client_credentials',
-// 			},
-// 			{
-// 				headers: {
-// 					'Content-Type': 'application/json',
-// 				},
-// 			}
-// 		)
-// 		.then(function (response) {
-// 			console.log(response.access_token);
-// 		})
-// 		.catch(function (error) {
-// 			console.error(error);
-// 		});
-// };

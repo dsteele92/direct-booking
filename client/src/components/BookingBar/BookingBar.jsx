@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import Style from './bookingBar.module.scss';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
@@ -7,11 +6,8 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { TfiArrowCircleRight } from 'react-icons/tfi';
 import { BsCalendarRange, BsPeopleFill } from 'react-icons/bs';
-import { RxPerson } from 'react-icons/rx';
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
-import { add, format, parseISO } from 'date-fns';
-
-import { keys } from '../../api_keys.js';
+import { add, format } from 'date-fns';
 
 export default function BookingBar(props) {
 	const [reserveActive, setReserveActive] = useState(false);
