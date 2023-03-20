@@ -333,3 +333,14 @@
 		}
 	}
 }
+
+@mixin errorModal {
+	.Inner {
+		max-width: 95%;
+		height: fit-content;
+
+		.Button {
+			margin-top: 10px;
+		}
+	}
+}

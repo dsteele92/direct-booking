@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { add, format, parseISO } from 'date-fns';
-import { Home, Book } from 'pages';
+import { Home, Book, Confirm } from 'pages';
 import { keys } from './keys.js';
 
 const App = (props) => {
@@ -25,16 +25,15 @@ const App = (props) => {
 			headers: {
 				accept: 'application/json',
 				Authorization: `Bearer ${props.token}`,
-				'Content-Type': 'application/vnd.hospitable.20190904+json',
+				'Content-Type': 'application/vnd.hospitable.20230314+json',
 			},
 		};
 
 		axios
 			.request(options)
-			.then(function (response) {
-				// console.log(response);
+			.then((response) => {
 				const data = response.data.data.days;
-				console.log(data);
+				// console.log(data);
 				let unavailable = [];
 				let unavailableCheckout = [];
 				let checkoutPossible = false;
@@ -62,7 +61,7 @@ const App = (props) => {
 				setDisabledCheckoutDates(unavailableCheckout);
 				setAvailableData(available);
 			})
-			.catch(function (error) {
+			.catch((error) => {
 				console.error(error);
 			});
 	}, [props.token]);
@@ -104,9 +103,30 @@ const App = (props) => {
 								disabledDates={disabledDates}
 								disabledCheckoutDates={disabledCheckoutDates}
 								availableData={availableData}
+								token={props.token}
 							/>
 						}
 					/>
+					<Route
+						path='/book'
+						element={
+							<Book
+								startDate={startDate}
+								setStartDate={(i) => setStartDate(i)}
+								endDate={endDate}
+								setEndDate={(i) => setEndDate(i)}
+								dates={dates}
+								setDates={(i) => setDates(i)}
+								guests={guests}
+								setGuests={(i) => setGuests(i)}
+								disabledDates={disabledDates}
+								disabledCheckoutDates={disabledCheckoutDates}
+								availableData={availableData}
+								token={props.token}
+							/>
+						}
+					/>
+					<Route path='/confirm' element={<Confirm token={props.token} />} />
 				</Routes>
 			</Router>
 		</div>

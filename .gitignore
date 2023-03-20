@@ -5,8 +5,9 @@
 
 /client/src/images/
 /client/src/firebase.js
-/client/src/api_keys.js
-/functions/api_keys.js
+/client/src/keys.js
+/functions/keys.js
+/functions/stripeTest.js
 
 # dependencies
 /client/node_modules

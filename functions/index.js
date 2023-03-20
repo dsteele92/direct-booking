@@ -1,84 +1,126 @@
 const functions = require('firebase-functions');
-
-// // Create and deploy your first functions
-// // https://firebase.google.com/docs/functions/get-started
-//
-
-//import libraries
-// import * as functions from 'firebase-functions';
-// import * as admin from 'firebase-admin';
-// import * as express from 'express';
-// import * as bodyParser from 'body-parser';
 const axios = require('axios');
 const cors = require('cors')({ origin: true });
 
-exports.getToken = functions.https.onRequest((req, res) => {
-	cors(req, res, () => {
-		axios
-			.post(
-				'https://auth.hospitable.com/oauth/token',
-				{
-					client_id: '',
-					client_secret: '',
-					audience: 'api.hospitable.com',
-					grant_type: 'client_credentials',
-				},
-				{
-					headers: {
-						'Content-Type': 'application/json',
-					},
-				}
-			)
-			.then((response) => {
-				console.log(response);
-				res.status(200).json({
-					token: response.data.access_token,
-				});
-			})
-			.catch((err) => {
-				res.status(500).json({
-					error: err,
-				});
-			});
-	});
+const stripe = require('stripe')('');
+const express = require('express');
+const app = express();
+const bodyParser = require('body-parser');
+const Buffer = require('buffer').Buffer;
+app.use(express.static('public'));
+app.use(cors);
+app.use(bodyParser.json());
+
+// ************************************************
+// REMEMBER TO REMOVE KEYS BEFORE PUSHING TO GITHUB
+// ************************************************
+
+const getToken = () => {
+	return axios.post(
+		'https://auth.hospitable.com/oauth/token',
+		{
+			client_id: '',
+			client_secret: '',
+			audience: 'api.hospitable.com',
+			grant_type: 'client_credentials',
+		},
+		{
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		}
+	);
+};
+
+app.get('/', async (req, res) => {
+	res.send('Hello');
+});
+app.get('/error', async (req, res) => {
+	res.send('Error');
 });
 
-//initialize firebase inorder to access its services
-// admin.initializeApp(functions.config().firebase);
+app.get('/get-hospitable-token', async (req, res) => {
+	await getToken()
+		.then((response) => {
+			res.status(200).json({
+				token: response.data.access_token,
+			});
+		})
+		.catch((err) => {
+			res.status(500).json({
+				error: err,
+			});
+		});
+});
 
-//initialize express server
-// const hospitable = express();
-// const main = express();
+app.post('/create-checkout-session', async (req, res) => {
+	const url_buffer = Buffer.from(req.body.url_data, 'base64');
+	const url_data = JSON.parse(url_buffer.toString('utf-8'));
+	const dates = url_data.dates;
+	const startDate = dates[0];
+	const endDate = dates[dates.length - 1];
+	let data;
 
-//add the path to receive request and set json as bodyParser to process the body
-// main.use('https://auth.hospitable.com', hospitable);
-// main.use(bodyParser.json());
-// main.use(bodyParser.urlencoded({ extended: false }));
+	const options = {
+		method: 'GET',
+		url: 'https://api.hospitable.com/calendar/964614',
+		params: {
+			start_date: startDate,
+			end_date: endDate,
+		},
+		headers: {
+			accept: 'application/json',
+			Authorization: `Bearer ${url_data.token}`,
+			'Content-Type': 'application/vnd.hospitable.20230314+json',
+		},
+	};
 
-//initialize the database and the collection
-// const db = admin.firestore();
-// const userCollection = 'users';
+	await axios
+		.request(options)
+		.then((response) => {
+			data = response.data.data.days;
+			console.log(data);
+		})
+		.catch((err) => console.log(err));
 
-//define google cloud function name
-// export const webApi = functions.https.onRequest(main);
+	let price = 18500;
+	for (day in data) {
+		if (!data[day].status.available) {
+			res.json({ url: `http://localhost:3000/book?data=${req.body.url_data}&datesError=true` });
+			return;
+		}
+		price += data[day].price.amount;
+	}
 
-// exports.getListings = functions.https.onRequest(async (request, response) => {
-// 	const options = {
-// 		method: 'GET',
-// 		url: 'https://api.hospitable.com/listings',
-// 		params: { page: '1', per_page: '10' },
-// 		headers: {
-// 			accept: 'application/json',
-// 			authorization: `Bearer ${process.env.HOSPITABLE_KEY}`,
-// 			'Content-Type': 'application/vnd.hospitable.20190904+json',
-// 		},
-// 	};
+	const pmnt = {
+		total: (price / 100).toFixed(2),
+		price: ((price - 18500) / 100).toFixed(),
+		avgPrice: ((price - 18500) / dates.length / 100).toFixed(),
+	};
 
-// 	functions.logger.info('Hello logs!', { structuredData: true });
-// 	// functions.logger.info(process.env.GOOGLE_MAPS_KEY);
-// 	functions.logger.info(process.env.HOSPITABLE_KEY);
-// 	const res = await axios.request(options);
-// 	functions.logger.info(res);
-// 	response.json(res);
-// 	// response.send('Hello from Firebase!');
-// });
+	const paymentData = Buffer.from(JSON.stringify(pmnt)).toString('base64');
+
+	const session = await stripe.checkout.sessions.create({
+		line_items: [
+			{
+				price_data: {
+					currency: 'usd',
+					product_data: { name: `Tabor B&B: ${url_data.displayDates}` },
+					unit_amount: price,
+					tax_behavior: 'inclusive',
+				},
+				quantity: 1,
+			},
+		],
+		mode: 'payment',
+		success_url: `https://tabor-bnb.web.app/book?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		cancel_url: `https://tabor-bnb.web.app/book?canceled=true&data=${req.body.url_data}`,
+		// for testing confirmation page:
+		// cancel_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+	});
+	res.json({ url: session.url });
+});
+
+exports.api = functions.https.onRequest(app);
+
+// app.listen(10000, () => console.log('Running on port 10000'));

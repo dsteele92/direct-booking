@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Style from './bookingBar.module.scss';
+import { LoadingSpinner } from 'components';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -119,18 +120,24 @@ export default function BookingBar(props) {
 								</h4>
 							</div>
 						</div>
-						<DateRange
-							className={Style.DateRange}
-							ranges={[selectionRange]}
-							onChange={handleSelect}
-							minDate={new Date()}
-							rangeColors={['#52758a']}
-							color={'#000000'}
-							disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
-							monthHeight={6}
-							startDatePlaceholder={'Check-in'}
-							endDatePlaceholder={'Checkout'}
-						/>
+						{props.disabledDates.length > 0 ? (
+							<DateRange
+								className={Style.DateRange}
+								ranges={[selectionRange]}
+								onChange={handleSelect}
+								minDate={new Date()}
+								rangeColors={['#52758a']}
+								color={'#000000'}
+								disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
+								monthHeight={6}
+								startDatePlaceholder={'Check-in'}
+								endDatePlaceholder={'Checkout'}
+							/>
+						) : (
+							<div className={Style.CalendarLoading}>
+								<LoadingSpinner />
+							</div>
+						)}
 					</div>
 				</div>
 				<div className={Style.Guests}>

@@ -5,7 +5,7 @@ import './index.css';
 import App from './App';
 
 axios
-	.get('https://us-central1-tabor-bnb.cloudfunctions.net/getToken')
+	.get('https://us-central1-tabor-bnb.cloudfunctions.net/api/get-hospitable-token')
 	.then((response) => {
 		const root = ReactDOM.createRoot(document.getElementById('root'));
 		root.render(<App token={response.data.token} />);

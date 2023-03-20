@@ -5,6 +5,7 @@ import {
 	GalleryMobile,
 	AmenitiesMatrix,
 	AmenitiesMobile,
+	AmenitiesMobileShowAll,
 	GoogleMaps,
 	useHasIntersected,
 	GalleryFullScreenMobile,
@@ -35,7 +36,7 @@ function Home(props) {
 	// const intro = useRef();
 	// const amenities = useRef();
 	const [amenities, amenitiesIntersected] = useHasIntersected({ threshold: 0.25 });
-	const host = useRef();
+	const [mobileShowAmenities, setMobileShowAmenities] = useState(false);
 	const [intro, introIntersected] = useHasIntersected({ threshold: 1 });
 	const [info, infoIntersected] = useHasIntersected({ threshold: 0.25 });
 	// for full screen gallery ----->
@@ -218,9 +219,9 @@ function Home(props) {
 						</div>
 					</section>
 					<section className={Style.AmenitiesMobile}>
-						<AmenitiesMobile scroll={scroll} />
+						<AmenitiesMobile scroll={scroll} showAll={() => setMobileShowAmenities(true)} />
 					</section>
-					<section className={Style.Host} ref={host}>
+					<section className={Style.Host}>
 						<div className={Style.HostPhoto}>
 							<div className={Style.Signature}>
 								Your Hosts,
@@ -416,6 +417,20 @@ function Home(props) {
 									</li>
 								))}
 							</ul>
+						</div>
+					</div>
+				</div>
+			)}
+			{mobileShowAmenities && (
+				<div className={Style.Modal}>
+					<div className={Style.ModalBackground} onClick={() => setSeeRules(false)}></div>
+					<div className={Style.Inner}>
+						<div className={Style.Close} onClick={() => setMobileShowAmenities(false)}>
+							<AiFillCloseCircle />
+						</div>
+						<div className={Style.Content}>
+							<h1>Amenities</h1>
+							<AmenitiesMobileShowAll />
 						</div>
 					</div>
 				</div>

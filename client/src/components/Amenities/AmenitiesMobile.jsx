@@ -13,7 +13,7 @@ export default function AmenitiesMobile(props) {
 		<div className={Style[`AmenitiesMobile${props.scroll}`]}>
 			<div className={Style.Header}>
 				<h2>Our Amenities:</h2>
-				<h4>Show All</h4>
+				<h4 onClick={props.showAll}>Show All</h4>
 			</div>
 			<div className={Style.MobileMatrix} ref={mobileMatrix}>
 				{amenitiesIconData.map((amenity, index) => (

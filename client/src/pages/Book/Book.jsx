@@ -1,11 +1,12 @@
 import Style from './book.module.scss';
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { LoadingSpinner } from 'components';
+import { Link, useSearchParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { add, format } from 'date-fns';
+import { add, format, parseISO } from 'date-fns';
 import { BsArrowLeft, BsPeopleFill } from 'react-icons/bs';
 import { AiFillCloseCircle, AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { LR3sm } from 'images';
@@ -15,9 +16,10 @@ import theme from '../../theme.js';
 import { MuiTelInput, matchIsValidTel } from 'mui-tel-input';
 
 function Book(props) {
-	const [avgPrice, setAvgPrice] = useState('');
-	const [price, setPrice] = useState('');
-	const [totalPrice, setTotalPrice] = useState('');
+	const [searchParams, setSearchParams] = useSearchParams();
+	const [avgPrice, setAvgPrice] = useState(0);
+	const [price, setPrice] = useState(0);
+	const [totalPrice, setTotalPrice] = useState(0);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
@@ -31,28 +33,49 @@ function Book(props) {
 	const [startDateUpdate, setStartDateUpdate] = useState(props.startDate);
 	const [endDateUpdate, setEndDateUpdate] = useState(props.endDate);
 	const [guestsUpdate, setGuestsUpdate] = useState(props.guests);
+	const [datesError, setDatesError] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		let total = 0;
-		for (const day in props.dates) {
-			const amt = props.availableData[props.dates[day]].price;
-			total += amt;
+		if (searchParams.get('data')) {
+			const returnData = JSON.parse(atob(searchParams.get('data')));
+			setFirstName(returnData.client.firstName);
+			setLastName(returnData.client.lastName);
+			setEmail(returnData.client.email);
+			setPhone(returnData.client.phone);
+			props.setDates(returnData.dates);
+			props.setStartDate(new Date(returnData.startDate));
+			props.setEndDate(new Date(returnData.endDate));
+			props.setGuests(returnData.guests);
 		}
-		const totalStr = total.toString().slice(0, -2);
-		total = Number(totalStr);
-		const withFees = total + 185;
-		setPrice(total.toLocaleString());
-		setTotalPrice(withFees.toLocaleString());
-		setAvgPrice((total / props.dates.length).toFixed().toLocaleString());
+		if (searchParams.has('datesError')) {
+			setDatesError(true);
+		}
+	}, [searchParams]);
+
+	useEffect(() => {
+		if (Object.keys(props.availableData).length > 0) {
+			let total = 0;
+			for (const day in props.dates) {
+				const amt = props.availableData[props.dates[day]].price;
+				total += amt;
+			}
+			total = total / 100;
+			const totalRounded = total;
+			const withFees = total + 185;
+			setPrice(totalRounded);
+			setTotalPrice(withFees);
+			setAvgPrice((total / props.dates.length).toFixed());
+		}
 	}, [props.availableData, props.dates]);
 
 	useEffect(() => {
-		if (firstName && lastName && email && matchIsValidTel(phone)) {
+		if (price && firstName && lastName && email && matchIsValidTel(phone)) {
 			setContinueToPayment(true);
 		} else {
 			setContinueToPayment(false);
 		}
-	}, [firstName, lastName, email, phone]);
+	}, [price, firstName, lastName, email, phone]);
 
 	const handleSelect = (ranges) => {
 		if (ranges.selection.startDate === ranges.selection.endDate) {
@@ -117,13 +140,40 @@ function Book(props) {
 		setGuestsUpdate(props.guests);
 	};
 
-	const pay = async () => {
-		const data = {};
-		await axios({
-			method: 'post',
-			url: 'http://localhost:10000/create-checkout-session',
-			data: data,
-		});
+	const handleSubmit = (req, res) => {
+		setLoading(true);
+		const url = 'https://us-central1-tabor-bnb.cloudfunctions.net/api/create-checkout-session';
+		// const url = 'http://localhost:10000/create-checkout-session';
+		const data = {
+			url_data: btoa(
+				JSON.stringify({
+					client: { firstName: firstName, lastName: lastName, email: email, phone: phone },
+					token: props.token,
+					dates: props.dates,
+					startDate: props.startDate,
+					endDate: props.endDate,
+					guests: props.guests,
+					displayDates: `${format(props.startDate, 'MMM dd')} - ${format(props.endDate, 'MMM dd')}`,
+				})
+			),
+		};
+
+		axios
+			.post(url, data)
+			.then((res) => {
+				console.log(res.data); // Handle the response here
+				window.location.href = res.data.url;
+			})
+			.catch((error) => {
+				console.error(error); // Handle any errors here
+			});
+	};
+
+	const handleKeyDown = (e) => {
+		if (!continueToPayment) return;
+		if (e.key === 'Enter') {
+			handleSubmit();
+		}
 	};
 
 	return (
@@ -143,10 +193,11 @@ function Book(props) {
 						<div className={Style.SubSection}>
 							<div className={Style.Info}>
 								<div className={Style.Info1}>Dates</div>
-								<div className={Style.Info2}>{`${format(props.startDate, 'MMM dd')} - ${format(
-									props.endDate,
-									'MMM dd'
-								)}`}</div>
+								<div className={Style.Info2}>
+									{props.startDate && props.endDate
+										? `${format(props.startDate, 'MMM dd')} - ${format(props.endDate, 'MMM dd')}`
+										: 'Select dates'}
+								</div>
 							</div>
 							<div className={Style.Edit} onClick={() => setEditDates(true)}>
 								Edit
@@ -167,10 +218,10 @@ function Book(props) {
 					<section>
 						<h2>Cancellation Policy</h2>
 						<div className={Style.SubSection}>
-							<p>
-								Cancel before check-in on ---DATE - 48hours--- for a partial refund. After that, this
-								reservation is non-refundable
-							</p>
+							<h4>
+								Cancel before check-in on ---need to decide on policy--- for a full refund. After that,
+								this reservation is non-refundable
+							</h4>
 						</div>
 					</section>
 					<section>
@@ -188,6 +239,7 @@ function Book(props) {
 											fullWidth={true}
 											value={firstName}
 											onChange={(e) => setFirstName(e.target.value)}
+											onKeyDown={handleKeyDown}
 										/>
 									</div>
 									<div className={Style.Name}>
@@ -200,6 +252,7 @@ function Book(props) {
 											fullWidth={true}
 											value={lastName}
 											onChange={(e) => setLastName(e.target.value)}
+											onKeyDown={handleKeyDown}
 										/>
 									</div>
 								</div>
@@ -212,6 +265,7 @@ function Book(props) {
 									fullWidth={true}
 									value={email}
 									onChange={(e) => setEmail(e.target.value)}
+									onKeyDown={handleKeyDown}
 								/>
 								<MuiTelInput
 									value={phone}
@@ -221,13 +275,14 @@ function Book(props) {
 									label='Phone'
 									fullWidth={true}
 									onChange={(value) => setPhone(value)}
+									onKeyDown={handleKeyDown}
 								/>
 							</FormControl>
 						</ThemeProvider>
 					</section>
 					<div className={Style.Button}>
 						{continueToPayment ? (
-							<Button variant='contained' size='large' onClick={pay}>
+							<Button variant='contained' size='large' onClick={handleSubmit}>
 								Continue to Payment
 							</Button>
 						) : (
@@ -235,7 +290,6 @@ function Book(props) {
 								Continue to Payment
 							</Button>
 						)}
-
 						<h4 style={{ margin: '20px 0', fontStyle: 'italic' }}>You will be redirected to Stripe</h4>
 					</div>
 				</div>
@@ -247,20 +301,26 @@ function Book(props) {
 						</div>
 						<div className={Style.SubSection}>
 							<h2>Price Details</h2>
-							<div className={Style.PriceDetails}>
-								<div className={Style.Detail}>
-									<div>{`$${avgPrice} x ${props.dates.length} nights`}</div>
-									<div>{`$${price}`}</div>
+							{price ? (
+								<div className={Style.PriceDetails}>
+									<div className={Style.Detail}>
+										<div>{`$${avgPrice} x ${props.dates.length} night${
+											props.dates.length > 1 ? 's' : ''
+										}`}</div>
+										<div>{`$${price}`}</div>
+									</div>
+									<div className={Style.Detail}>
+										<div>Cleaning Fee</div>
+										<div>$185</div>
+									</div>
+									<div className={Style.Total}>
+										<div>Total before taxes (USD)</div>
+										<div>{`$${totalPrice}`}</div>
+									</div>
 								</div>
-								<div className={Style.Detail}>
-									<div>Cleaning Fee</div>
-									<div>$185</div>
-								</div>
-								<div className={Style.Total}>
-									<div>Total before taxes (USD)</div>
-									<div>{`$${totalPrice}`}</div>
-								</div>
-							</div>
+							) : (
+								<div>Selct dates to see price details.</div>
+							)}
 						</div>
 					</section>
 				</div>
@@ -360,6 +420,32 @@ function Book(props) {
 							</div>
 						</div>
 					</div>
+				</div>
+			)}
+			{datesError && (
+				<div className={Style.ErrorModal}>
+					<div className={Style.ModalBackground} onClick={() => setDatesError(false)}></div>
+					<div className={Style.Inner}>
+						<div className={Style.Close} onClick={() => setDatesError(false)}>
+							<AiFillCloseCircle />
+						</div>
+						<div className={Style.Content}>
+							<h1>Error</h1>
+							<p>The dates you selected are unavailable. Please select different dates.</p>
+							<div className={Style.Button}>
+								<ThemeProvider theme={theme}>
+									<Button variant='outlined' color='primary' onClick={() => setDatesError(false)}>
+										Return
+									</Button>
+								</ThemeProvider>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+			{loading && (
+				<div className={Style.LoadingSpinner}>
+					<LoadingSpinner />
 				</div>
 			)}
 		</div>

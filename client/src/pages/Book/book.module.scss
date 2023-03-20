@@ -203,4 +203,13 @@
 		@include modal;
 		@include guestsModal;
 	}
+	.ErrorModal {
+		@include modal;
+		@include errorModal;
+	}
+	.LoadingSpinner {
+		height: 100vh;
+		width: 100vw;
+		position: fixed;
+	}
 }

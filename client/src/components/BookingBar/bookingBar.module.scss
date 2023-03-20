@@ -124,6 +124,14 @@
 				}
 
 				transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+
+				.CalendarLoading {
+					height: 320px;
+					width: 100%;
+					position: absolute;
+					bottom: 0;
+					background-color: white;
+				}
 				&Open {
 					@extend .SelectDates;
 					height: 385px;

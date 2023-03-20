@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Style from './bookingBarMobile.module.scss';
+import { LoadingSpinner } from 'components';
 import { Link } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
@@ -116,51 +117,57 @@ export default function BookingBarMobile(props) {
 						<div className={Style.Close} onClick={close}>
 							<AiFillCloseCircle />
 						</div>
-						<div className={Style.Content}>
-							<div className={Style.SelectDates}>
-								<h1>Select Dates</h1>
-								<DateRange
-									className={Style.DateRange}
-									ranges={[selectionRange]}
-									onChange={handleSelect}
-									minDate={new Date()}
-									rangeColors={['#52758a']}
-									color={'#000000'}
-									disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
-									monthHeight={6}
-									startDatePlaceholder={'Check-in'}
-									endDatePlaceholder={'Checkout'}
-									months={2}
-									direction={window.innerWidth > 750 ? 'horizontal' : 'vertical'}
-								/>
-							</div>
-							<div className={Style.Save}>
-								<ThemeProvider theme={theme}>
-									{!minStayNotMet && !checkout ? (
-										<Link to='/book' className={Style.EditRangeButton}>
-											<Button variant='outlined' color='primary'>
+						{props.disabledDates.length > 0 ? (
+							<div className={Style.Content}>
+								<div className={Style.SelectDates}>
+									<h1>Select Dates</h1>
+									<DateRange
+										className={Style.DateRange}
+										ranges={[selectionRange]}
+										onChange={handleSelect}
+										minDate={new Date()}
+										rangeColors={['#52758a']}
+										color={'#000000'}
+										disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
+										monthHeight={6}
+										startDatePlaceholder={'Check-in'}
+										endDatePlaceholder={'Checkout'}
+										months={2}
+										direction={window.innerWidth > 750 ? 'horizontal' : 'vertical'}
+									/>
+								</div>
+								<div className={Style.Save}>
+									<ThemeProvider theme={theme}>
+										{!minStayNotMet && !checkout ? (
+											<Link to='/book' className={Style.EditRangeButton}>
+												<Button variant='outlined' color='primary'>
+													Reserve
+												</Button>
+											</Link>
+										) : (
+											<Button
+												variant='outlined'
+												className={Style.EditRangeButton}
+												color='primary'
+												disabled>
 												Reserve
 											</Button>
-										</Link>
-									) : (
-										<Button
-											variant='outlined'
-											className={Style.EditRangeButton}
-											color='primary'
-											disabled>
-											Reserve
-										</Button>
-									)}
-								</ThemeProvider>
-								<div className={Style.MinStay}>
-									{minStayNotMet && (
-										<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
-											minStay > 1 ? 's' : ''
-										}`}</p>
-									)}
+										)}
+									</ThemeProvider>
+									<div className={Style.MinStay}>
+										{minStayNotMet && (
+											<p className={Style.MinStayNotMet}>{`Minimum stay ${minStay} day${
+												minStay > 1 ? 's' : ''
+											}`}</p>
+										)}
+									</div>
 								</div>
 							</div>
-						</div>
+						) : (
+							<div style={{ height: '100vh', width: '100vw' }}>
+								<LoadingSpinner />
+							</div>
+						)}
 					</div>
 				</div>
 			)}
