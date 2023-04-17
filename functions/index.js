@@ -41,7 +41,7 @@ app.get('/', async (req, res) => {
 
 app.get('/get-google-maps-key', (req, res) => {
 	res.json({
-		maps_key: 'AIzaSyDgqpASCWBjjFmV1G6TjYN-ubGmIOPVrSM',
+		maps_key: process.env.GOOGLE_MAPS_KEY,
 	});
 });
 
