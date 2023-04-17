@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { LoadingSpinner } from 'components';
 import { Link, useSearchParams } from 'react-router-dom';
-import { add, format, parseISO } from 'date-fns';
+import { add, format, parseISO, sub } from 'date-fns';
 import { BsArrowLeft, BsPeopleFill, BsCheck2Circle } from 'react-icons/bs';
 import { AiFillCloseCircle, AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { LR3sm } from 'images';
@@ -21,16 +21,29 @@ function Confirm(props) {
 	const [displayDates, setDisplayDates] = useState('');
 	const [dates, setDates] = useState([]);
 	const [guests, setGuests] = useState(1);
-	// set this to true when publishing
+	// set this to true when publishing ---------------------->
 	const [loading, setLoading] = useState(false);
-	const [confirmed, setConfirmed] = useState(false);
+	// ------------------------------------------------------->
+	const [confirmed, setConfirmed] = useState(true);
+	// const [submitted, setSubmitted] = useState(true);
 
-	let returnData;
 	let paymentData;
+	let returnData;
+
+	if (searchParams.has('payment')) {
+		paymentData = JSON.parse(atob(searchParams.get('payment')));
+	}
+	if (searchParams.has('data')) {
+		returnData = JSON.parse(atob(searchParams.get('data')));
+	}
 
 	useEffect(() => {
-		if (searchParams.get('data')) {
-			returnData = JSON.parse(atob(searchParams.get('data')));
+		if (searchParams.has('payment')) {
+			setAmtPaid(paymentData.total);
+			setAvgPrice(paymentData.avgPrice);
+			setPrice(paymentData.price);
+		}
+		if (searchParams.has('data')) {
 			setFirstName(returnData.client.firstName);
 			setLastName(returnData.client.lastName);
 			setEmail(returnData.client.email);
@@ -38,28 +51,45 @@ function Confirm(props) {
 			setDates(returnData.dates);
 			setDisplayDates(returnData.displayDates);
 			setGuests(returnData.guests);
-			paymentData = JSON.parse(atob(searchParams.get('payment')));
-			setAmtPaid(paymentData.total);
-			setAvgPrice(paymentData.avgPrice);
-			setPrice(paymentData.price);
+
+			const bodyFormData = new FormData();
+			bodyFormData.append('firstName', returnData.client.firstName);
+			bodyFormData.append('lastName', returnData.client.lastName);
+			bodyFormData.append('email', returnData.client.email);
+			bodyFormData.append('phone', returnData.client.phone);
+			bodyFormData.append('startDate', returnData.dates[0]);
+			bodyFormData.append('endDate', returnData.dates[returnData.dates.length - 1]);
+			bodyFormData.append('guests', returnData.guests);
+
+			// console.log(bodyFormData);
+
+			axios({
+				method: 'post',
+				url: 'https://script.google.com/macros/s/AKfycbzTMI6Ry4c7hjBf6OPHrV1O0upKutpV02brRy87jWSfYfOiWz8cK5tIByvrDVJ1JRKM/exec',
+				data: bodyFormData,
+				headers: { 'Content-Type': 'multipart/form-data' },
+			})
+				.then(function (response) {
+					console.log(response);
+				})
+				.catch(function (response) {
+					console.log(response);
+				});
 		}
-	}, [searchParams]);
+	}, []);
 
 	useEffect(() => {
 		if (searchParams.has('success')) {
-			// if (true) {
 			let updateDates = [];
 			for (const day in returnData.dates) {
 				const update = { date: returnData.dates[day], available: false };
 				updateDates.push(update);
 			}
-			// ********************************************
-			// NEED TO TEST IF THIS DATE FORMAT IS CORRECT
-			// ********************************************
 			// console.log(updateDates);
+
 			const options = {
 				method: 'PUT',
-				url: `https://api.hospitable.com/calendar/${keys.HOSPITABLE_PROPERTY_ID}`,
+				url: 'https://api.hospitable.com/calendar/964614',
 				headers: {
 					accept: 'application/json',
 					'content-type': 'application/json',
@@ -141,8 +171,13 @@ function Confirm(props) {
 							<h2>Cancellation Policy</h2>
 							<div className={Style.SubSection}>
 								<h4>
-									Cancel before check-in on ---need to decide on policy--- for a full refund. After
-									that, this reservation is non-refundable
+									{`Cancel before check-in on ${format(
+										sub(new Date(returnData.dates[0]), {
+											days: 2,
+										}),
+										'MMMM dd, yyyy'
+									)} for a full refund. After that,
+								this reservation is non-refundable`}
 								</h4>
 							</div>
 						</section>

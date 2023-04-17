@@ -22,15 +22,10 @@
 				transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
 				color: gray;
 				cursor: pointer;
-				// text-transform: uppercase;
 				border-bottom: 1px solid rgba($color: $color-aqua, $alpha: 0);
 
 				&Current {
 					@extend .Li;
-					// text-decoration: underline;
-					// color: white;
-					// text-shadow: rgb(255, 255, 255) 1px 0 3px;
-					// color: pink;
 					color: black;
 					border-bottom: 1px solid rgba($color: $color-aqua, $alpha: 1);
 				}
@@ -105,6 +100,20 @@
 					background-repeat: no-repeat;
 					background-position: center;
 					cursor: pointer;
+					.Expand {
+						color: white;
+						position: absolute;
+						top: 18px;
+						right: 18px;
+						font-size: 22px;
+						opacity: 0;
+						transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
+					}
+					&:hover {
+						.Expand {
+							opacity: 1;
+						}
+					}
 					&::after {
 						content: '';
 						height: 100%;

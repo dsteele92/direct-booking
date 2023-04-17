@@ -2,7 +2,10 @@ const functions = require('firebase-functions');
 const axios = require('axios');
 const cors = require('cors')({ origin: true });
 
-const stripe = require('stripe')('');
+require('dotenv').config();
+// console.log(process.env);
+
+const stripe = require('stripe')(process.env.STRIPE_KEY);
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -19,8 +22,8 @@ const getToken = () => {
 	return axios.post(
 		'https://auth.hospitable.com/oauth/token',
 		{
-			client_id: '',
-			client_secret: '',
+			client_id: process.env.HOSPITABLE_CLIENT_ID,
+			client_secret: process.env.HOSPITABLE_CLIENT_SECRET,
 			audience: 'api.hospitable.com',
 			grant_type: 'client_credentials',
 		},
@@ -35,8 +38,11 @@ const getToken = () => {
 app.get('/', async (req, res) => {
 	res.send('Hello');
 });
-app.get('/error', async (req, res) => {
-	res.send('Error');
+
+app.get('/get-google-maps-key', (req, res) => {
+	res.json({
+		maps_key: 'AIzaSyDgqpASCWBjjFmV1G6TjYN-ubGmIOPVrSM',
+	});
 });
 
 app.get('/get-hospitable-token', async (req, res) => {
@@ -79,14 +85,13 @@ app.post('/create-checkout-session', async (req, res) => {
 		.request(options)
 		.then((response) => {
 			data = response.data.data.days;
-			console.log(data);
 		})
 		.catch((err) => console.log(err));
 
 	let price = 18500;
 	for (day in data) {
 		if (!data[day].status.available) {
-			res.json({ url: `http://localhost:3000/book?data=${req.body.url_data}&datesError=true` });
+			res.json({ url: `https://tabor-bnb.web.app/book?data=${req.body.url_data}&datesError=true` });
 			return;
 		}
 		price += data[day].price.amount;
@@ -113,9 +118,12 @@ app.post('/create-checkout-session', async (req, res) => {
 			},
 		],
 		mode: 'payment',
-		success_url: `https://tabor-bnb.web.app/book?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		cancel_url: `https://tabor-bnb.web.app/book?canceled=true&data=${req.body.url_data}`,
-		// for testing confirmation page:
+		// success_url: `https://tabor-bnb.web.app/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		// cancel_url: `https://tabor-bnb.web.app/book?canceled=true&data=${req.body.url_data}`,
+		success_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
+
+		// for testing success page:
 		// cancel_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
 	});
 	res.json({ url: session.url });
@@ -123,4 +131,4 @@ app.post('/create-checkout-session', async (req, res) => {
 
 exports.api = functions.https.onRequest(app);
 
-// app.listen(10000, () => console.log('Running on port 10000'));
+app.listen(10000, () => console.log('Running on port 10000'));

@@ -17,7 +17,7 @@ const App = (props) => {
 	useEffect(() => {
 		const options = {
 			method: 'GET',
-			url: `https://api.hospitable.com/calendar/${keys.HOSPITABLE_PROPERTY_ID}`,
+			url: 'https://api.hospitable.com/calendar/964614',
 			params: {
 				start_date: format(new Date(), 'yyyy-MM-dd'),
 				end_date: format(add(new Date(), { months: 6 }), 'yyyy-MM-dd'),

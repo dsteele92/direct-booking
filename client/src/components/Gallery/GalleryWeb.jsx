@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Style from './galleryWeb.module.scss';
-import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from 'react-icons/bs';
+import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill, BsArrowsAngleExpand } from 'react-icons/bs';
 import { IoIosPhotos } from 'react-icons/io';
 import {
 	LR1sm,
@@ -148,7 +148,11 @@ export default function GalleryWeb(props) {
 								className={Style.Photo}
 								style={{ backgroundImage: `url(${img.url})` }}
 								key={index}
-								onClick={() => props.openFullScreen(index)}></div>
+								onClick={() => props.openFullScreen(index)}>
+								<div className={Style.Expand}>
+									<BsArrowsAngleExpand />
+								</div>
+							</div>
 						))}
 					</div>
 				</div>

@@ -682,11 +682,12 @@
 						.Location {
 							font-family: 'Roboto', serif;
 							font-weight: 100;
-							font-size: 16px;
+							font-size: 18px;
 							line-height: 130%;
 							text-align: justify;
 							@media screen and (max-width: $breakpoint-tablet) {
 								text-align: center;
+								font-size: 16px;
 							}
 						}
 						.FiveStars {
@@ -762,10 +763,9 @@
 						width: 100%;
 						text-align: end;
 						margin-top: 10px;
-						font-size: 15px;
+						font-size: 18px;
 						font-weight: 100;
 						cursor: pointer;
-						// color: black;
 						span {
 							font-weight: 300;
 						}

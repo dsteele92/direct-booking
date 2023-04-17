@@ -28,7 +28,7 @@ export default function BookingBarMobile(props) {
 	}, [props.startDate, props.endDate]);
 
 	const handleSelect = (ranges) => {
-		if (ranges.selection.startDate === ranges.selection.endDate) {
+		if (JSON.stringify(ranges.selection.startDate) === JSON.stringify(ranges.selection.endDate)) {
 			// this works because when you select the check in date, it sets that exact object as the checkout date as well, until a checkout date is selected
 			setCheckout(true);
 		} else {
@@ -36,10 +36,7 @@ export default function BookingBarMobile(props) {
 			let start = format(ranges.selection.startDate, 'yyyy-MM-dd');
 			const min_stay = props.availableData[start].min_stay;
 			setMinStay(min_stay);
-			if (format(ranges.selection.startDate, 'yyyy-MM-dd') === format(ranges.selection.endDate, 'yyyy-MM-dd')) {
-				setMinStayNotMet(true);
-				return;
-			}
+
 			let dates = [start];
 			let current = ranges.selection.startDate;
 			let end = false;
@@ -125,8 +122,9 @@ export default function BookingBarMobile(props) {
 										className={Style.DateRange}
 										ranges={[selectionRange]}
 										onChange={handleSelect}
-										minDate={new Date()}
-										rangeColors={['#52758a']}
+										minDate={!checkout ? new Date() : props.startDate}
+										maxDate={add(new Date(), { months: 6 })}
+										rangeColors={['#dab3ae']}
 										color={'#000000'}
 										disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
 										monthHeight={6}

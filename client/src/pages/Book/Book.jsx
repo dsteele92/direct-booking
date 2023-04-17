@@ -6,7 +6,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { add, format, parseISO } from 'date-fns';
+import { add, format, parseISO, sub } from 'date-fns';
 import { BsArrowLeft, BsPeopleFill } from 'react-icons/bs';
 import { AiFillCloseCircle, AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { LR3sm } from 'images';
@@ -37,7 +37,7 @@ function Book(props) {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		if (searchParams.get('data')) {
+		if (searchParams.has('data')) {
 			const returnData = JSON.parse(atob(searchParams.get('data')));
 			setFirstName(returnData.client.firstName);
 			setLastName(returnData.client.lastName);
@@ -51,7 +51,7 @@ function Book(props) {
 		if (searchParams.has('datesError')) {
 			setDatesError(true);
 		}
-	}, [searchParams]);
+	}, []);
 
 	useEffect(() => {
 		if (Object.keys(props.availableData).length > 0) {
@@ -78,7 +78,8 @@ function Book(props) {
 	}, [price, firstName, lastName, email, phone]);
 
 	const handleSelect = (ranges) => {
-		if (ranges.selection.startDate === ranges.selection.endDate) {
+		// console.log(JSON.stringify(ranges.selection.startDate) === JSON.stringify(ranges.selection.endDate));
+		if (JSON.stringify(ranges.selection.startDate) === JSON.stringify(ranges.selection.endDate)) {
 			// this works because when you select the check in date, it sets that exact object as the checkout date as well, until a checkout date is selected
 			setCheckout(true);
 		} else {
@@ -86,10 +87,7 @@ function Book(props) {
 			let start = format(ranges.selection.startDate, 'yyyy-MM-dd');
 			const min_stay = props.availableData[start].min_stay;
 			setMinStay(min_stay);
-			if (format(ranges.selection.startDate, 'yyyy-MM-dd') === format(ranges.selection.endDate, 'yyyy-MM-dd')) {
-				setMinStayNotMet(true);
-				return;
-			}
+
 			let dates = [start];
 			let current = ranges.selection.startDate;
 			let end = false;
@@ -142,8 +140,8 @@ function Book(props) {
 
 	const handleSubmit = (req, res) => {
 		setLoading(true);
-		const url = 'https://us-central1-tabor-bnb.cloudfunctions.net/api/create-checkout-session';
-		// const url = 'http://localhost:10000/create-checkout-session';
+		// const url = 'https://us-central1-tabor-bnb.cloudfunctions.net/api/create-checkout-session';
+		const url = 'http://localhost:10000/create-checkout-session';
 		const data = {
 			url_data: btoa(
 				JSON.stringify({
@@ -161,11 +159,11 @@ function Book(props) {
 		axios
 			.post(url, data)
 			.then((res) => {
-				console.log(res.data); // Handle the response here
+				// console.log(res.data);
 				window.location.href = res.data.url;
 			})
 			.catch((error) => {
-				console.error(error); // Handle any errors here
+				console.error(error);
 			});
 	};
 
@@ -219,8 +217,13 @@ function Book(props) {
 						<h2>Cancellation Policy</h2>
 						<div className={Style.SubSection}>
 							<h4>
-								Cancel before check-in on ---need to decide on policy--- for a full refund. After that,
-								this reservation is non-refundable
+								{`Cancel before check-in on ${format(
+									sub(new Date(props.startDate), {
+										days: 2,
+									}),
+									'MMMM dd, yyyy'
+								)} for a full refund. After that,
+								this reservation is non-refundable`}
 							</h4>
 						</div>
 					</section>
@@ -340,7 +343,7 @@ function Book(props) {
 									ranges={[selectionRange]}
 									onChange={handleSelect}
 									minDate={new Date()}
-									rangeColors={['#52758a']}
+									rangeColors={['#dab3ae']}
 									color={'#000000'}
 									disabledDates={!checkout ? props.disabledDates : props.disabledCheckoutDates}
 									monthHeight={6}
