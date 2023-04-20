@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import Style from './home.module.scss';
 import {
 	GalleryWeb,
@@ -42,6 +43,7 @@ function Home(props) {
 	// for full screen gallery ----->
 	const [fullScreenMobile, setFullScreenMobile] = useState(-1);
 	const [fullScreenWeb, setFullScreenWeb] = useState(-1);
+	const [googleMapsKey, setGoogleMapsKey] = useState('');
 
 	useEffect(() => {
 		const handleScroll = (event) => {
@@ -94,6 +96,16 @@ function Home(props) {
 		return () => {
 			mainCurrent.removeEventListener('scroll', handleScroll);
 		};
+	}, []);
+
+	useEffect(() => {
+		async function fetchGoogleMapsKey() {
+			const response = await axios.get(
+				'https://us-central1-tabor-bnb.cloudfunctions.net/api/get-google-maps-key'
+			);
+			setGoogleMapsKey(response.data.maps_key);
+		}
+		fetchGoogleMapsKey();
 	}, []);
 
 	return (
@@ -332,7 +344,7 @@ function Home(props) {
 						<div className={Style.Content}>
 							<h1>Where You'll Be</h1>
 							<div className={Style.Map}>
-								<GoogleMaps />
+								<GoogleMaps mapsKey={googleMapsKey} />
 							</div>
 							<h4>Portland, Oregon, United States</h4>
 							<p>{propertyInfo.location}</p>

@@ -1,5 +1,4 @@
-import React, { memo } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, memo } from 'react';
 import { GoogleMap, useJsApiLoader, Circle } from '@react-google-maps/api';
 import { keys } from '../../keys.js';
 
@@ -27,9 +26,9 @@ const options = {
 	zIndex: 1,
 };
 
-const GoogleMaps = memo(() => {
+const GoogleMaps = memo((props) => {
 	const { isLoaded, loadError } = useJsApiLoader({
-		googleMapsApiKey: keys.maps, // ,
+		googleMapsApiKey: props.mapsKey, // ,
 		// ...otherOptions
 	});
 

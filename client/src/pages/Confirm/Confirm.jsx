@@ -1,6 +1,6 @@
 import Style from './confirm.module.scss';
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { LoadingSpinner } from 'components';
 import { Link, useSearchParams } from 'react-router-dom';
 import { add, format, parseISO, sub } from 'date-fns';
@@ -22,26 +22,26 @@ function Confirm(props) {
 	const [dates, setDates] = useState([]);
 	const [guests, setGuests] = useState(1);
 	// set this to true when publishing ---------------------->
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
+	// ******************* set all to false *******************
+	const [datesReserved, setDatesReserved] = useState(true);
+	const [datesReservedError, setDatesReservedError] = useState(false);
+	const [emailsSent, setEmailsSent] = useState(false);
+	const [emailsSentError, setEmailsSentError] = useState(false);
 	// ------------------------------------------------------->
 	const [confirmed, setConfirmed] = useState(true);
 	// const [submitted, setSubmitted] = useState(true);
 
-	let paymentData;
-	let returnData;
-
-	if (searchParams.has('payment')) {
-		paymentData = JSON.parse(atob(searchParams.get('payment')));
-	}
-	if (searchParams.has('data')) {
-		returnData = JSON.parse(atob(searchParams.get('data')));
-	}
+	const paymentData = searchParams.has('payment') ? JSON.parse(atob(searchParams.get('payment'))) : {};
+	const returnData = searchParams.has('data') ? JSON.parse(atob(searchParams.get('data'))) : {};
+	const bodyFormData = new FormData();
 
 	useEffect(() => {
 		if (searchParams.has('payment')) {
 			setAmtPaid(paymentData.total);
 			setAvgPrice(paymentData.avgPrice);
 			setPrice(paymentData.price);
+			bodyFormData.append('amtPaid', paymentData.total);
 		}
 		if (searchParams.has('data')) {
 			setFirstName(returnData.client.firstName);
@@ -52,7 +52,6 @@ function Confirm(props) {
 			setDisplayDates(returnData.displayDates);
 			setGuests(returnData.guests);
 
-			const bodyFormData = new FormData();
 			bodyFormData.append('firstName', returnData.client.firstName);
 			bodyFormData.append('lastName', returnData.client.lastName);
 			bodyFormData.append('email', returnData.client.email);
@@ -65,15 +64,17 @@ function Confirm(props) {
 
 			axios({
 				method: 'post',
-				url: 'https://script.google.com/macros/s/AKfycbzTMI6Ry4c7hjBf6OPHrV1O0upKutpV02brRy87jWSfYfOiWz8cK5tIByvrDVJ1JRKM/exec',
+				url: 'https://script.google.com/macros/s/AKfycbx43H-wAAnmr_pRIaaC_rTTut3YBFlUFU-041w4Op9OFCZMESYoR5byodJnpu4ch48J/exec',
 				data: bodyFormData,
 				headers: { 'Content-Type': 'multipart/form-data' },
 			})
 				.then(function (response) {
 					console.log(response);
+					setEmailsSent(true);
 				})
 				.catch(function (response) {
 					console.log(response);
+					setEmailsSentError(true);
 				});
 		}
 	}, []);
@@ -100,16 +101,18 @@ function Confirm(props) {
 			// axios
 			// .request(options)
 			// .then((response) => {
-			// setConfirmed(true);
-			// setLoading(false);
+			// setDatesReserved(true);
 			// })
 			// .catch((error) => {
 			// 	console.error(error);
-			// setConfirmed(false);
-			// 	setLoading(false);
+			// setDatesReservedError(true);
 			// });
 		}
 	}, []);
+
+	useEffect(() => {
+		if (datesReserved && emailsSent) setLoading(false);
+	}, [datesReserved, emailsSent]);
 
 	return (
 		<div className={Style.Page}>

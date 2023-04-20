@@ -3,7 +3,7 @@ const axios = require('axios');
 const cors = require('cors')({ origin: true });
 
 require('dotenv').config();
-// console.log(process.env);
+// **************** Remove process.env and add keys before deploying functions **************** //
 
 const stripe = require('stripe')(process.env.STRIPE_KEY);
 const express = require('express');
@@ -13,10 +13,6 @@ const Buffer = require('buffer').Buffer;
 app.use(express.static('public'));
 app.use(cors);
 app.use(bodyParser.json());
-
-// ************************************************
-// REMEMBER TO REMOVE KEYS BEFORE PUSHING TO GITHUB
-// ************************************************
 
 const getToken = () => {
 	return axios.post(
@@ -118,10 +114,10 @@ app.post('/create-checkout-session', async (req, res) => {
 			},
 		],
 		mode: 'payment',
-		// success_url: `https://tabor-bnb.web.app/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		// cancel_url: `https://tabor-bnb.web.app/book?canceled=true&data=${req.body.url_data}`,
-		success_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
+		success_url: `https://tabor-bnb.web.app/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		cancel_url: `https://tabor-bnb.web.app/book?canceled=true&data=${req.body.url_data}`,
+		// success_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		// cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
 
 		// for testing success page:
 		// cancel_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
@@ -131,4 +127,4 @@ app.post('/create-checkout-session', async (req, res) => {
 
 exports.api = functions.https.onRequest(app);
 
-app.listen(10000, () => console.log('Running on port 10000'));
+// app.listen(10000, () => console.log('Running on port 10000'));
