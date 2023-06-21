@@ -219,15 +219,45 @@ function Book(props) {
 					<section>
 						<h2>Cancellation Policy</h2>
 						<div className={Style.SubSection}>
-							<h4>
-								{`Cancel before check-in on ${format(
-									sub(new Date(props.startDate), {
-										days: 2,
-									}),
-									'MMMM dd, yyyy'
-								)} for a full refund. After that,
-								this reservation is non-refundable`}
-							</h4>
+							{props.startDate ? (
+								<h4>
+									{format(props.startDate, 'yyyy-MM-dd') >
+									format(add(new Date(), { days: 14 }), 'yyyy-MM-dd') ? (
+										<p>
+											Cancel by{' '}
+											{format(
+												add(new Date(), {
+													days: 2,
+												}),
+												'MMMM dd, yyyy'
+											)}{' '}
+											for a full refund.
+										</p>
+									) : (
+										''
+									)}
+									{format(props.startDate, 'yyyy-MM-dd') >
+									format(add(new Date(), { days: 7 }), 'yyyy-MM-dd') ? (
+										<>
+											<p>
+												Cancel by{' '}
+												{format(
+													sub(new Date(props.startDate), {
+														days: 7,
+													}),
+													'MMMM dd, yyyy'
+												)}{' '}
+												for a 50% refund.
+											</p>
+											<p>After that, this reservation is non-refundable.</p>
+										</>
+									) : (
+										<p>This reservation is non-refundable.</p>
+									)}
+								</h4>
+							) : (
+								<h4>Select dates to see cancellation policy.</h4>
+							)}
 						</div>
 					</section>
 					<section>

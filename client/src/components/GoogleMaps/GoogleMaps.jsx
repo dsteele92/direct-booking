@@ -1,6 +1,5 @@
 import React, { useState, useEffect, memo } from 'react';
 import { GoogleMap, useJsApiLoader, Circle } from '@react-google-maps/api';
-import { keys } from '../../keys.js';
 
 const containerStyle = {
 	width: '100%',

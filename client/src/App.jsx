@@ -3,7 +3,6 @@ import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { add, format, parseISO } from 'date-fns';
 import { Home, Book, Confirm } from 'pages';
-import { keys } from './keys.js';
 
 const App = (props) => {
 	const [startDate, setStartDate] = useState(null);

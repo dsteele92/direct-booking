@@ -7,7 +7,6 @@ import { add, format, parseISO, sub } from 'date-fns';
 import { BsArrowLeft, BsPeopleFill, BsCheck2Circle } from 'react-icons/bs';
 import { AiFillCloseCircle, AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai';
 import { LR3sm } from 'images';
-import { keys } from '../../keys.js';
 
 function Confirm(props) {
 	const [searchParams, setSearchParams] = useSearchParams();
@@ -36,6 +35,23 @@ function Confirm(props) {
 	const returnData = searchParams.has('data') ? JSON.parse(atob(searchParams.get('data'))) : {};
 	const bodyFormData = new FormData();
 
+	const googleScripts = (bodyFormData) => {
+		axios({
+			method: 'post',
+			url: 'https://script.google.com/macros/s/AKfycbx43H-wAAnmr_pRIaaC_rTTut3YBFlUFU-041w4Op9OFCZMESYoR5byodJnpu4ch48J/exec',
+			data: bodyFormData,
+			headers: { 'Content-Type': 'multipart/form-data' },
+		})
+			.then(function (response) {
+				console.log(response);
+				setEmailsSent(true);
+			})
+			.catch(function (response) {
+				console.log(response);
+				setEmailsSentError(true);
+			});
+	};
+
 	useEffect(() => {
 		if (searchParams.has('payment')) {
 			setAmtPaid(paymentData.total);
@@ -59,27 +75,8 @@ function Confirm(props) {
 			bodyFormData.append('startDate', returnData.dates[0]);
 			bodyFormData.append('endDate', returnData.dates[returnData.dates.length - 1]);
 			bodyFormData.append('guests', returnData.guests);
-
 			// console.log(bodyFormData);
-
-			axios({
-				method: 'post',
-				url: 'https://script.google.com/macros/s/AKfycbx43H-wAAnmr_pRIaaC_rTTut3YBFlUFU-041w4Op9OFCZMESYoR5byodJnpu4ch48J/exec',
-				data: bodyFormData,
-				headers: { 'Content-Type': 'multipart/form-data' },
-			})
-				.then(function (response) {
-					console.log(response);
-					setEmailsSent(true);
-				})
-				.catch(function (response) {
-					console.log(response);
-					setEmailsSentError(true);
-				});
 		}
-	}, []);
-
-	useEffect(() => {
 		if (searchParams.has('success')) {
 			let updateDates = [];
 			for (const day in returnData.dates) {
@@ -98,21 +95,27 @@ function Confirm(props) {
 				},
 				data: updateDates,
 			};
-			// axios
-			// .request(options)
-			// .then((response) => {
-			// setDatesReserved(true);
-			// })
-			// .catch((error) => {
-			// 	console.error(error);
-			// setDatesReservedError(true);
-			// });
+
+			axios
+				.request(options)
+				.then((response) => {
+					googleScripts(bodyFormData);
+				})
+				.catch((error) => {
+					console.error(error);
+					setDatesReservedError(true);
+					bodyFormData.append(
+						'ERROR',
+						'DATES NOT RESERVED WITH HOSPITABLE - ERROR IN PUT REQUEST. MANUAL RESERVATION REQUIRED. CHECK FOR DUPLICATE RESERVATIONS.'
+					);
+					googleScripts(bodyFormData);
+				});
 		}
 	}, []);
 
 	useEffect(() => {
-		if (datesReserved && emailsSent) setLoading(false);
-	}, [datesReserved, emailsSent]);
+		if (emailsSent || emailsSentError) setLoading(false);
+	}, [emailsSent, emailsSentError]);
 
 	return (
 		<div className={Style.Page}>
@@ -147,11 +150,19 @@ function Confirm(props) {
 					</div>
 					<div className={Style.Left}>
 						<section>
-							{confirmed ? (
+							{!datesReservedError ? (
 								<h4>You're all set! You will recieve an email shortly with your booking details.</h4>
 							) : (
 								<h4>
 									Payment was successful. You will recieve an email when your booking is confirmed.
+								</h4>
+							)}
+							{!emailsSentError ? (
+								''
+							) : (
+								<h4>
+									There may have been an error saving your booking. If you do not recieve an email
+									within 5 minutes, please contact us.
 								</h4>
 							)}
 						</section>
@@ -174,13 +185,39 @@ function Confirm(props) {
 							<h2>Cancellation Policy</h2>
 							<div className={Style.SubSection}>
 								<h4>
-									{`Cancel before check-in on ${format(
-										sub(new Date(returnData.dates[0]), {
-											days: 2,
-										}),
-										'MMMM dd, yyyy'
-									)} for a full refund. After that,
-								this reservation is non-refundable`}
+									{format(new Date(returnData.dates[0]), 'yyyy-MM-dd') >
+									format(add(new Date(), { days: 14 }), 'yyyy-MM-dd') ? (
+										<p>
+											Cancel by{' '}
+											{format(
+												add(new Date(), {
+													days: 2,
+												}),
+												'MMMM dd, yyyy'
+											)}{' '}
+											for a full refund.
+										</p>
+									) : (
+										''
+									)}
+									{format(new Date(returnData.dates[0]), 'yyyy-MM-dd') >
+									format(add(new Date(), { days: 7 }), 'yyyy-MM-dd') ? (
+										<>
+											<p>
+												Cancel by{' '}
+												{format(
+													sub(new Date(returnData.dates[0]), {
+														days: 7,
+													}),
+													'MMMM dd, yyyy'
+												)}{' '}
+												for a 50% refund.
+											</p>
+											<p>After that, this reservation is non-refundable.</p>
+										</>
+									) : (
+										<p>This reservation is non-refundable.</p>
+									)}
 								</h4>
 							</div>
 						</section>
