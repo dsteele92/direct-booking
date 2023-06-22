@@ -106,25 +106,6 @@ const App = (props) => {
 							/>
 						}
 					/>
-					<Route
-						path='/book'
-						element={
-							<Book
-								startDate={startDate}
-								setStartDate={(i) => setStartDate(i)}
-								endDate={endDate}
-								setEndDate={(i) => setEndDate(i)}
-								dates={dates}
-								setDates={(i) => setDates(i)}
-								guests={guests}
-								setGuests={(i) => setGuests(i)}
-								disabledDates={disabledDates}
-								disabledCheckoutDates={disabledCheckoutDates}
-								availableData={availableData}
-								token={props.token}
-							/>
-						}
-					/>
 					<Route path='/confirm' element={<Confirm token={props.token} />} />
 				</Routes>
 			</Router>
