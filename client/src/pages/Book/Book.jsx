@@ -20,6 +20,7 @@ function Book(props) {
 	const [avgPrice, setAvgPrice] = useState(0);
 	const [price, setPrice] = useState(0);
 	const [totalPrice, setTotalPrice] = useState(0);
+	const [taxes, setTaxes] = useState(0);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
@@ -27,12 +28,14 @@ function Book(props) {
 	const [continueToPayment, setContinueToPayment] = useState(false);
 	const [editDates, setEditDates] = useState(false);
 	const [editGuests, setEditGuests] = useState(false);
+	const [editPets, setEditPets] = useState(false);
 	const [checkout, setCheckout] = useState(false);
 	const [minStay, setMinStay] = useState(1);
 	const [minStayNotMet, setMinStayNotMet] = useState(false);
 	const [startDateUpdate, setStartDateUpdate] = useState(props.startDate);
 	const [endDateUpdate, setEndDateUpdate] = useState(props.endDate);
 	const [guestsUpdate, setGuestsUpdate] = useState(props.guests);
+	const [petsUpdate, setPetsUpdate] = useState(props.pets);
 	const [datesError, setDatesError] = useState(false);
 	const [loading, setLoading] = useState(false);
 
@@ -47,6 +50,7 @@ function Book(props) {
 			props.setStartDate(new Date(returnData.startDate));
 			props.setEndDate(new Date(returnData.endDate));
 			props.setGuests(returnData.guests);
+			props.setPets(returnData.pets);
 		}
 		if (searchParams.has('datesError')) {
 			setDatesError(true);
@@ -62,12 +66,15 @@ function Book(props) {
 			}
 			total = total / 100;
 			const totalRounded = total;
-			const withFees = total + 185;
+			let withFees = total + 185;
+			if (props.pets) withFees += 150;
+			const taxes = withFees * 0.155 + props.dates.length * 4;
 			setPrice(totalRounded);
-			setTotalPrice(withFees);
+			setTotalPrice((withFees + taxes).toFixed());
 			setAvgPrice((total / props.dates.length).toFixed());
+			setTaxes(taxes.toFixed());
 		}
-	}, [props.availableData, props.dates]);
+	}, [props.availableData, props.dates, props.pets]);
 
 	useEffect(() => {
 		if (price && firstName && lastName && email && matchIsValidTel(phone)) {
@@ -127,6 +134,10 @@ function Book(props) {
 		props.setGuests(guestsUpdate);
 		setEditGuests(false);
 	};
+	const savePets = () => {
+		props.setPets(petsUpdate);
+		setEditPets(false);
+	};
 
 	const closeDates = () => {
 		setEditDates(false);
@@ -136,6 +147,10 @@ function Book(props) {
 	const closeGuests = () => {
 		setEditGuests(false);
 		setGuestsUpdate(props.guests);
+	};
+	const closePets = () => {
+		setEditPets(false);
+		setPetsUpdate(props.pets);
 	};
 
 	const handleSubmit = (req, res) => {
@@ -154,7 +169,9 @@ function Book(props) {
 					startDate: props.startDate,
 					endDate: props.endDate,
 					guests: props.guests,
-					displayDates: `${format(props.startDate, 'MMM dd')} - ${format(props.endDate, 'MMM dd')}`,
+					pets: props.pets,
+					checkin: format(props.startDate, 'MMMM dd, yyyy'),
+					checkout: format(props.endDate, 'MMMM dd, yyyy'),
 				})
 			),
 		};
@@ -195,9 +212,28 @@ function Book(props) {
 							<div className={Style.Info}>
 								<div className={Style.Info1}>Dates</div>
 								<div className={Style.Info2}>
-									{props.startDate && props.endDate
-										? `${format(props.startDate, 'MMM dd')} - ${format(props.endDate, 'MMM dd')}`
-										: 'Select dates'}
+									{props.startDate && props.endDate ? (
+										<div>
+											<div>
+												Check in:{' '}
+												<span
+													style={{
+														fontWeight: 500,
+														color: '#52758a',
+													}}>{`${format(props.startDate, 'MMMM dd, yyyy')}`}</span>
+											</div>
+											<div>
+												Check out:{' '}
+												<span
+													style={{
+														fontWeight: 500,
+														color: '#52758a',
+													}}>{`${format(props.endDate, 'MMMM dd, yyyy')}`}</span>
+											</div>
+										</div>
+									) : (
+										'Select dates'
+									)}
 								</div>
 							</div>
 							<div className={Style.Edit} onClick={() => setEditDates(true)}>
@@ -212,6 +248,15 @@ function Book(props) {
 								}`}</div>
 							</div>
 							<div className={Style.Edit} onClick={() => setEditGuests(true)}>
+								Edit
+							</div>
+						</div>
+						<div className={Style.SubSection}>
+							<div className={Style.Info}>
+								<div className={Style.Info1}>Pets</div>
+								<div className={Style.Info2}>{props.pets ? 'Yes' : 'No'}</div>
+							</div>
+							<div className={Style.Edit} onClick={() => setEditPets(true)}>
 								Edit
 							</div>
 						</div>
@@ -349,8 +394,20 @@ function Book(props) {
 										<div>Cleaning Fee</div>
 										<div>$185</div>
 									</div>
+									{props.pets ? (
+										<div className={Style.Detail}>
+											<div>Pet Fee</div>
+											<div>$150</div>
+										</div>
+									) : (
+										''
+									)}
+									<div className={Style.Detail}>
+										<div>Taxes</div>
+										<div>{`$${taxes}`}</div>
+									</div>
 									<div className={Style.Total}>
-										<div>Total before taxes (USD)</div>
+										<div>Total with taxes (USD)</div>
 										<div>{`$${totalPrice}`}</div>
 									</div>
 								</div>
@@ -450,6 +507,54 @@ function Book(props) {
 							<div className={Style.Save}>
 								<ThemeProvider theme={theme}>
 									<Button variant='outlined' color='primary' onClick={saveGuests}>
+										Save
+									</Button>
+								</ThemeProvider>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+			{editPets && (
+				<div className={Style.GuestsModal}>
+					<div className={Style.ModalBackground} onClick={closePets}></div>
+					<div className={Style.Inner}>
+						<div className={Style.Close} onClick={closePets}>
+							<AiFillCloseCircle />
+						</div>
+						<div className={Style.Content}>
+							<div className={Style.SelectGuests}>
+								<h1>Select Pets</h1>
+								<div className={Style.Guests}>
+									<div className={Style.Icon}>
+										<BsPeopleFill />
+									</div>
+									<div className={Style.Select}>
+										<div className={Style.Count}>
+											<h4>{`${petsUpdate}`}</h4>
+										</div>
+										<div className={Style.Arrows}>
+											<div
+												className={`${Style.Arrow} ${petsUpdate === 5 ? Style.Disable : ''}`}
+												onClick={() => {
+													if (petsUpdate < 5) setPetsUpdate(petsUpdate + 1);
+												}}>
+												<AiOutlinePlus />
+											</div>
+											<div
+												className={`${Style.Arrow} ${petsUpdate === 0 ? Style.Disable : ''}`}
+												onClick={() => {
+													if (petsUpdate > 0) setPetsUpdate(petsUpdate - 1);
+												}}>
+												<AiOutlineMinus />
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className={Style.Save}>
+								<ThemeProvider theme={theme}>
+									<Button variant='outlined' color='primary' onClick={savePets}>
 										Save
 									</Button>
 								</ThemeProvider>

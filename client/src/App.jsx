@@ -12,6 +12,7 @@ const App = (props) => {
 	const [disabledCheckoutDates, setDisabledCheckoutDates] = useState([]);
 	const [availableData, setAvailableData] = useState({});
 	const [dates, setDates] = useState([]);
+	const [pets, setPets] = useState(0);
 
 	useEffect(() => {
 		const options = {
@@ -99,6 +100,8 @@ const App = (props) => {
 								setDates={(i) => setDates(i)}
 								guests={guests}
 								setGuests={(i) => setGuests(i)}
+								pets={pets}
+								setPets={(i) => setPets(i)}
 								disabledDates={disabledDates}
 								disabledCheckoutDates={disabledCheckoutDates}
 								availableData={availableData}

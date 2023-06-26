@@ -12,14 +12,19 @@ function Confirm(props) {
 	const [searchParams, setSearchParams] = useSearchParams();
 	const [avgPrice, setAvgPrice] = useState(0);
 	const [price, setPrice] = useState(0);
+	const [taxes, setTaxes] = useState(0);
 	const [amtPaid, setAmtPaid] = useState(0);
 	const [firstName, setFirstName] = useState('');
 	const [lastName, setLastName] = useState('');
 	const [email, setEmail] = useState('');
 	const [phone, setPhone] = useState('+1');
-	const [displayDates, setDisplayDates] = useState('');
+
+	const [checkin, setCheckin] = useState('');
+	const [checkout, setCheckout] = useState('');
+
 	const [dates, setDates] = useState([]);
 	const [guests, setGuests] = useState(1);
+	const [pets, setPets] = useState(0);
 	// set this to true when publishing ---------------------->
 	const [loading, setLoading] = useState(true);
 	// ******************* set all to false *******************
@@ -38,7 +43,7 @@ function Confirm(props) {
 	const googleScripts = (bodyFormData) => {
 		axios({
 			method: 'post',
-			url: 'https://script.google.com/macros/s/AKfycbx43H-wAAnmr_pRIaaC_rTTut3YBFlUFU-041w4Op9OFCZMESYoR5byodJnpu4ch48J/exec',
+			url: 'https://script.google.com/macros/s/AKfycbxc-3GQf6MRuMnHh8T4LZdRSkcD9-IP3cZaq3K9Y2frCdMh2ZM61fCBEFR9NkKg3sgV/exec',
 			data: bodyFormData,
 			headers: { 'Content-Type': 'multipart/form-data' },
 		})
@@ -56,24 +61,29 @@ function Confirm(props) {
 		if (searchParams.has('payment')) {
 			setAmtPaid(paymentData.total);
 			setAvgPrice(paymentData.avgPrice);
+			setTaxes(paymentData.taxes);
 			setPrice(paymentData.price);
 			bodyFormData.append('amtPaid', paymentData.total);
 		}
 		if (searchParams.has('data')) {
+			// console.log(returnData.dates);
+			// console.log(new Date(returnData.dates[returnData.dates.length - 1]));
 			setFirstName(returnData.client.firstName);
 			setLastName(returnData.client.lastName);
 			setEmail(returnData.client.email);
 			setPhone(returnData.client.phone);
 			setDates(returnData.dates);
-			setDisplayDates(returnData.displayDates);
+			setCheckin(returnData.checkin);
+			setCheckout(returnData.checkout);
 			setGuests(returnData.guests);
+			setPets(returnData.pets);
 
 			bodyFormData.append('firstName', returnData.client.firstName);
 			bodyFormData.append('lastName', returnData.client.lastName);
 			bodyFormData.append('email', returnData.client.email);
 			bodyFormData.append('phone', returnData.client.phone);
-			bodyFormData.append('startDate', returnData.dates[0]);
-			bodyFormData.append('endDate', returnData.dates[returnData.dates.length - 1]);
+			bodyFormData.append('startDate', returnData.checkin);
+			bodyFormData.append('endDate', returnData.checkout);
 			bodyFormData.append('guests', returnData.guests);
 			// console.log(bodyFormData);
 		}
@@ -95,6 +105,9 @@ function Confirm(props) {
 				},
 				data: updateDates,
 			};
+
+			// **********************FOR TESTING**********************
+			// googleScripts(bodyFormData);
 
 			axios
 				.request(options)
@@ -171,13 +184,40 @@ function Confirm(props) {
 							<div className={Style.SubSection}>
 								<div className={Style.Info}>
 									<div className={Style.Info1}>Dates</div>
-									<div className={Style.Info2}>{displayDates}</div>
+									<div className={Style.Info2}>
+										<div>
+											Check in:{' '}
+											<span
+												style={{
+													fontWeight: 500,
+													color: '#52758a',
+												}}>
+												{checkin}
+											</span>
+										</div>
+										<div>
+											Check out:{' '}
+											<span
+												style={{
+													fontWeight: 500,
+													color: '#52758a',
+												}}>
+												{checkout}
+											</span>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div className={Style.SubSection}>
 								<div className={Style.Info}>
 									<div className={Style.Info1}>Guests</div>
 									<div className={Style.Info2}>{`${guests} guest${guests > 1 ? 's' : ''}`}</div>
+								</div>
+							</div>
+							<div className={Style.SubSection}>
+								<div className={Style.Info}>
+									<div className={Style.Info1}>Pets</div>
+									<div className={Style.Info2}>{props.pets ? 'Yes' : 'No'}</div>
 								</div>
 							</div>
 						</section>
@@ -246,6 +286,10 @@ function Confirm(props) {
 									<div className={Style.Detail}>
 										<div>Cleaning Fee</div>
 										<div>$185</div>
+									</div>
+									<div className={Style.Detail}>
+										<div>Taxes</div>
+										<div>{`$${taxes}`}</div>
 									</div>
 									<div className={Style.Total}>
 										<div>Amount Paid (USD)</div>

@@ -5,7 +5,7 @@ import { TbSmokingNo } from 'react-icons/tb';
 
 export const houseRulesMain = [
 	['10 guests maximum', <BsPeople />],
-	['No pets', <MdPets />],
+	['Pets allowed for a fee', <MdPets />],
 	['Check-in after 4:00 PM', <SlClock />],
 	['Check-out before 11:00 AM', <SlClock />],
 	['Self check-in with smart lock', <BsDoorOpen />],

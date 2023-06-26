@@ -60,7 +60,8 @@ app.post('/create-checkout-session', async (req, res) => {
 	const url_data = JSON.parse(url_buffer.toString('utf-8'));
 	const dates = url_data.dates;
 	const startDate = dates[0];
-	const endDate = dates[dates.length - 1];
+	const lastBookedDate = dates[dates.length - 1];
+	const pets = url_data.pets;
 	let data;
 
 	const options = {
@@ -68,7 +69,7 @@ app.post('/create-checkout-session', async (req, res) => {
 		url: 'https://api.hospitable.com/calendar/964614',
 		params: {
 			start_date: startDate,
-			end_date: endDate,
+			end_date: lastBookedDate,
 		},
 		headers: {
 			accept: 'application/json',
@@ -85,6 +86,9 @@ app.post('/create-checkout-session', async (req, res) => {
 		.catch((err) => console.log(err));
 
 	let price = 18500;
+	if (pets > 0) {
+		price += 15000;
+	}
 	for (day in data) {
 		if (!data[day].status.available) {
 			res.json({ url: `https://tabor-bnb.web.app/book?data=${req.body.url_data}&datesError=true` });
@@ -92,11 +96,14 @@ app.post('/create-checkout-session', async (req, res) => {
 		}
 		price += data[day].price.amount;
 	}
+	const taxes = price * 0.155 + dates.length * 400;
+	price += taxes;
 
 	const pmnt = {
 		total: (price / 100).toFixed(2),
-		price: ((price - 18500) / 100).toFixed(),
-		avgPrice: ((price - 18500) / dates.length / 100).toFixed(),
+		price: ((price - 18500 - taxes) / 100).toFixed(),
+		avgPrice: ((price - 18500 - taxes) / dates.length / 100).toFixed(),
+		taxes: (taxes / 100).toFixed(),
 	};
 
 	const paymentData = Buffer.from(JSON.stringify(pmnt)).toString('base64');
@@ -106,7 +113,7 @@ app.post('/create-checkout-session', async (req, res) => {
 			{
 				price_data: {
 					currency: 'usd',
-					product_data: { name: `Tabor B&B: ${url_data.displayDates}` },
+					product_data: { name: `Tabor B&B: ${url_data.checkin} - ${url_data.checkout}` },
 					unit_amount: price,
 					tax_behavior: 'inclusive',
 				},
