@@ -43,7 +43,7 @@ function Confirm(props) {
 	const googleScripts = (bodyFormData) => {
 		axios({
 			method: 'post',
-			url: 'https://script.google.com/macros/s/AKfycbxc-3GQf6MRuMnHh8T4LZdRSkcD9-IP3cZaq3K9Y2frCdMh2ZM61fCBEFR9NkKg3sgV/exec',
+			url: 'https://script.google.com/macros/s/AKfycbzGjR9R5xpuvSW7EaLUnOttVDevKz7jDw5w08otAQ9MMllnBBe95vJAmDMGi3Ta9x2X/exec',
 			data: bodyFormData,
 			headers: { 'Content-Type': 'multipart/form-data' },
 		})

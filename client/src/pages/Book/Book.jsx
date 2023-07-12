@@ -155,11 +155,7 @@ function Book(props) {
 
 	const handleSubmit = (req, res) => {
 		setLoading(true);
-		// const url = 'https://us-central1-tabor-bnb.cloudfunctions.net/api/create-checkout-session';
-		const url =
-			process.env.NODE_ENV === 'development'
-				? 'http://localhost:10000/create-checkout-session'
-				: 'https://us-central1-tabor-bnb.cloudfunctions.net/api/create-checkout-session';
+		const url = 'https://us-central1-tabor-bnb.cloudfunctions.net/api/create-checkout-session';
 		const data = {
 			url_data: btoa(
 				JSON.stringify({
