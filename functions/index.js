@@ -91,13 +91,14 @@ app.post('/create-checkout-session', async (req, res) => {
 	}
 	for (day in data) {
 		if (!data[day].status.available) {
-			res.json({ url: `https://tabor-bnb.web.app/book?data=${req.body.url_data}&datesError=true` });
+			res.json({ url: `https://portlandbnb.org/book?data=${req.body.url_data}&datesError=true` });
 			return;
 		}
 		price += data[day].price.amount;
 	}
 	const taxes = price * 0.155 + dates.length * 400;
 	price += taxes;
+	price = Math.round(price);
 
 	const pmnt = {
 		total: (price / 100).toFixed(2),
@@ -121,13 +122,13 @@ app.post('/create-checkout-session', async (req, res) => {
 			},
 		],
 		mode: 'payment',
-		// success_url: `https://tabor-bnb.web.app/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		// cancel_url: `https://tabor-bnb.web.app/book?canceled=true&data=${req.body.url_data}`,
+		// success_url: `https://portlandbnb.org/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		// cancel_url: `https://portlandbnb.org/book?canceled=true&data=${req.body.url_data}`,
 		success_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		// cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
+		cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
 
 		// for testing success page:
-		cancel_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		// cancel_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
 	});
 	res.json({ url: session.url });
 });
