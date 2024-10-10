@@ -123,6 +123,7 @@ function Home(props) {
 					disabledDates={props.disabledDates}
 					disabledCheckoutDates={props.disabledCheckoutDates}
 					availableData={props.availableData}
+					error={props.error}
 				/>
 			</div>
 			<div className={Style.BookingMobile}>
@@ -138,6 +139,7 @@ function Home(props) {
 					disabledDates={props.disabledDates}
 					disabledCheckoutDates={props.disabledCheckoutDates}
 					availableData={props.availableData}
+					error={props.error}
 				/>
 			</div>
 			<div className={Style.Window}>

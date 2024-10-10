@@ -4,6 +4,8 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
+	display: flex;
+	justify-content: center;
 	border-radius: 10px;
 	overflow: visible;
 	background: rgba($color: $color-light-two, $alpha: 1);
@@ -33,10 +35,10 @@
 
 	.Booker {
 		// max-width: 700px;
-		position: absolute;
+		// position: absolute;
 		height: 100%;
-		width: 30%;
-		left: 35%;
+		// width: 30%;
+		// left: 35%;
 		display: flex;
 		flex-direction: row;
 		justify-content: space-evenly;
@@ -66,13 +68,12 @@
 				position: absolute;
 				left: 0;
 				top: 0;
-				height: 400px;
 				height: 55px;
 				width: 332px;
-				// border: 1px solid rgba(0, 0, 0, 0.5);
-				// border-radius: 10px;
-				@include flex-center;
-				// padding: 10px;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				align-items: center;
 				overflow: hidden;
 				.Dates {
 					cursor: pointer;
@@ -115,124 +116,14 @@
 						}
 					}
 				}
-				.DateRange {
-					position: absolute;
-					left: 0;
-					top: 0;
-					overflow: hidden;
-					transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-				}
-
-				transition: 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
-
-				.CalendarLoading {
-					height: 320px;
-					width: 100%;
-					position: absolute;
-					bottom: 0;
-					background-color: white;
+				.IframeContainer {
+					overflow: auto;
 				}
 				&Open {
 					@extend .SelectDates;
-					height: 385px;
-				}
-			}
-		}
-
-		.Guests {
-			display: flex;
-			@media screen and (max-width: $breakpoint-small) {
-				display: none;
-			}
-			margin-left: 5vw;
-			justify-content: center;
-			align-items: center;
-			.Icon {
-				font-size: 25px;
-				color: grey;
-				@include flex-center;
-				margin-right: 10px;
-			}
-			.Select {
-				position: relative;
-				height: 52px;
-				width: 130px;
-				padding: 0 2%;
-				@include flex-center;
-				overflow: hidden;
-
-				font-size: 18px;
-				font-weight: 300;
-
-				.Overlay {
-					position: absolute;
-					z-index: 0;
-					height: 100%;
-					width: 100%;
-					top: 0;
-					left: 50%;
-					transform: translateX(-50%);
+					height: 775px;
 					border-radius: 10px;
-					background-color: rgba($color: $color-light, $alpha: 0.5);
-					opacity: 0;
-					transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
-				}
-
-				.Count {
-					position: absolute;
-					width: 100px;
-					height: 100%;
-					left: 0;
-					top: 0;
-					@include flex-center;
-					cursor: default;
-				}
-
-				.Arrows {
-					padding: 2%;
-					position: absolute;
-					height: 100%;
-					width: 30px;
-					top: 0;
-					right: 0;
-					display: flex;
-					flex-direction: column;
-					justify-content: space-between;
-					align-items: center;
-
-					opacity: 0;
-					transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
-
-					.Arrow {
-						// border: 1px solid black;
-						// border-radius: 50%;
-						height: 22px;
-						width: 22px;
-						@include flex-center;
-						cursor: pointer;
-						font-size: 14px;
-
-						&:active {
-							background-color: rgba($color: gray, $alpha: 0.1);
-						}
-
-						&:first-of-type {
-							// border-bottom: 1px solid gray;
-						}
-					}
-
-					.Disable {
-						color: rgba($color: black, $alpha: 0.5);
-						cursor: default;
-					}
-				}
-				&:hover {
-					.Arrows {
-						opacity: 1;
-					}
-					.Overlay {
-						opacity: 1;
-					}
+					background-color: $color-light;
 				}
 			}
 		}

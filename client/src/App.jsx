@@ -13,6 +13,7 @@ const App = (props) => {
 	const [availableData, setAvailableData] = useState({});
 	const [dates, setDates] = useState([]);
 	const [pets, setPets] = useState(0);
+	const [error, setError] = useState(false);
 
 	useEffect(() => {
 		const options = {
@@ -63,6 +64,7 @@ const App = (props) => {
 			})
 			.catch((error) => {
 				console.error(error);
+				setError(true);
 			});
 	}, [props.token]);
 
@@ -85,6 +87,7 @@ const App = (props) => {
 								disabledDates={disabledDates}
 								disabledCheckoutDates={disabledCheckoutDates}
 								availableData={availableData}
+								error={error}
 							/>
 						}
 					/>

@@ -5,7 +5,7 @@ const cors = require('cors')({ origin: true });
 require('dotenv').config();
 // **************** Remove process.env and add keys before deploying functions **************** //
 
-const stripe = require('stripe')(process.env.STRIPE_KEY);
+const stripe = require('stripe')('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');
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -18,8 +18,8 @@ const getToken = () => {
 	return axios.post(
 		'https://auth.hospitable.com/oauth/token',
 		{
-			client_id: process.env.HOSPITABLE_CLIENT_ID,
-			client_secret: process.env.HOSPITABLE_CLIENT_SECRET,
+			client_id: '9b0ed7be-86ed-4e75-9ac5-968d63a00d5b'
+			client_secret: '6loEG6zh8dFw0q46uMtzwo7F3AOK7lGYGA27lASU',
 			audience: 'api.hospitable.com',
 			grant_type: 'client_credentials',
 		},
@@ -37,7 +37,7 @@ app.get('/', async (req, res) => {
 
 app.get('/get-google-maps-key', (req, res) => {
 	res.json({
-		maps_key: process.env.GOOGLE_MAPS_KEY,
+		maps_key: 'AIzaSyBKKYbyIFZ1Ok1PNYc8S4Dil9tA2xDli-g',
 	});
 });
 
@@ -73,7 +73,7 @@ app.post('/create-checkout-session', async (req, res) => {
 		},
 		headers: {
 			accept: 'application/json',
-			Authorization: `Bearer ${url_data.token}`,
+			Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5YTYyNGRmMC0xMmYxLTQ0OGUtYjg4NC00MzY3ODBhNWQzY2QiLCJqdGkiOiI3OGI2ODlhMmY5M2M3OWQ1ZmRjOTM0MmRiNmEyMWQ3OTliNzkxMDY2Nzc2ZmU2NmFjNTJmMGFlNWY0NmE5YjUyYjg2ZjFlNWUzZTg0OWY2NCIsImlhdCI6MTcwNDY3NTM5MC44NTU5MTksIm5iZiI6MTcwNDY3NTM5MC44NTU5MjIsImV4cCI6MTczNjI5Nzc5MC44NTE3NzYsInN1YiI6IjE4NTY5NCIsInNjb3BlcyI6WyJwYXQ6cmVhZCIsInBhdDp3cml0ZSJdfQ.dleZC7sJIKU34LtsyjbU1QZ-hQ-QCvmNBg_YqJnHAu2bzGbY5W_Esub6oTIcPpC27eHwgdztiPddWcFPBjoElaxJaFwQvTgkg_Y6xzrkwrr5wYAvQSkOu5Awyj56kQt9MX2rpEs2FMTD09EghdBZMhE2oFOAbLp7OrzchugQHZbJGuHw4BhzygfNUP9OWEKGDfLG4WhaSjJvzCwttRdVvVouyYV1lse8A3OJMGyJLDF2KWIocRSqslXy8mBKhUozxurTE-fu4FUuuArCwLgB1TnBQAwuqb4Cw1UcWWbZQbOjan_XTx21o_L_jLe-frTI5gzPi4SuJuhEgDyxIc9SIIxsyBwsfCa297a5-igEaBASsFjpTG1JgZsEvtS9nExiJbOAT0FI1NXbMCiQ87hYHZkS0E6n52fqol7ZmaKVIvrsE-hnP4hFF-rmuGkgPPyyoqPfUZI-aMBqJWZTl8hkkpbCDOVT8Ge2vHKZsRfZEeM0vNES2zxBGpKxvP-wo_xEcI7mvpSvb6BvAg2GwhvphUNU3v95cxITmBk8cVVSazhb_SWiXXTmZuVHKCO30MsVdsJzHc-2qz-f8zu6Paar3afHrW4dL93ypQJHHRfDQEdGlaDJnIBa4o3go9UHDmGdeCC_1ULjAyDVMrgrxSujL_ccC5cTQa53oPjfLcBvPEg`,
 			'Content-Type': 'application/vnd.hospitable.20230314+json',
 		},
 	};
@@ -122,10 +122,10 @@ app.post('/create-checkout-session', async (req, res) => {
 			},
 		],
 		mode: 'payment',
-		// success_url: `https://portlandbnb.org/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		// cancel_url: `https://portlandbnb.org/book?canceled=true&data=${req.body.url_data}`,
-		success_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
-		cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
+		success_url: `https://portlandbnb.org/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		cancel_url: `https://portlandbnb.org/book?canceled=true&data=${req.body.url_data}`,
+		// success_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
+		// cancel_url: `http://localhost:3000/book?canceled=true&data=${req.body.url_data}`,
 
 		// for testing success page:
 		// cancel_url: `http://localhost:3000/confirm?success=true&data=${req.body.url_data}&payment=${paymentData}`,
