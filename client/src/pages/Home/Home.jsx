@@ -126,22 +126,6 @@ function Home(props) {
 					error={props.error}
 				/>
 			</div>
-			<div className={Style.BookingMobile}>
-				<BookingBarMobile
-					startDate={props.startDate}
-					setStartDate={props.setStartDate}
-					endDate={props.endDate}
-					setEndDate={props.setEndDate}
-					dates={props.dates}
-					setDates={props.setDates}
-					guests={props.guests}
-					setGuests={props.setGuests}
-					disabledDates={props.disabledDates}
-					disabledCheckoutDates={props.disabledCheckoutDates}
-					availableData={props.availableData}
-					error={props.error}
-				/>
-			</div>
 			<div className={Style.Window}>
 				<main className={Style[`Main${scroll}`]} ref={main}>
 					<div className={Style.HomeBanner}>

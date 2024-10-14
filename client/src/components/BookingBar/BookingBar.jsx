@@ -8,7 +8,6 @@ export default function BookingBar(props) {
 	const [openDatePicker, setOpenDatePicker] = useState(false);
 
 	const datePicker = useRef();
-	const button = useRef();
 
 	useEffect(() => {
 		const handleKeydown = (e) => {
@@ -17,12 +16,7 @@ export default function BookingBar(props) {
 			}
 		};
 		const handleClick = (e) => {
-			if (
-				datePicker.current &&
-				!datePicker.current.contains(e.target) &&
-				button.current &&
-				!button.current.contains(e.target)
-			) {
+			if (datePicker.current && !datePicker.current.contains(e.target)) {
 				setOpenDatePicker(false);
 			}
 		};
@@ -37,16 +31,13 @@ export default function BookingBar(props) {
 	}, []);
 
 	return (
-		<div className={Style.Book}>
+		<div className={Style.Book} onClick={() => setOpenDatePicker(true)} ref={datePicker}>
 			<div className={Style.Booker}>
 				<div className={Style.Icon}>
 					<BsCalendarRange />
 				</div>
 				<div className={Style.DatePickerContainer}>
-					<div
-						className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}
-						onClick={() => setOpenDatePicker(true)}
-						ref={datePicker}>
+					<div className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}>
 						<div className={Style.Dates}>
 							<div className={Style.Overlay}></div>
 							<div className={Style.Start}>
@@ -68,7 +59,7 @@ export default function BookingBar(props) {
 					</div>
 				</div>
 			</div>
-			<div className={Style.Button} ref={button}>
+			<div className={Style.Button}>
 				<div className={Style.ButtonText}>
 					<h4>Check Availability</h4>
 				</div>
