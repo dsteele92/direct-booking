@@ -83,26 +83,13 @@
 					z-index: 3;
 					top: 0;
 					left: 0;
-					height: 57px;
+					height: 55px;
+					max-height: 90%;
 					padding: 0 2%;
 					width: 100%;
 					background-color: $color-light-two;
 					display: grid;
 					grid-template-columns: 1fr 1fr;
-
-					.Overlay {
-						position: absolute;
-						z-index: 0;
-						height: 100%;
-						width: 95%;
-						top: 0;
-						left: 50%;
-						transform: translateX(-50%);
-						border-radius: 10px;
-						background-color: rgba($color: $color-light, $alpha: 0.5);
-						opacity: 0;
-						transition: all 0.1s cubic-bezier(0.39, 0.575, 0.565, 1);
-					}
 					.Start {
 						z-index: 1;
 						@include flex-center;

@@ -39,7 +39,6 @@ export default function BookingBar(props) {
 				<div className={Style.DatePickerContainer}>
 					<div className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}>
 						<div className={Style.Dates}>
-							<div className={Style.Overlay}></div>
 							<div className={Style.Start}>
 								<h4>Check-In</h4>
 							</div>
