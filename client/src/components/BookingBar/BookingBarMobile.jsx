@@ -8,21 +8,19 @@ import { AiFillCloseCircle } from 'react-icons/ai';
 export default function BookingBarMobile(props) {
 	const [editDates, setEditDates] = useState(false);
 
-	const close = () => {
-		setEditDates(false);
-	};
-
 	return (
 		<div className={Style.Book}>
-			<div className={Style.Icon}>
-				<BsCalendarRange />
+			<div onClick={() => setEditDates(true)} className={Style.SelectDates}>
+				<div className={Style.Icon}>
+					<BsCalendarRange />
+				</div>
+				<h4>Select Dates</h4>
 			</div>
-			<h4>Select Dates</h4>
 
 			{editDates && (
 				<div className={Style.Modal}>
 					<div className={Style.ModalBackground}></div>
-					<div className={Style.Back} onClick={close}>
+					<div className={Style.Back} onClick={() => setEditDates(false)}>
 						<AiFillCloseCircle />
 					</div>
 					<div className={Style.IframeContainer}>

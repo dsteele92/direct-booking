@@ -89,6 +89,7 @@ export default function GalleryFullScreenWeb(props) {
 	gallery.forEach((arr, index) => {
 		breakpoints.set(index, breakpoint);
 		breakpoint += arr.length;
+		// eslint-disable-next-line
 		for (const photo in arr) {
 			galleryMap.set(total, index);
 			total++;
@@ -126,6 +127,7 @@ export default function GalleryFullScreenWeb(props) {
 			window.removeEventListener('wheel', handleWheel);
 			openingPhotoRef.removeEventListener('load', handleLoad);
 		};
+		// eslint-disable-next-line
 	}, []);
 
 	return (

@@ -12,6 +12,26 @@
 	.Booking {
 		position: fixed;
 		@include flex-center;
+		@media screen and (max-width: $breakpoint-small), (max-height: 700px) {
+			display: none;
+		}
+		top: 0;
+		left: 0;
+		z-index: 10;
+		height: 8%;
+		width: 100%;
+		padding: 10px 10px 0;
+		@media screen and (max-height: $breakpoint-small) {
+			padding: 5px 5px 0;
+		}
+		overflow: visible;
+	}
+	.BookingMobile {
+		display: none;
+		@media screen and (max-width: $breakpoint-small), (max-height: 700px) {
+			@include flex-center;
+		}
+		position: fixed;
 		top: 0;
 		left: 0;
 		z-index: 10;
@@ -542,7 +562,7 @@
 					background-image: url('../../images/host.jpg');
 					background-size: cover;
 					background-position: center;
-					border: solid $color-light;
+					border: solid $color-light-two;
 					border-width: 10px 10px 50px;
 					border-radius: 10px;
 
