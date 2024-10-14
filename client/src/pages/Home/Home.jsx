@@ -222,9 +222,9 @@ function Home(props) {
 					<section className={Style.Host}>
 						<div className={Style.HostPhoto}>
 							<div className={Style.Signature}>
-								Your Hosts,
+								Your Host,
 								<br />
-								Brenson & Alaina
+								Brenson
 							</div>
 						</div>
 						<div className={Style.HostIntro}>
