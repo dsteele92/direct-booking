@@ -57,6 +57,7 @@
 			position: relative;
 			width: 332px;
 			height: 55px;
+			max-height: 100%;
 			overflow: visible;
 			@media screen and (max-width: $breakpoint-small) {
 				width: 275px;
@@ -69,7 +70,7 @@
 				position: absolute;
 				left: 0;
 				top: 0;
-				height: 55px;
+				height: 100%;
 				width: 100%;
 				display: flex;
 				flex-direction: column;
@@ -82,7 +83,7 @@
 					z-index: 3;
 					top: 0;
 					left: 0;
-					height: 57px;
+					height: 100%;
 					padding: 0 2%;
 					width: 100%;
 					background-color: $color-light-two;
