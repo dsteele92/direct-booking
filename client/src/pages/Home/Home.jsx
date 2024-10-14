@@ -12,7 +12,6 @@ import {
 	GalleryFullScreenMobile,
 	GalleryFullScreenWeb,
 	BookingBar,
-	BookingBarMobile,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsArrowDown } from 'react-icons/bs';
