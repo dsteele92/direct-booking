@@ -52,7 +52,7 @@
 		left: 0;
 		height: 92%;
 		padding: 10px;
-		@media screen and (max-height: $breakpoint-mobile) {
+		@media screen and (max-height: $breakpoint-small) {
 			padding: 5px;
 		}
 		width: 100%;
