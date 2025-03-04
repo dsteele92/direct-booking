@@ -12,7 +12,6 @@ import {
 	GalleryFullScreenMobile,
 	GalleryFullScreenWeb,
 	BookingBar,
-	BookingBarMobile,
 } from 'components';
 import { propertyInfo, amenitiesIconData, houseRulesMain, additionalRules, reviews, highlightedReviews } from 'content';
 import { BsDoorClosed, BsDoorOpen, BsStarFill, BsArrowDown } from 'react-icons/bs';
@@ -44,6 +43,7 @@ function Home(props) {
 	const [fullScreenMobile, setFullScreenMobile] = useState(-1);
 	const [fullScreenWeb, setFullScreenWeb] = useState(-1);
 	const [googleMapsKey, setGoogleMapsKey] = useState('');
+	const [modalOpen, setModalOpen] = useState(false);
 
 	useEffect(() => {
 		const handleScroll = (event) => {
@@ -110,37 +110,9 @@ function Home(props) {
 
 	return (
 		<div className={Style.Home}>
+			{modalOpen && <div className={Style.ModalBackground}></div>}
 			<div className={Style.Booking}>
-				<BookingBar
-					startDate={props.startDate}
-					setStartDate={props.setStartDate}
-					endDate={props.endDate}
-					setEndDate={props.setEndDate}
-					dates={props.dates}
-					setDates={props.setDates}
-					guests={props.guests}
-					setGuests={props.setGuests}
-					disabledDates={props.disabledDates}
-					disabledCheckoutDates={props.disabledCheckoutDates}
-					availableData={props.availableData}
-					error={props.error}
-				/>
-			</div>
-			<div className={Style.BookingMobile}>
-				<BookingBarMobile
-					startDate={props.startDate}
-					setStartDate={props.setStartDate}
-					endDate={props.endDate}
-					setEndDate={props.setEndDate}
-					dates={props.dates}
-					setDates={props.setDates}
-					guests={props.guests}
-					setGuests={props.setGuests}
-					disabledDates={props.disabledDates}
-					disabledCheckoutDates={props.disabledCheckoutDates}
-					availableData={props.availableData}
-					error={props.error}
-				/>
+				<BookingBar toggleModalBackground={(bool) => setModalOpen(bool)} />
 			</div>
 			<div className={Style.Window}>
 				<main className={Style[`Main${scroll}`]} ref={main}>
@@ -193,7 +165,7 @@ function Home(props) {
 					</section>
 					<section className={Style.AmenitiesWeb} ref={amenities}>
 						<div className={Style.Header}>
-							<h2>Our Amenities:</h2>
+							<h2>Amenities:</h2>
 						</div>
 						<div className={Style.MatrixContainer}>
 							<div className={Style.Matrix} ref={matrixEven}>
@@ -214,18 +186,20 @@ function Home(props) {
 									intersected={amenitiesIntersected}
 								/>
 							</div>
-							<div className={Style.MatrixHoverGrid}>
+							<div
+								className={Style.MatrixHoverGrid}
+								onMouseEnter={() => setShowAll(true)}
+								onMouseLeave={() => setShowAll(false)}>
 								{amenitiesIconData.map((amenity, index) => (
 									<div className={Style.GridSlot} key={index}>
 										<div
 											className={Style.HoverDiv}
 											onMouseEnter={() => {
 												setShow(index);
-												setShowAll(true);
+												// setShowAll(true);
 											}}
 											onMouseLeave={() => {
 												setShow(-1);
-												setShowAll(false);
 											}}></div>
 									</div>
 								))}

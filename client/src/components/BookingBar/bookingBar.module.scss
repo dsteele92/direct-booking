@@ -4,185 +4,47 @@
 	position: relative;
 	height: 100%;
 	width: 100%;
-	display: flex;
-	justify-content: center;
-	border-radius: 10px;
+	@include flex-center;
+	gap: 1rem;
+	border-radius: 50px;
 	overflow: visible;
 	background: rgba($color: $color-light-two, $alpha: 1);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
 
-	transition: all 1s cubic-bezier(0.39, 0.575, 0.565, 1);
+	transition: all 0.25s cubic-bezier(0.39, 0.575, 0.565, 1);
 
-	@include flex-center;
-
-	h1 {
-		font-size: 32px;
-		@media screen and (max-width: $breakpoint-small) {
-			font-size: 24px;
-		}
-		margin-bottom: 25px;
-		font-family: 'Marcellus', serif;
-	}
-	h4 {
-		font-family: 'Marcellus', serif;
-		font-size: 18px;
-		letter-spacing: 1pt;
-		@media screen and (max-width: $breakpoint-small) {
-			font-size: 16px;
-		}
-		@media screen and (max-width: $breakpoint-mobile) {
-			font-size: 14px;
-		}
-		text-transform: uppercase;
+	&:hover {
+		background-color: $color-three;
+		box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 	}
 
-	.Booker {
-		height: 100%;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-evenly;
-		align-items: center;
-
-		.Icon {
-			font-size: 25px;
-			@media screen and (max-width: $breakpoint-small) {
-				font-size: 20px;
-			}
-			color: grey;
-			@include flex-center;
-		}
-
-		.DatePickerContainer {
-			flex-shrink: 0;
-			position: relative;
-			width: 332px;
-			height: 55px;
-			max-height: 100%;
-			overflow: visible;
-			@media screen and (max-width: $breakpoint-small) {
-				width: 275px;
-			}
-			@media screen and (max-width: $breakpoint-mobile) {
-				width: 225px;
-			}
-
-			.SelectDates {
-				position: absolute;
-				left: 0;
-				top: 0;
-				height: 55px;
-				max-height: 100%;
-				width: 100%;
-				display: flex;
-				flex-direction: column;
-				justify-content: flex-end;
-				align-items: center;
-				overflow: hidden;
-				.Dates {
-					cursor: pointer;
-					position: absolute;
-					z-index: 3;
-					top: 0;
-					left: 0;
-					height: 55px;
-					max-height: 100%;
-					padding: 0 2%;
-					width: 100%;
-					background-color: $color-light-two;
-					display: grid;
-					grid-template-columns: 1fr 1fr;
-					.Start {
-						z-index: 1;
-						@include flex-center;
-						border-right: 1px solid black;
-					}
-					.End {
-						z-index: 1;
-						@include flex-center;
-					}
-					&:hover {
-						.Overlay {
-							opacity: 1;
-						}
-					}
-				}
-				.IframeContainer {
-					overflow: visible;
-					width: 100%;
-					padding-left: 6px;
-				}
-				.ErrorMessage {
-					height: 100%;
-					width: 100%;
-					display: flex;
-					justify-content: center;
-					align-items: center;
-					flex-direction: column;
-					padding: 2rem;
-					text-align: center;
-					gap: 0.5rem;
-				}
-				&Open {
-					@extend .SelectDates;
-					height: 775px;
-					max-height: none;
-					border-radius: 10px;
-					background-color: $color-light;
-				}
-			}
-		}
-	}
-
-	.Button {
-		position: absolute;
-		height: 100%;
-		width: 18%;
+	.Icon {
+		font-size: 25px;
 		@media screen and (max-width: $breakpoint-small) {
-			display: none;
+			font-size: 20px;
 		}
-		right: 0;
-		border-radius: 0 10px 10px 0;
-		background: rgba($color: black, $alpha: 0.05);
+		color: rgb(66, 66, 66);
 		@include flex-center;
-		transition: all 0.3s cubic-bezier(0.215, 0.61, 0.355, 1);
-
-		a {
-			height: 100%;
-			width: 100%;
-			text-decoration: none;
-			color: black;
+		gap: 1rem;
+	}
+	h2 {
+		color: rgb(66, 66, 66);
+		font-family: 'Marcellus', serif;
+		font-size: 32px;
+		@media screen and (max-height: $breakpoint-tablet) {
+			font-size: 28px;
 		}
+	}
 
-		.ButtonText {
-			height: 100%;
-			width: 100%;
-			@include flex-center;
-			h4 {
-				font-size: 16px;
-				@media screen and (max-width: $breakpoint-tablet) {
-					font-size: 14px;
-				}
-				text-align: center;
-				margin: 0 25px;
-			}
-			.MinStayNotMet {
-				color: $color-red;
-			}
-			span {
-				@include flex-center;
-				@media screen and (max-width: $breakpoint-small) {
-					display: none;
-				}
-			}
-		}
-
-		&Reserve {
-			@extend .Button;
-			background: rgba($color: $color-dark, $alpha: 0.5);
-			cursor: pointer;
-			&:hover {
-				box-shadow: inset 0 0 10px rgba($color: gray, $alpha: 0.2);
-			}
-		}
+	.BookModal {
+		background-color: $color-light-two;
+		position: absolute;
+		top: 50vh;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 350px;
+		@include flex-center;
+		border-radius: 20px;
 	}
 }

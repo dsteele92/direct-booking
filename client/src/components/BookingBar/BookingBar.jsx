@@ -18,6 +18,7 @@ export default function BookingBar(props) {
 		const handleClick = (e) => {
 			if (datePicker.current && !datePicker.current.contains(e.target)) {
 				setOpenDatePicker(false);
+				props.toggleModalBackground(false);
 			}
 		};
 
@@ -28,44 +29,33 @@ export default function BookingBar(props) {
 			document.removeEventListener('keydown', handleKeydown);
 			document.removeEventListener('click', handleClick);
 		};
-	}, []);
+	}, [props]);
 
 	return (
-		<div className={Style.Book} onClick={() => setOpenDatePicker(true)} ref={datePicker}>
-			<div className={Style.Booker}>
-				<div className={Style.Icon}>
-					<BsCalendarRange />
-				</div>
-				<div className={Style.DatePickerContainer}>
-					<div className={openDatePicker ? Style.SelectDatesOpen : Style.SelectDates}>
-						<div className={Style.Dates}>
-							<div className={Style.Start}>
-								<h4>Check-In</h4>
-							</div>
-							<div className={Style.End}>
-								<h4>Check-Out</h4>
-							</div>
-						</div>
-						{/* <h4 className={Style.ErrorMessage}>
-							Booking currently unavailable. Please check back again soon.
-						</h4> */}
-						<div className={Style.IframeContainer}>
-							<iframe
-								id='booking-iframe'
-								sandbox='allow-top-navigation allow-scripts allow-same-origin'
-								style={{ width: '100%', height: '700px' }}
-								frameborder='0'
-								title='Booking Iframe'
-								src='https://booking.hospitable.com/widget/9e5aad90-2857-48b7-963d-2fa213ecd5de/1678916'></iframe>
-						</div>
+		<div
+			className={Style.Book}
+			onClick={() => {
+				setOpenDatePicker(true);
+				props.toggleModalBackground(true);
+			}}
+			ref={datePicker}>
+			<div className={Style.Icon}>
+				<BsCalendarRange />
+			</div>
+			<h2>BOOK</h2>
+			{openDatePicker && (
+				<div className={Style.BookModal}>
+					<div>
+						<iframe
+							id='booking-iframe'
+							sandbox='allow-top-navigation allow-scripts allow-same-origin'
+							style={{ width: '105%', height: '700px', transform: 'translateX(-2.5%)' }}
+							frameborder='0'
+							title='Booking Iframe'
+							src='https://booking.hospitable.com/widget/9e5aad90-2857-48b7-963d-2fa213ecd5de/1678916'></iframe>
 					</div>
 				</div>
-			</div>
-			<div className={Style.Button}>
-				<div className={Style.ButtonText}>
-					<h4>Check Availability</h4>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 }

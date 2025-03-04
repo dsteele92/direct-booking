@@ -16,12 +16,12 @@
 		.Icon {
 			position: relative;
 			transition: all 0.5s cubic-bezier(0.39, 0.575, 0.565, 1);
-			font-size: 38px;
+			font-size: 72px;
 			@media screen and (max-width: $breakpoint-large) {
-				font-size: 34px;
+				font-size: 52px;
 			}
 			@media screen and (max-width: $breakpoint-tablet) {
-				font-size: 30px;
+				font-size: 32px;
 			}
 		}
 		.Description {
@@ -32,9 +32,9 @@
 			max-width: 100%;
 			opacity: 0;
 			transition: all 0.3s ease-in;
-			font-size: 16px;
+			font-size: 18px;
 			@media screen and (max-width: $breakpoint-large) {
-				font-size: 14px;
+				font-size: 16px;
 			}
 			@media screen and (max-width: $breakpoint-tablet) {
 				font-size: 12px;
@@ -64,7 +64,7 @@
 	&0 {
 		@extend .AmenitiesMatrix;
 		.Amenity {
-			color: black;
+			color: $color-dark;
 		}
 		.Show {
 			color: $color-dark;

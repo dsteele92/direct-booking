@@ -1,5 +1,4 @@
 export { default as BookingBar } from './BookingBar/BookingBar.jsx';
-export { default as BookingBarMobile } from './BookingBar/BookingBarMobile.jsx';
 export { default as GalleryWeb } from './Gallery/GalleryWeb.jsx';
 export { default as GalleryMobile } from './Gallery/GalleryMobile.jsx';
 export { default as GalleryFullScreenMobile } from './Gallery/GalleryFullScreenMobile.jsx';
