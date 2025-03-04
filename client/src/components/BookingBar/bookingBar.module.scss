@@ -71,6 +71,7 @@
 				left: 0;
 				top: 0;
 				height: 55px;
+				max-height: 100%;
 				width: 100%;
 				display: flex;
 				flex-direction: column;
@@ -84,7 +85,7 @@
 					top: 0;
 					left: 0;
 					height: 55px;
-					max-height: 90%;
+					max-height: 100%;
 					padding: 0 2%;
 					width: 100%;
 					background-color: $color-light-two;
@@ -106,11 +107,25 @@
 					}
 				}
 				.IframeContainer {
-					overflow: auto;
+					overflow: visible;
+					width: 100%;
+					padding-left: 6px;
+				}
+				.ErrorMessage {
+					height: 100%;
+					width: 100%;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					flex-direction: column;
+					padding: 2rem;
+					text-align: center;
+					gap: 0.5rem;
 				}
 				&Open {
 					@extend .SelectDates;
 					height: 775px;
+					max-height: none;
 					border-radius: 10px;
 					background-color: $color-light;
 				}

@@ -46,6 +46,9 @@ export default function BookingBar(props) {
 								<h4>Check-Out</h4>
 							</div>
 						</div>
+						{/* <h4 className={Style.ErrorMessage}>
+							Booking currently unavailable. Please check back again soon.
+						</h4> */}
 						<div className={Style.IframeContainer}>
 							<iframe
 								id='booking-iframe'
@@ -53,7 +56,7 @@ export default function BookingBar(props) {
 								style={{ width: '100%', height: '700px' }}
 								frameborder='0'
 								title='Booking Iframe'
-								src='https://booking.hospitable.com/widget/9d356214-f5c1-4110-b87c-787c7afe4551/1304268'></iframe>
+								src='https://booking.hospitable.com/widget/9e5aad90-2857-48b7-963d-2fa213ecd5de/1678916'></iframe>
 						</div>
 					</div>
 				</div>
